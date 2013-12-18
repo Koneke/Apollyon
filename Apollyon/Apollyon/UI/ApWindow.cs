@@ -64,6 +64,10 @@ namespace Apollyon
                     grabbed.x1 = ms.X - grabOffset.X;
                     grabbed.y1 = ms.Y - grabOffset.Y;
 
+                    //sample snapping
+                    grabbed.x1 -= grabbed.x1 % 10;
+                    grabbed.y1 -= grabbed.y1 % 10;
+
                     //oob checking (and recalcing graboffset) here
                 }
             }

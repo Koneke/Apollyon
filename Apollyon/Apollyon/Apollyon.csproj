@@ -126,7 +126,6 @@
     <Compile Include="Engine\Utility.cs" />
     <Compile Include="Gameplay\World.cs" />
     <Compile Include="UI\ApComponentOverview.cs" />
-    <Compile Include="UI\ApHostileOverview.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

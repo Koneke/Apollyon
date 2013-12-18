@@ -12,5 +12,6 @@ namespace Apollyon
         public static ApComponentOverview ComponentOverview;
         public static ApLogWindow CombatLog;
         public static ApStatusWindow SelectionStatus;
+        public static ApStatusWindow HostileSelectionStatus;
     }
 }

@@ -17,15 +17,24 @@ namespace Apollyon
 
         public override void ActualRender(SpriteBatch spriteBatch)
         {
-            graphics.Clear(ApLogWindow.StandardBackground);
+            graphics.Clear(
+                Utility.MultiplyColours(
+                    ApLogWindow.StandardBackground,
+                    Tint
+                )
+            );
 
             int _sideMargin = 4;
             int _topMargin = 12; //between top bar and top, vv bottom
             //int _padding = 4; //between bars
 
             float _percentage = 0;
-            foreach(Ship _s in Ships) _percentage += _s.Shield.getPercentage();
-            _percentage /= Ships.Count;
+            if (Ships != null)
+            {
+                foreach (Ship _s in Ships)
+                    _percentage += _s.Shield.getPercentage();
+                _percentage /= Ships.Count;
+            }
 
             Utility.DrawOutlinedRectangle(
                 spriteBatch,
@@ -47,7 +56,7 @@ namespace Apollyon
                 new Vector2(_sideMargin + 4, _topMargin + 2),
                 Color.White);
 
-            if (Ships.Count != 0)
+            if ((Ships??new List<Ship>{}).Count != 0)
             {
                 spriteBatch.Draw(
                     Res.OneByOne,

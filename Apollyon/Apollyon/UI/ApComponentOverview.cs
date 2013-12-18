@@ -60,17 +60,6 @@ namespace Apollyon
                     }
                 }
             }
-
-            /*foreach (Ship _s in Ships)
-            {
-                foreach (ShipComponent _c in _s.Components)
-                {
-                    if (ComponentList.Find(x => x.Name == _c.Name) == null)
-                    {
-                        ComponentList.Add(_c);
-                    }
-                }
-            }*/
         }
 
         public override void GetAction(string _action)
@@ -96,7 +85,6 @@ namespace Apollyon
                 float _currentY = 0;
                 float _offs = Res.LogFont.MeasureString("ship").Y;
 
-                //foreach (ShipComponent _c in list)
                 for(int i = 0; i < ComponentList.Count; i++)
                 {
                     ShipComponent _c = ComponentList[i];
@@ -156,10 +144,41 @@ namespace Apollyon
 
                 if ((DateTime.Now - lastLeftClick).Milliseconds < 200)
                 {
-                    if(Selection != -1)
-                        Game.Log(
-                            "CO : Would fire " + ComponentList[Selection].Name
-                        );
+                    if (Selection != -1)
+                    {
+                        if (ApUI.HostileOverview.Selection.Count > 0)
+                        {
+                            Game.Log(
+                                "CO : Would fire " +
+                                ComponentList[Selection].Name +
+                                " from " +
+                                String.Join(
+                                    ", ",
+                                    ApUI.ShipOverview.Selection.Select(
+                                        x => x.Name)
+                                    ) + " to " +
+                                String.Join(
+                                    ", ",
+                                    ApUI.HostileOverview.Selection.Select(
+                                        x => x.Name)
+                                    )
+                            );
+                        }
+                        else
+                        {
+                            Game.Log(
+                                "CO : Would fire " +
+                                ComponentList[Selection].Name +
+                                " from " +
+                                String.Join(
+                                    ", ",
+                                    ApUI.ShipOverview.Selection.Select(
+                                        x => x.Name)
+                                    ) +
+                                " but had no target."
+                            );
+                        }
+                    }
                 }
 
                 lastLeftClick = DateTime.Now;
