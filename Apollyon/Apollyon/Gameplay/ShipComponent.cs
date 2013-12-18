@@ -12,22 +12,38 @@ namespace Apollyon
 
         public bool Active = false;
         public int Frequency; //time ticks per component tick
-        int timer;
+        public int Timer;
+
+        //weapons and similar
+        public List<Ship> Targets;
+        public Game.TargetingType TargetingType;
 
         public ShipComponent(string _name)
         {
             Name = _name;
+
+            //choose random from the list of targets.
+            //adding support for weakest, strongest etc. later on
+            TargetingType = Game.TargetingType.Random;
         }
 
         public virtual void Tick()
         {
-            timer += 1;
-            if (timer == Frequency) Fire();
+            if (!Active)
+            {
+                Timer = 0;
+                return;
+            }
+            Timer += 1;
+            if (Timer == Frequency)
+            {
+                Fire();
+                Timer = 0;
+            }
         }
 
         public virtual void Fire()
         {
-            timer = 0;
         }
     }
 }

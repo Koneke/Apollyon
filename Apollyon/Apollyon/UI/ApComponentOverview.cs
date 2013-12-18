@@ -107,12 +107,15 @@ namespace Apollyon
 
                     spriteBatch.DrawString(
                         Res.LogFont,
-                        _c.Name,
+                        _c.Name + " ("+
+                            Math.Round(
+                                100f*_c.Timer/_c.Frequency
+                            ) + "%)",
                         new Vector2(
                             indent,
                             _currentY
                         ),
-                        Selection == i ? Color.Yellow : Color.White
+                        _c.Active ? Color.Yellow : Color.White
                     );
                     _currentY += _offs;
                 }
@@ -163,6 +166,18 @@ namespace Apollyon
                                         x => x.Name)
                                     ) + "."
                             );
+
+                            if (!ComponentList[Selection].Active)
+                            {
+                                ComponentList[Selection].Targets =
+                                    ApUI.HostileOverview.Selection;
+                                ComponentList[Selection].Active = true;
+                            }
+                            else
+                            {
+                                ComponentList[Selection].Targets = null;
+                                ComponentList[Selection].Active = false;
+                            }
                         }
                         else
                         {

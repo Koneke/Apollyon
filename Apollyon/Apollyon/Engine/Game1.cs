@@ -121,14 +121,18 @@ namespace Apollyon
             _s.TargetPosition = new Vector2(300, 100);
             world.Ships.Add(_s);
             Game.Fleet.Add(_s);
-            _s.Components.Add(new ShipComponent("foo bar"));
-            _s.Components.Add(new ShipComponent("qux baz"));
+            _s.Components.Add(
+                new Weapon("Railgun")
+            );
+            Weapon _blaster = new Weapon("Heavy Blaster");
+            _blaster.Frequency = 140;
+            _blaster.Damage = 7;
+            _s.Components.Add(_blaster);
 
             _s = new Ship();
             _s.Position = new Vector2(300, 100);
             world.Ships.Add(_s);
             Game.Fleet.Add(_s);
-            _s.Components.Add(new ShipComponent("foo bar"));
 
 
             ApUI.CombatLog.BindKey(Keys.C, KeyBindType.Press, "Clear log");

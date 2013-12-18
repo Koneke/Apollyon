@@ -7,8 +7,8 @@ namespace Apollyon
 {
     class Shield
     {
-        int Current;
-        int Max;
+        public int Current;
+        public int Max;
 
         public Shield(int _c, int _max)
         {

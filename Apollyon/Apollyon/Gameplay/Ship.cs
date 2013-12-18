@@ -15,7 +15,7 @@ namespace Apollyon
         public Vector2 TargetPosition;
         public float TurnSpeed = 0.06f; //rad/s
 
-        public List<Ship> Targets;
+        //public List<Ship> Targets;
         public Game.TargetingType TargetingType;
 
         public List<ShipComponent> Components;
@@ -30,11 +30,6 @@ namespace Apollyon
             Position = new Vector2(0, 0);
             Direction = Math.PI;
             Speed = 0;
-
-            Targets = new List<Ship>();
-            //choose random from the list of targets.
-            //adding support for weakest, strongest etc. later on
-            TargetingType = Game.TargetingType.Random;
 
             Components = new List<ShipComponent>();
             Shield = new Shield(Game.Random.Next(50, 100), 100);
@@ -53,9 +48,10 @@ namespace Apollyon
 
             Position.X += (float)Math.Cos(Direction) * Speed;
             Position.Y += (float)Math.Sin(Direction) * Speed;
+
             foreach (ShipComponent _c in Components)
             {
-                if(_c.Active) _c.Tick();
+                _c.Tick();
             }
 
             /*double _trgtDir = Math.Atan2(
