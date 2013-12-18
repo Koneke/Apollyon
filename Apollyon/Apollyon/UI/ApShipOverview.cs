@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
+using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,6 +29,17 @@ namespace Apollyon
             Selection = new List<Ship>();
         }
 
+        public override void SpecificUILoading(XElement _e)
+        {
+            switch (_e.Element("ships").Value)
+            {
+                case "Game.Fleet":
+                    ShipList = Game.Fleet;
+                    break;
+                default: break;
+            }
+        }
+            
         public override void GetAction(string _action)
         {
             switch (_action)

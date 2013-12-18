@@ -54,7 +54,8 @@ namespace Apollyon
                 );
             ApWindow.Windows.Add(ApUI.CombatLog);
 
-            ApUI.ShipOverview =
+
+            /*ApUI.ShipOverview =
                 new ApShipOverview(
                     220, 10, 200, 200
                 );
@@ -64,7 +65,12 @@ namespace Apollyon
                 Keys.D,
                 KeyBindType.Press,
                 "Clear Selection"
-            );
+            );*/
+
+            ApUI.ShipOverview =
+                (ApShipOverview)WindowManager.GetWindowByName("Fleet Overview");
+
+            ApWindow.Windows = WindowManager.Windows;
 
             ApUI.HostileOverview =
                 new ApShipOverview(

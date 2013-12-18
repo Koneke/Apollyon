@@ -88,6 +88,9 @@ namespace Apollyon
                         _k, _t, _action
                     );
                 }
+
+                _new.SpecificUILoading(_e);
+                WindowManager.Windows.Add(_new);
             }
         }
     }

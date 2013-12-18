@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <windows>
+  
   <window>
-    <name>Hostile Overview</name>
+    <name>Fleet Overview</name>
     <type>ShipOverview</type>
     <position>
-      <x>0</x>
-      <y>0</y>
+      <x>225</x>
+      <y>10</y>
       <w>200</w>
       <h>200</h>
     </position>
-    <tint>
-      <r>1</r>
-      <g>0</g>
-      <b>0</b>
-      <a>1</a>
-    </tint>
     <bindings>
       <bind>
-        <key>d</key>
-        <type>press</type>
+        <key>D</key>
+        <type>Press</type>
         <action>Clear Selection</action>
       </bind>
     </bindings>
+    <ships>Game.Fleet</ships>
   </window>
+
 </windows>

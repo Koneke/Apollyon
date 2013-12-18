@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
+using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -134,6 +136,10 @@ namespace Apollyon
         //receive an action from a key they bound earlier
         //to be overridden by subclasses
         public virtual void GetAction(string _action)
+        {
+        }
+
+        public virtual void SpecificUILoading(XElement _e)
         {
         }
 

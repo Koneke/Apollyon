@@ -132,6 +132,7 @@
     <Compile Include="UI\ApComponentOverview.cs" />
     <Compile Include="UI\ApInventory.cs" />
     <Compile Include="Gameplay\Weapon.cs" />
+    <Compile Include="WindowManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
