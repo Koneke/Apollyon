@@ -161,7 +161,7 @@ namespace Apollyon
                                     ", ",
                                     ApUI.HostileOverview.Selection.Select(
                                         x => x.Name)
-                                    )
+                                    ) + "."
                             );
                         }
                         else
