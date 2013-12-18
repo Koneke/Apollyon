@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Gameplay\Item.cs" />
     <Compile Include="UI\ApStatusWindow.cs" />
     <Compile Include="Gameplay\Shield.cs" />
     <Compile Include="UI\ApShipOverview.cs" />

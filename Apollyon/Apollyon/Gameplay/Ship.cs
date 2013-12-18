@@ -40,8 +40,37 @@ namespace Apollyon
 
         public void Update()
         {
+            //if (Speed == 0) return; //HACK DEBUG ETC.
+
+            float _d = Vector2.Distance(Position, TargetPosition);
+            Speed = 1;
+            Speed = _d < 10 * Speed ? _d / (10 * Speed) : Speed;
+
             Position.X += (float)Math.Cos(Direction) * Speed;
             Position.Y += (float)Math.Sin(Direction) * Speed;
+
+            double _targetDirection = Math.Atan2(
+                TargetPosition.Y - Position.Y,
+                TargetPosition.X - Position.X);
+
+            var a = _targetDirection;
+            var b = Direction;
+
+            a = a <= 0 ? a + Math.PI * 2 : a;
+            b = b <= 0 ? b + Math.PI * 2 : b;
+            b = b - a;
+            a = 0;
+            b = b <= 0 ? b + Math.PI * 2 : b;
+
+            if (b > Math.PI)
+                Direction += 0.05f;
+            else
+                Direction -= 0.05f;
+
+            while (Direction > Math.PI * 2)
+                Direction -= Math.PI * 2;
+            while (Direction < 0)
+                Direction += Math.PI * 2;
 
             foreach (ShipComponent _c in Components)
             {

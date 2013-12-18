@@ -31,7 +31,7 @@ namespace Apollyon
         {
             if (!Active)
             {
-                Timer = 0;
+                Timer = Timer > 0 ? Timer -= 2 : 0;
                 return;
             }
             Timer += 1;

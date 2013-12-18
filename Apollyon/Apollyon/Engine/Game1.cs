@@ -126,6 +126,7 @@ namespace Apollyon
 
             _s = new Ship();
             _s.Position = new Vector2(300, 100);
+            _s.Speed = 1;
             world.Ships.Add(_s);
             Game.Fleet.Add(_s);
 

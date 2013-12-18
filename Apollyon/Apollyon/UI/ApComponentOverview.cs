@@ -152,8 +152,8 @@ namespace Apollyon
 
                 if (
                     (DateTime.Now - lastLeftClick).Milliseconds < 200 &&
-                    //HACK: DO SOMETHING ABOUT THIS. THERE SHOULD BE A BETTER
-                    //WAY OF GROUPING UI ELEMENTS TOGETHER.
+                    //HACK BELOW: DO SOMETHING ABOUT THIS. THERE SHOULD BE A
+                    //BETTER WAY OF GROUPING UI ELEMENTS TOGETHER.
                     this == ApUI.ComponentOverview
                 ) {
                     if (Selection != -1)

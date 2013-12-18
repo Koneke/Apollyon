@@ -46,6 +46,36 @@ namespace Apollyon
                     boxSelection.Height = ms.Y - boxSelection.Y;
                 }
             }
+
+            if (
+                ms.RightButton == ButtonState.Pressed &&
+                oms.RightButton == ButtonState.Released
+            ) {
+                if (ApUI.ShipOverview.Selection.Count > 0)
+                {
+                    Vector2 _avgPosition = new Vector2(0, 0);
+
+                    foreach (Ship _s in ApUI.ShipOverview.Selection)
+                    {
+                        _avgPosition.X += _s.Position.X;
+                        _avgPosition.Y += _s.Position.Y;
+                    }
+
+                    _avgPosition =
+                        _avgPosition / ApUI.ShipOverview.Selection.Count;
+
+                    foreach (Ship _s in ApUI.ShipOverview.Selection)
+                    {
+                        Vector2 _avgPositionOffset =
+                            _s.Position - _avgPosition;
+                        _s.TargetPosition =
+                            Camera.ScreenToWorld(
+                                new Vector2(ms.X, ms.Y)
+                            ) + _avgPositionOffset;
+                        var a = 1;
+                    }
+                }
+            }
         }
 
         public void Update(GameTime gameTime)
@@ -72,9 +102,6 @@ namespace Apollyon
                     continue;
 
                 Vector2 _screenPosition = _s.Position - CameraPosition;
-                //float _zoom = ((float)Camera.Width / Game.ScreenSize.X);
-                //float _xzoom = (Game.ScreenSize.X / (float)Camera.Width);
-                //float _yzoom = (Game.ScreenSize.Y / (float)Camera.Height);
                 _screenPosition =
                     _screenPosition *
                     new Vector2(
