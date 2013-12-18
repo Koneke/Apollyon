@@ -20,6 +20,7 @@ namespace Apollyon
         public float Timer; //ms timer
 
         Rectangle boxSelection;
+        bool selecting = false;
 
         public World()
         {
@@ -32,24 +33,71 @@ namespace Apollyon
             Camera.Input(ms, oms);
 
             if (
-                ms.LeftButton == ButtonState.Pressed &&
-                !ApWindow.PointInWindow(new Point(ms.X, ms.Y))
+                ms.LeftButton == ButtonState.Pressed
             ) {
-                if (oms.LeftButton == ButtonState.Released)
-                {
-                    boxSelection.X = ms.X;
-                    boxSelection.Y = ms.Y;
+                if (
+                    oms.LeftButton == ButtonState.Released &&
+                    !ApWindow.PointInWindow(new Point(ms.X, ms.Y))
+                ) {
+                    Vector2 _clickPoint = Camera.ScreenToWorld(
+                        new Vector2(ms.X, ms.Y));
+                    boxSelection.X = (int)_clickPoint.X;
+                    boxSelection.Y = (int)_clickPoint.Y;
+                    selecting = true;
                 }
-                else
-                {
-                    boxSelection.Width = ms.X - boxSelection.X;
-                    boxSelection.Height = ms.Y - boxSelection.Y;
+
+                if (
+                    oms.LeftButton == ButtonState.Pressed &&
+                    selecting
+                ) {
+                    Vector2 _clickPoint = Camera.ScreenToWorld(
+                        new Vector2(ms.X, ms.Y));
+                    boxSelection.Width = (int)(_clickPoint.X - boxSelection.X);
+                    boxSelection.Height = (int)(_clickPoint.Y - boxSelection.Y);
                 }
+            } else if (
+                ms.LeftButton == ButtonState.Released &&
+                oms.LeftButton == ButtonState.Pressed &&
+                selecting
+            ) {
+                ApUI.ShipOverview.Selection.Clear();
+                foreach (Ship _s in Ships)
+                {
+                    Rectangle _box = boxSelection;
+
+                    if (_box.Width < 0)
+                    {
+                        _box.X += _box.Width;
+                        _box.Width *= -1;
+                    }
+
+                    if (_box.Height < 0)
+                    {
+                        _box.Y += _box.Height;
+                        _box.Height *= -1;
+                    }
+
+                    if (
+                        ApUI.ShipOverview.ShipList.Contains(_s) &&
+                        _box.Contains(
+                            new Point(
+                                (int)_s.Position.X,
+                                (int)_s.Position.Y
+                            )
+                        )
+                    ) {
+                        ApUI.ShipOverview.Selection.Add(_s);
+                    }
+                }
+                boxSelection.Width = 0;
+                selecting = false;
+                ApUI.Inventory.UpdateList();
             }
 
             if (
                 ms.RightButton == ButtonState.Pressed &&
-                oms.RightButton == ButtonState.Released
+                oms.RightButton == ButtonState.Released &&
+                !ApWindow.PointInWindow(new Point(ms.X, ms.Y))
             ) {
                 if (ApUI.ShipOverview.Selection.Count > 0)
                 {
@@ -72,7 +120,6 @@ namespace Apollyon
                             Camera.ScreenToWorld(
                                 new Vector2(ms.X, ms.Y)
                             ) + _avgPositionOffset;
-                        var a = 1;
                     }
                 }
             }
@@ -134,6 +181,43 @@ namespace Apollyon
                         spriteBatch,
                         _shipRectOffset,
                         new Color(0f, 1f, 0f, 0.5f)
+                    );
+                }
+
+                //selection box
+                if (boxSelection.Width != 0)
+                {
+                    Rectangle _screenRectangle = boxSelection;
+
+                    _screenRectangle.Offset(
+                        new Point(-Camera.X, -Camera.Y));
+
+                    if (_screenRectangle.Width < 0)
+                    {
+                        _screenRectangle.X += _screenRectangle.Width;
+                        _screenRectangle.Width *= -1;
+                    }
+
+                    if (_screenRectangle.Height < 0)
+                    {
+                        _screenRectangle.Y += _screenRectangle.Height;
+                        _screenRectangle.Height *= -1;
+                    }
+
+                    _screenRectangle.X =
+                        (int)(_screenRectangle.X * Camera.GetZoom());
+                    _screenRectangle.Y =
+                        (int)(_screenRectangle.Y * Camera.GetZoom());
+
+                    _screenRectangle.Width =
+                        (int)(_screenRectangle.Width * Camera.GetZoom());
+                    _screenRectangle.Height =
+                        (int)(_screenRectangle.Height * Camera.GetZoom());
+
+                    Utility.DrawOutlinedRectangle(
+                        spriteBatch,
+                        _screenRectangle,
+                        new Color(0f, 1f, 0f, 1f)
                     );
                 }
 

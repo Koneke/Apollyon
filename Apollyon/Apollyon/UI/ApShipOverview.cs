@@ -10,7 +10,7 @@ namespace Apollyon
 {
     class ApShipOverview : ApWindow
     {
-        public List<Ship> list; //list to overview
+        public List<Ship> ShipList; //list to overview
         int indent = 4;
         public List<Ship> Selection;
 
@@ -36,7 +36,10 @@ namespace Apollyon
 
                     //HACK: UGLY, UGLY HACK. DO SOMETHING ABOUT IT.
                     if (this == ApUI.ShipOverview)
+                    {
                         ApUI.ComponentOverview.UpdateList();
+                        ApUI.Inventory.UpdateList();
+                    }
                     else
                         ApUI.HostileComponentOverview.UpdateList();
 
@@ -55,14 +58,14 @@ namespace Apollyon
                 )
             );
 
-            if (list != null)
+            if (ShipList != null)
             {
                 spriteBatch.Begin();
 
                 float _currentY = 0;
                 float _offs = Res.LogFont.MeasureString("ship").Y;
 
-                foreach (Ship _s in list)
+                foreach (Ship _s in ShipList)
                 {
                     if (Selection.Contains(_s))
                     {
@@ -110,13 +113,13 @@ namespace Apollyon
                 float _item = _mouseY - (_mouseY % _itemHeight);
                 _item /= _itemHeight;
 
-                if (_item >= list.Count) {
+                if (_item >= ShipList.Count) {
                     Selection.Clear();
                     return;
                 }
 
                 int _shipIndex = Selection.IndexOf(
-                    list[(int)_item]
+                    ShipList[(int)_item]
                 );
 
                 //deselect
@@ -128,12 +131,15 @@ namespace Apollyon
                 //select
                 else
                 {
-                    Selection.Add(list[(int)_item]);
+                    Selection.Add(ShipList[(int)_item]);
                 }
 
                 //HACK: UGLY, UGLY HACK. DO SOMETHING ABOUT IT.
                 if (this == ApUI.ShipOverview)
+                {
                     ApUI.ComponentOverview.UpdateList();
+                    ApUI.Inventory.UpdateList();
+                }
                 else
                     ApUI.HostileComponentOverview.UpdateList();
             }

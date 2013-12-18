@@ -15,6 +15,10 @@ namespace Apollyon
 
         public static Random Random = new Random();
 
+        public static int DoubleClickTime = 200; //dct in ms
+
+        public static bool HasFocus = true;
+
         public enum TargetingType {
             Cycle,
             Weakest,

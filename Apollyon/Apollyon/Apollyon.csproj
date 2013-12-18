@@ -107,7 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Camera.cs" />
+    <Compile Include="Engine\Camera.cs" />
     <Compile Include="Gameplay\Item.cs" />
     <Compile Include="UI\ApStatusWindow.cs" />
     <Compile Include="Gameplay\Shield.cs" />
@@ -128,7 +128,8 @@
     <Compile Include="Engine\Utility.cs" />
     <Compile Include="Gameplay\World.cs" />
     <Compile Include="UI\ApComponentOverview.cs" />
-    <Compile Include="Weapon.cs" />
+    <Compile Include="UI\ApInventory.cs" />
+    <Compile Include="Gameplay\Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

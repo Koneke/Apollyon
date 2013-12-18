@@ -44,6 +44,7 @@ namespace Apollyon
 
         public void Input(MouseState ms, MouseState oms)
         {
+            if (!Game.HasFocus) return;
             float _zoom = (Game.ScreenSize.X / (float)Rectangle.Width);
 
             int _scrollSpeed = (int)(9f/_zoom);

@@ -19,6 +19,8 @@ namespace Apollyon
         public Shield Shield;
         //public Armor Armor;
 
+        public List<Item> Inventory;
+
         //public bool Friendly;
 
         public Ship()
@@ -30,6 +32,8 @@ namespace Apollyon
 
             Components = new List<ShipComponent>();
             Shield = new Shield(Game.Random.Next(50, 100), 100);
+
+            Inventory = new List<Item>();
         }
 
         public void AddComponent(ShipComponent _sc)

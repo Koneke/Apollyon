@@ -17,5 +17,7 @@ namespace Apollyon
 
         public static ApStatusWindow SelectionStatus;
         public static ApStatusWindow HostileSelectionStatus;
+
+        public static ApInventory Inventory;
     }
 }

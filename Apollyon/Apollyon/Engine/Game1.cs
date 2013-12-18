@@ -30,6 +30,7 @@ namespace Apollyon
             Content.RootDirectory = "Content";
         }
 
+        //clean me, holy shit
         protected override void Initialize()
         {
             base.Initialize();
@@ -55,7 +56,7 @@ namespace Apollyon
                     220, 10, 200, 200
                 );
             ApWindow.Windows.Add(ApUI.ShipOverview);
-            ApUI.ShipOverview.list = Game.Fleet; //player fleet of ships
+            ApUI.ShipOverview.ShipList = Game.Fleet; //player fleet of ships
             ApUI.ShipOverview.BindKey(
                 Keys.D,
                 KeyBindType.Press,
@@ -68,7 +69,7 @@ namespace Apollyon
                 );
             ApWindow.Windows.Add(ApUI.HostileOverview);
             ApUI.HostileOverview.Tint = new Color(1f, 0f, 0f, 1f);
-            ApUI.HostileOverview.list = Game.Fleet; //player fleet of ships
+            ApUI.HostileOverview.ShipList = Game.Fleet; //player fleet of ships
             ApUI.HostileOverview.BindKey(
                 Keys.F,
                 KeyBindType.Press,
@@ -106,6 +107,13 @@ namespace Apollyon
             ApUI.HostileSelectionStatus.Tint = new Color(1f, 0f, 0f, 1f);
             ApUI.HostileSelectionStatus.Ships = ApUI.HostileOverview.Selection;
 
+            ApUI.Inventory =
+                new ApInventory(
+                    220, 430, 200, 200
+                    );
+            ApWindow.Windows.Add(ApUI.Inventory);
+            ApUI.Inventory.Ships = ApUI.ShipOverview.Selection;
+
             world = new World();
 
             //test stuff
@@ -123,10 +131,14 @@ namespace Apollyon
             _blaster.Frequency = 140;
             _blaster.Damage = 7;
             _s.AddComponent(_blaster);
+            _s.Inventory.Add(new Item("Coal", true, 10));
+            _s.Inventory.Add(new Item("Railgun", true, 1));
 
             _s = new Ship();
             _s.Position = new Vector2(300, 100);
             _s.Speed = 1;
+            _s.Inventory.Add(new Item("Coal", true, 5));
+            _s.Inventory.Add(new Item("Railgun", true, 1));
             world.Ships.Add(_s);
             Game.Fleet.Add(_s);
 
@@ -156,6 +168,8 @@ namespace Apollyon
 
             ms = Mouse.GetState();
             ks = Keyboard.GetState();
+
+            Game.HasFocus = IsActive;
 
             BindingsManager.HandleInput(ks.GetPressedKeys());
 
