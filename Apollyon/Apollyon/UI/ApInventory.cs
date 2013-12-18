@@ -175,8 +175,11 @@ namespace Apollyon
                 if (
                     (DateTime.Now - lastLeftClick).Milliseconds
                     < Game.DoubleClickTime
+                    && Ships.Count == 1
                 ) {
+                    Items[_item].Items[0].Use(Ships[0]);
                 }
+
                 lastLeftClick = DateTime.Now;
             }
         }

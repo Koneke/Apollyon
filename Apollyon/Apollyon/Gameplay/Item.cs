@@ -19,7 +19,14 @@ namespace Apollyon
             Count = _count;
         }
 
-        public virtual void Use(Ship _user)
+        public void Use(Ship _user)
+        {
+            RealUse(_user);
+            //ApUI.ComponentOverview.UpdateList(); 
+            //ApUI.Inventory.UpdateList();
+        }
+
+        public virtual void RealUse(Ship _user)
         {
         }
     }

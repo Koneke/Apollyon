@@ -16,6 +16,7 @@ namespace Apollyon
         //a new target, and because it's more readable this way.
         public static GraphicsDevice graphics;
 
+        public String Name;
         public Color Tint;
 
         public static List<ApWindow> Windows;
@@ -27,6 +28,13 @@ namespace Apollyon
         //keeping track of currently dragged window and such
         static ApWindow grabbed = null;
         static Vector2 grabOffset = new Vector2(0,0);
+
+        public static void Update()
+        {
+            ApUI.Inventory.UpdateList();
+            ApUI.ComponentOverview.UpdateList();
+            ApUI.HostileComponentOverview.UpdateList();
+        }
         
         //handle window dragging (if draggable)
         //pushes the window to the front as well.

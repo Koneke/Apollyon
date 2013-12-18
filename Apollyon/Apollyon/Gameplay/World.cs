@@ -91,7 +91,7 @@ namespace Apollyon
                 }
                 boxSelection.Width = 0;
                 selecting = false;
-                ApUI.Inventory.UpdateList();
+                //ApUI.Inventory.UpdateList();
             }
 
             if (

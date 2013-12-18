@@ -45,6 +45,9 @@ namespace Apollyon
             ApWindow.graphics = graphics.GraphicsDevice;
             ApWindow.Setup();
 
+            UILoader foo = new UILoader();
+            foo.Load();
+
             ApUI.CombatLog = 
                 new ApLogWindow(
                     10, 10, 200, 200
@@ -130,9 +133,11 @@ namespace Apollyon
             Weapon _blaster = new Weapon("Heavy Blaster");
             _blaster.Frequency = 140;
             _blaster.Damage = 7;
-            _s.AddComponent(_blaster);
-            _s.Inventory.Add(new Item("Coal", true, 10));
-            _s.Inventory.Add(new Item("Railgun", true, 1));
+            ComponentItem _ci = new ComponentItem(
+                "Heavy Blaster",
+                _blaster);
+            _s.Inventory.Add(_ci);
+            //_s.AddComponent(_blaster);
 
             _s = new Ship();
             _s.Position = new Vector2(300, 100);
@@ -176,6 +181,7 @@ namespace Apollyon
             ApWindow.Input(ms, oms);
             world.Input(ms, oms);
             world.Update(gameTime);
+            ApWindow.Update();
 
             oms = ms;
             oks = ks;
