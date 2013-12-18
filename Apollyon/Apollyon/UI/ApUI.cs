@@ -9,8 +9,12 @@ namespace Apollyon
     {
         public static ApShipOverview ShipOverview;
         public static ApShipOverview HostileOverview;
+
         public static ApComponentOverview ComponentOverview;
+        public static ApComponentOverview HostileComponentOverview;
+
         public static ApLogWindow CombatLog;
+
         public static ApStatusWindow SelectionStatus;
         public static ApStatusWindow HostileSelectionStatus;
     }

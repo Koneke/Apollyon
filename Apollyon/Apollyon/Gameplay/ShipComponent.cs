@@ -7,7 +7,7 @@ namespace Apollyon
 {
     class ShipComponent
     {
-        public Ship ship;
+        public Ship Parent;
         public string Name;
 
         public bool Active = false;

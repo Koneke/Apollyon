@@ -76,7 +76,12 @@ namespace Apollyon
 
         public override void ActualRender(SpriteBatch spriteBatch)
         {
-            graphics.Clear(ApLogWindow.StandardBackground);
+            graphics.Clear(
+                Utility.MultiplyColours(
+                    ApLogWindow.StandardBackground,
+                    Tint
+                )
+            );
 
             if (ComponentList != null && Ships != null)
             {
@@ -145,13 +150,17 @@ namespace Apollyon
                     Selection = -1;
                 }
 
-                if ((DateTime.Now - lastLeftClick).Milliseconds < 200)
-                {
+                if (
+                    (DateTime.Now - lastLeftClick).Milliseconds < 200 &&
+                    //HACK: DO SOMETHING ABOUT THIS. THERE SHOULD BE A BETTER
+                    //WAY OF GROUPING UI ELEMENTS TOGETHER.
+                    this == ApUI.ComponentOverview
+                ) {
                     if (Selection != -1)
                     {
                         if (ApUI.HostileOverview.Selection.Count > 0)
                         {
-                            Game.Log(
+                            if(Game.Verbose) Game.Log(
                                 "CO : Would fire " +
                                 ComponentList[Selection].Name +
                                 " from " +
@@ -181,7 +190,7 @@ namespace Apollyon
                         }
                         else
                         {
-                            Game.Log(
+                            if(Game.Verbose) Game.Log(
                                 "CO : Would fire " +
                                 ComponentList[Selection].Name +
                                 " from " +

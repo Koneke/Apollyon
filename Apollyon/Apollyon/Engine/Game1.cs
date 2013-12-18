@@ -44,15 +44,11 @@ namespace Apollyon
             ApWindow.graphics = graphics.GraphicsDevice;
             ApWindow.Setup();
 
-
-
             ApUI.CombatLog = 
                 new ApLogWindow(
                     10, 10, 200, 200
                 );
             ApWindow.Windows.Add(ApUI.CombatLog);
-
-
 
             ApUI.ShipOverview =
                 new ApShipOverview(
@@ -65,8 +61,6 @@ namespace Apollyon
                 KeyBindType.Press,
                 "Clear Selection"
             );
-
-
 
             ApUI.HostileOverview =
                 new ApShipOverview(
@@ -81,17 +75,6 @@ namespace Apollyon
                 "Clear Selection"
             );
 
-
-
-            ApUI.SelectionStatus =
-                new ApStatusWindow(
-                    10, 220, 200, 80
-                );
-            ApWindow.Windows.Add(ApUI.SelectionStatus);
-            ApUI.SelectionStatus.Ships = ApUI.ShipOverview.Selection;
-            
-
-
             ApUI.ComponentOverview =
                 new ApComponentOverview(
                     220, 220, 200, 200
@@ -99,8 +82,22 @@ namespace Apollyon
             ApWindow.Windows.Add(ApUI.ComponentOverview);
             ApUI.ComponentOverview.Ships = ApUI.ShipOverview.Selection;
 
+            ApUI.HostileComponentOverview =
+                new ApComponentOverview(
+                    10, 310, 200, 200
+                );
+            ApWindow.Windows.Add(ApUI.HostileComponentOverview);
+            ApUI.HostileComponentOverview.Tint = new Color(1f, 0f, 0f, 1f);
+            ApUI.HostileComponentOverview.Ships =
+                ApUI.HostileOverview.Selection;
 
-            
+            ApUI.SelectionStatus =
+                new ApStatusWindow(
+                    10, 220, 200, 80
+                );
+            ApWindow.Windows.Add(ApUI.SelectionStatus);
+            ApUI.SelectionStatus.Ships = ApUI.ShipOverview.Selection;
+
             ApUI.HostileSelectionStatus =
                 new ApStatusWindow(
                     430, 220, 200, 80
@@ -108,8 +105,6 @@ namespace Apollyon
             ApWindow.Windows.Add(ApUI.HostileSelectionStatus);
             ApUI.HostileSelectionStatus.Tint = new Color(1f, 0f, 0f, 1f);
             ApUI.HostileSelectionStatus.Ships = ApUI.HostileOverview.Selection;
-            
-            
 
             world = new World();
 
@@ -121,13 +116,13 @@ namespace Apollyon
             _s.TargetPosition = new Vector2(300, 100);
             world.Ships.Add(_s);
             Game.Fleet.Add(_s);
-            _s.Components.Add(
+            _s.AddComponent(
                 new Weapon("Railgun")
             );
             Weapon _blaster = new Weapon("Heavy Blaster");
             _blaster.Frequency = 140;
             _blaster.Damage = 7;
-            _s.Components.Add(_blaster);
+            _s.AddComponent(_blaster);
 
             _s = new Ship();
             _s.Position = new Vector2(300, 100);

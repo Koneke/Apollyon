@@ -33,7 +33,13 @@ namespace Apollyon
             {
                 case "Clear Selection":
                     Selection.Clear();
-                    ApUI.ComponentOverview.UpdateList();
+
+                    //HACK: UGLY, UGLY HACK. DO SOMETHING ABOUT IT.
+                    if (this == ApUI.ShipOverview)
+                        ApUI.ComponentOverview.UpdateList();
+                    else
+                        ApUI.HostileComponentOverview.UpdateList();
+
                     break;
                 default:
                     break;
@@ -125,7 +131,11 @@ namespace Apollyon
                     Selection.Add(list[(int)_item]);
                 }
 
-                ApUI.ComponentOverview.UpdateList();
+                //HACK: UGLY, UGLY HACK. DO SOMETHING ABOUT IT.
+                if (this == ApUI.ShipOverview)
+                    ApUI.ComponentOverview.UpdateList();
+                else
+                    ApUI.HostileComponentOverview.UpdateList();
             }
         }
     }

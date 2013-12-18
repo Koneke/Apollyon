@@ -11,6 +11,8 @@ namespace Apollyon
 
         public static float TickTime = 1000 / 60; //time in ms per time tick
 
+        public static Boolean Verbose = false;
+
         public static Random Random = new Random();
 
         public enum TargetingType {

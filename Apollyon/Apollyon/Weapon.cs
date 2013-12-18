@@ -29,6 +29,9 @@ namespace Apollyon
             if (_target != null)
             {
                 _target.Shield.Current -= Damage;
+                Game.Log(Parent.Name + " dealt " + Damage +
+                    " points of damage to " + _target.Name + " using " +
+                    this.Name + ".");
             }
         }
     }
