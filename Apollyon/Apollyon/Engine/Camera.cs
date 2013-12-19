@@ -85,5 +85,12 @@ namespace Apollyon
             Vector2 _camPos = new Vector2(Rectangle.X, Rectangle.Y);
             return _camPos + _position / GetZoom();
         }
+
+        public Vector2 WorldToScreen(Vector2 _position)
+        {
+            Vector2 _camPos = new Vector2(Rectangle.X, Rectangle.Y);
+            Vector2 _offs = (_position - _camPos) * GetZoom();
+            return _offs;
+        }
     }
 }

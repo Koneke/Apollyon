@@ -153,48 +153,6 @@ namespace Apollyon
         {
             foreach (Ship _s in Ships)
             {
-                Point _shipPoint =
-                    new Point((int)_s.Position.X, (int)_s.Position.Y);
-                //if (!Camera.Contains(_shipPoint))
-                if (!Camera.Contains(_shipPoint))
-                    continue;
-
-                Vector2 _screenPosition = _s.Position - CameraPosition;
-                _screenPosition =
-                    _screenPosition *
-                    new Vector2(
-                        Camera.GetZoom(),
-                        Camera.GetZoom()
-                    );
-
-                Rectangle _shipRect =
-                    new Rectangle(
-                        (int)(_screenPosition.X),
-                        (int)(_screenPosition.Y),
-                        (int)(32 * Camera.GetZoom()),
-                        (int)(32 * Camera.GetZoom())
-                    );
-
-                Rectangle _shipRectOffset = _shipRect;
-                _shipRectOffset.Offset(
-                    (int)(-16 * Camera.GetZoom()),
-                    (int)(-16 * Camera.GetZoom())
-                );
-
-                if(Game.Targeted.Contains(_s)) {
-                    Utility.DrawOutlinedRectangle(
-                        spriteBatch,
-                        _shipRectOffset,
-                        new Color(1f, 0f, 0f, 0.5f)
-                    );
-                } else if(Game.Selected.Contains(_s)) {
-                    Utility.DrawOutlinedRectangle(
-                        spriteBatch,
-                        _shipRectOffset,
-                        new Color(0f, 1f, 0f, 0.5f)
-                    );
-                }
-
                 //selection box
                 if (boxSelection.Width != 0)
                 {
@@ -233,21 +191,48 @@ namespace Apollyon
                 }
 
                 spriteBatch.Begin();
-                spriteBatch.Draw(
-                    Res.Ship,
+
+                Vector2 _sp = Game.Camera.WorldToScreen(_s.Position);
+                Rectangle _shipRect =
                     new Rectangle(
-                        (int)(_screenPosition.X),
-                        (int)(_screenPosition.Y),
+                        (int)(_sp.X),
+                        (int)(_sp.Y),
                         (int)(32 * Camera.GetZoom()),
                         (int)(32 * Camera.GetZoom())
-                    ),
+                    );
+
+                spriteBatch.Draw(
+                    Res.Ship,
+                    _shipRect,
                     null,
                     Color.White,
                     (float)_s.Direction,
                     new Vector2(Res.Ship.Width / 2, Res.Ship.Height / 2),
                     SpriteEffects.None, 0f
+
                 );
+
                 spriteBatch.End();
+
+                Rectangle _shipRectOffset = _shipRect;
+                _shipRectOffset.Offset(
+                    (int)(-16 * Camera.GetZoom()),
+                    (int)(-16 * Camera.GetZoom())
+                );
+
+                if(Game.Targeted.Contains(_s)) {
+                    Utility.DrawOutlinedRectangle(
+                        spriteBatch,
+                        _shipRectOffset,
+                        new Color(1f, 0f, 0f, 0.5f)
+                    );
+                } else if(Game.Selected.Contains(_s)) {
+                    Utility.DrawOutlinedRectangle(
+                        spriteBatch,
+                        _shipRectOffset,
+                        new Color(0f, 1f, 0f, 0.5f)
+                    );
+                }
             }
         }
     }

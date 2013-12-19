@@ -48,6 +48,7 @@ namespace Apollyon
 
             LoadUI();
             world = new World();
+            Game.Camera = world.Camera;
 
             //test stuff
             Ship _s = new Ship();
@@ -110,6 +111,13 @@ namespace Apollyon
             world.Input(ms, oms);
             world.Update(gameTime);
             ApWindow.Update();
+            //Particle.UpdateParticles();
+
+            Particle.Particles =
+                Particle.Particles.FindAll(
+                    x => (DateTime.Now - x.Created).Milliseconds < x.LifeTime);
+            foreach (Particle _p in Particle.Particles)
+                _p.Update();
 
             oms = ms;
             oks = ks;
@@ -134,7 +142,15 @@ namespace Apollyon
                 Color.White);
             spriteBatch.End();
 
+            foreach (Particle _p in
+                Particle.Particles.FindAll(x => x.Depth < 0))
+                _p.Draw(spriteBatch);
+
             world.Draw(spriteBatch);
+
+            foreach (Particle _p in
+                Particle.Particles.FindAll(x => x.Depth > 0))
+                _p.Draw(spriteBatch);
 
             foreach (ApWindow w in ApWindow.Windows)
                 w.Draw(spriteBatch);
@@ -155,10 +171,6 @@ namespace Apollyon
             ApUI.CombatLog =
                 (ApLogWindow)WindowManager.
                 GetWindowByName("Combat Log");
-
-            ApUI.ShipOverview =
-                (ApShipOverview)WindowManager.
-                GetWindowByName("Fleet Overview");
 
             ApUI.HostileOverview =
                 (ApShipOverview)WindowManager.

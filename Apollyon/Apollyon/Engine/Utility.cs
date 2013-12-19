@@ -9,13 +9,66 @@ namespace Apollyon
 {
     class Utility
     {
-        public static Color MultiplyColours(Color a, Color b)
+        public static Color AddColours(Color _a, Color _b)
         {
             return new Color(
-                a.R/255f * b.R/255f,
-                a.G/255f * b.G/255f,
-                a.B/255f * b.B/255f,
-                a.A/255f * b.A/255f
+                _a.R/255f + _b.R/255f,
+                _a.G/255f + _b.G/255f,
+                _a.B/255f + _b.B/255f,
+                _a.A/255f + _b.A/255f
+            );
+        }
+
+        public static Color AddColours(Color _a, Vector4 _b)
+        {
+            var foo =
+                _a.A / 255f + _b.W;
+            Color _c = new Color(
+                _a.R/255f + _b.X,
+                _a.G/255f + _b.Y,
+                _a.B/255f + _b.Z,
+                _a.A/255f + _b.W
+            );
+            return _c;
+        }
+
+        public static Color MultiplyColours(Color _a, Color _b)
+        {
+            return new Color(
+                _a.R/255f * _b.R/255f,
+                _a.G/255f * _b.G/255f,
+                _a.B/255f * _b.B/255f,
+                _a.A/255f * _b.A/255f
+            );
+        }
+
+        public static Color ScaleColour(Color _a, float _scale)
+        {
+            return new Color(
+                _a.R * _scale,
+                _a.G * _scale,
+                _a.B * _scale,
+                _a.A * _scale
+            );
+        }
+
+        public static Color SubtractFromColour(Color _a, float _amount)
+        {
+            return new Color(
+                _a.R - _amount,
+                _a.G - _amount,
+                _a.B - _amount,
+                _a.A - _amount
+            );
+        }
+
+        public static Color AddToColour(Color _a, float _amount)
+        {
+            return new Color(
+                _a.R + _amount,
+                _a.G + _amount,
+                _a.B + _amount,
+                _a.A + _amount
             );
         }
 

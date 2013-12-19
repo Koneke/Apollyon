@@ -12,8 +12,10 @@ namespace Apollyon
         public Vector2 Position;
         public double Direction;
         public float Speed;
+        public float MaxSpeed;
+        public float Acceleration;
         public Vector2 TargetPosition;
-        public float TurnSpeed = 0.06f; //rad/s
+        public float TurnSpeed = 0.01f; //rad/s
 
         public List<ShipComponent> Components;
         public Shield Shield;
@@ -29,11 +31,14 @@ namespace Apollyon
             Position = new Vector2(0, 0);
             Direction = Math.PI;
             Speed = 0;
+            MaxSpeed = 3;
+            Acceleration = 0.002f;
 
             Components = new List<ShipComponent>();
             Shield = new Shield(Game.Random.Next(50, 100), 100);
 
             Inventory = new List<Item>();
+
         }
 
         public void AddComponent(ShipComponent _sc)
@@ -44,11 +49,42 @@ namespace Apollyon
 
         public void Update()
         {
-            //if (Speed == 0) return; //HACK DEBUG ETC.
+            //move to ctor
+            if (Speed > 0.1f)
+            {
+                new ParticleSpawn(
+                    20,
+                    new Particle(
+                        new Vector2(
+                            Position.X,
+                            Position.Y),
+                        Res.OneByOne,
+                        new Color(1f, 0.2f, 0f, 1f),
+                        new Vector4(0f, 0f, 0f, -0.5f), //does not work
+                        //why does xna seem to drop the A of the colour above
+                        //completely all of a sudden..?
+                        300,
+                        Direction + Math.PI,
+                        Speed * Speed,
+                        0.1f
+                    )
+                ) //and just spawn and random here
+                .RandomizeSpeed(1.5f)
+                .RandomizePosition(new Vector2(8,8))
+                .RandomizeDirection((float)Math.PI / 8f)
+                .RandomizeColor(new Color(0f, 1f, 0f, 0f))
+                .Spawn();
+            }
 
             float _d = Vector2.Distance(Position, TargetPosition);
-            Speed = 1;
-            Speed = _d < 10 * Speed ? _d / (10 * Speed) : Speed;
+            //Speed = 1;
+            float _magicNumber = 60;
+            float _targetSpeed = _d < _magicNumber * MaxSpeed ?
+                _d / (_magicNumber * MaxSpeed) : MaxSpeed;
+            if (Math.Abs(Speed-_targetSpeed) < Acceleration)
+                Speed = _targetSpeed;
+            if (Speed < _targetSpeed) Speed += Acceleration;
+            if (Speed > _targetSpeed) Speed -= Acceleration*10;
 
             Position.X += (float)Math.Cos(Direction) * Speed;
             Position.Y += (float)Math.Sin(Direction) * Speed;
@@ -67,9 +103,9 @@ namespace Apollyon
             b = b <= 0 ? b + Math.PI * 2 : b;
 
             if (b > Math.PI)
-                Direction += 0.05f;
+                Direction += TurnSpeed;
             else
-                Direction -= 0.05f;
+                Direction -= TurnSpeed;
 
             while (Direction > Math.PI * 2)
                 Direction -= Math.PI * 2;

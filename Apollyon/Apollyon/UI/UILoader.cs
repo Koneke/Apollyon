@@ -18,7 +18,7 @@ namespace Apollyon
         public void Load()
         {
             IEnumerable<XElement> _elements =
-                (XElement.Load("Content/ui.xml")).Elements();
+                (XElement.Load("Content/data/ui.xml")).Elements();
             foreach (var _e in _elements)
             {
                 string _name    = _e.Element("name").Value;

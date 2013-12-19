@@ -8,7 +8,7 @@ namespace Apollyon
     //KILL ME (should not be needed with more data driven approach)
     class ApUI
     {
-        public static ApShipOverview ShipOverview;
+        //public static ApShipOverview ShipOverview;
         public static ApShipOverview HostileOverview;
 
         public static ApComponentOverview ComponentOverview;
