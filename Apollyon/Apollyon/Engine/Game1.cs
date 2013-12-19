@@ -66,6 +66,7 @@ namespace Apollyon
                 2002, //1000-2000 weapons
                       //2000-3000 the items for those weapons
                 _blaster);
+            _ci.Carrier = _s;
             _s.Inventory.Add(_ci);
 
             _ci = new ComponentItem(
@@ -73,12 +74,8 @@ namespace Apollyon
                 2001,
                 new Weapon("Railgun", 1001)
             );
-            SpaceItem _si = new SpaceItem(
-                _s.Position,
-                Res.Ship,
-                _ci
-            );
-            world.Items.Add(_si);
+            _ci.Position = _s.Position;
+            Game.World.SpaceObjects.Add(_ci);
 
             _s = new Ship(new Vector2(300, 100));
             world.Ships.Add(_s);

@@ -1,11 +1,36 @@
 ﻿using System;
 using System.Text;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
 {
-    class Item
+    class Item : ISpaceObject
     {
+        //iso impl
         public string Name;
+        public string GetName() {
+            return Name; }
+
+        public Vector2 Position;
+        public Vector2 GetPosition() {
+            return Position; }
+
+        public Texture2D GetTexture() {
+            return Res.Ship; }
+
+        public List<string> Tags;
+        public List<string> GetTags() {
+            return Tags; }
+
+        public bool GetVisible() {
+            return Carrier == null; }
+
+        /*-------*/
+
+        public Ship Carrier;
+
         public int Count;
         public Boolean Stacking;
         public int ID;
@@ -20,13 +45,14 @@ namespace Apollyon
             ID = _id;
             Stacking = _stacking;
             Count = _count;
+            Carrier = null;
+            Tags = new List<string>();
+            Tags.Add("Item");
         }
 
         public void Use(Ship _user)
         {
             RealUse(_user);
-            //ApUI.ComponentOverview.UpdateList(); 
-            //ApUI.Inventory.UpdateList();
         }
 
         public virtual void RealUse(Ship _user)

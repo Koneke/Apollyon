@@ -1,16 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
 {
-    class Ship
+    class Ship : ISpaceObject
     {
+        //ISpaceObject impl
         public string Name;
+        public string GetName() {
+            return Name; }
 
         public Vector2 Position;
+        public Vector2 GetPosition() {
+            return Position; }
+
+        public Texture2D GetTexture() {
+            return Res.Ship; }
+
+        public List<string> Tags;
+        public List<string> GetTags() {
+            return Tags; }
+
+        public bool GetVisible() {
+            return true; }
+
+
         public double Direction;
         public float Speed;
         public float MaxSpeed;
@@ -20,11 +39,8 @@ namespace Apollyon
 
         public List<ShipComponent> Components;
         public Shield Shield;
-        //public Armor Armor;
 
         public List<Item> Inventory;
-
-        //public bool Friendly;
 
         public Ship(
             Vector2 _position
@@ -42,6 +58,9 @@ namespace Apollyon
             Shield = new Shield(Game.Random.Next(50, 100), 100);
 
             Inventory = new List<Item>();
+
+            Tags = new List<string>();
+            Tags.Add("Ship");
         }
 
         public void AddComponent(ShipComponent _sc)
@@ -55,17 +74,33 @@ namespace Apollyon
             MouseState ms, MouseState oms
             )
         {
+            if (ks.IsKeyDown(Keys.X) && (!oks.IsKeyDown(Keys.X)))
+            {
+                if (UIBindings.Get("Selected").Contains(this))
+                {
+                    Shield.Current = -1;
+                }
+            }
             if (ks.IsKeyDown(Keys.Z) && (!oks.IsKeyDown(Keys.Z)))
             {
                 if (UIBindings.Get("Selected").Contains(this))
                 {
-                    foreach (SpaceItem _si in Game.World.Items)
+                    foreach (ISpaceObject _si in
+                        Game.World.SpaceObjects.FindAll(
+                        x => x.GetTags().Contains("Item")))
                     {
-                        if (Vector2.Distance(Position, _si.Position) < 100)
+                        Item _i = (Item)_si;
+                        if (_i.Carrier == null)
                         {
-                            Game.World.Items.Remove(_si);
-                            Inventory.Add(_si.Item);
-                            break;
+                            if (Vector2.Distance(
+                                    Position,
+                                    _si.GetPosition()
+                                ) < 100)
+                            {
+                                _i.Carrier = this;
+                                Inventory.Add(_i);
+                                break;
+                            }
                         }
                     }
                 }
@@ -76,14 +111,11 @@ namespace Apollyon
         {
             foreach (Item _i in Inventory)
             {
-                SpaceItem _si = new SpaceItem(
-                    Position + new Vector2(
+                _i.Carrier = null;
+                _i.Position = Position + new Vector2(
                         Game.Random.Next(-3, 4),
-                        Game.Random.Next(-3, 4)),
-                    Res.Ship,
-                    _i
-                );
-                Game.World.Items.Add(_si);
+                        Game.Random.Next(-3, 4));
+                Game.World.SpaceObjects.Add(_i);
             }
 
             new ParticleSpawn(

@@ -16,7 +16,8 @@ namespace Apollyon
             get { return new Vector2(Camera.X, Camera.Y); }
         }
         public List<Ship> Ships;
-        public List<SpaceItem> Items; //items in space
+        //public List<SpaceItem> Items; //items in space
+        public List<ISpaceObject> SpaceObjects;
 
         public float Timer; //ms timer
 
@@ -26,7 +27,8 @@ namespace Apollyon
         public World()
         {
             Ships = new List<Ship>();
-            Items = new List<SpaceItem>();
+            //Items = new List<SpaceItem>();
+            SpaceObjects = new List<ISpaceObject>();
             Camera = new Camera();
             UIBindings.Bind("All", Ships);
         }
@@ -264,11 +266,12 @@ namespace Apollyon
                 }
             }
 
-            foreach (SpaceItem _i in Items)
+            foreach (ISpaceObject _so in SpaceObjects)
             {
+                if (!_so.GetVisible()) continue;
                 Rectangle _itemRect = new Rectangle(
-                    (int)Game.Camera.WorldToScreen(_i.Position).X,
-                    (int)Game.Camera.WorldToScreen(_i.Position).Y,
+                    (int)Game.Camera.WorldToScreen(_so.GetPosition()).X,
+                    (int)Game.Camera.WorldToScreen(_so.GetPosition()).Y,
                     16,
                     16
                 );
@@ -283,7 +286,7 @@ namespace Apollyon
                 spriteBatch.Begin();
 
                 spriteBatch.Draw(
-                    _i.Texture,
+                    _so.GetTexture(),
                     _itemRect,
                     null,
                     Color.White,
@@ -300,10 +303,10 @@ namespace Apollyon
                     Utility.DropShadowText(
                         spriteBatch,
                         Res.LogFont,
-                        _i.Item.Name,
+                        _so.GetName(),
                         new Vector2(
                             _ms.X - Res.LogFont.MeasureString(
-                                _i.Item.Name).X/2 + 10,
+                                _so.GetName()).X/2 + 10,
                             _ms.Y - 20
                         ),
                         Color.Black,

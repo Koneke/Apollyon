@@ -181,6 +181,7 @@ namespace Apollyon
                     _item /= _itemHeight;
                     if (_item < Items.Count)
                     {
+                        /*
                         SpaceItem _si = new SpaceItem(
                             UIBindings.Get("Selected")[0].Position,
                             //do something about this
@@ -188,7 +189,11 @@ namespace Apollyon
                             Items[(int)_item].Items[0]
                         );
 
-                        Game.World.Items.Add(_si);
+                        Game.World.Items.Add(_si);*/
+                        Item _i = Items[(int)_item].Items[0];
+                        _i.Position = _i.Carrier.Position;
+                        _i.Carrier = null;
+                        Game.World.SpaceObjects.Add(_i);
 
                         UIBindings.Get("Selected")[0].Inventory.RemoveAt(
                             (int)_item

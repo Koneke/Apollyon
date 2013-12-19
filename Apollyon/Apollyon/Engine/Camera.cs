@@ -67,15 +67,25 @@ namespace Apollyon
 
             float _zoomSpeed = 1.1f;
 
-            Rectangle.Width = (int)(Rectangle.Width * 1 + (_wDelta * _zoomSpeed));
-            Rectangle.Height = (int)(Rectangle.Width * (9f / 16f));
+            Rectangle.Width =
+                (int)(Rectangle.Width * 1 + (_wDelta * _zoomSpeed));
+            Rectangle.Height =
+                (int)(Rectangle.Width * (9f / 16f));
             _zoom = (Game.ScreenSize.X / (float)Rectangle.Width);
+            //work more on this to avoid glitching "through" the world
+            if (_zoom > 6)
+            {
+                Rectangle.Width = (int)Game.ScreenSize.X / 6;
+                Rectangle.Height = (int)Game.ScreenSize.Y / 6;
+            }
             float _newmsx = Rectangle.X + ms.X * _zoom;
             float _newmsy = Rectangle.Y + ms.Y * _zoom;
             Rectangle.X -= (int)(
-                (Rectangle.Width - _preW) * (ms.X / (Game.ScreenSize.X / 2f)) / 2f);
+                (Rectangle.Width - _preW) *
+                (ms.X / (Game.ScreenSize.X / 2f)) / 2f);
             Rectangle.Y -= (int)(
-                (Rectangle.Height - _preH) * (ms.Y / (Game.ScreenSize.Y / 2f)) / 2f);
+                (Rectangle.Height - _preH) *
+                (ms.Y / (Game.ScreenSize.Y / 2f)) / 2f);
 
             lastScrollWheelValue = ms.ScrollWheelValue;
         }
