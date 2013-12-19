@@ -118,7 +118,6 @@
     <Compile Include="Gameplay\Shield.cs" />
     <Compile Include="UI\Windows\ApShipOverview.cs" />
     <Compile Include="UI\Windows\ApLogWindow.cs" />
-    <Compile Include="UI\ApUI.cs" />
     <Compile Include="Input\ApWindowKeyBind.cs" />
     <Compile Include="Input\BindingsManager.cs" />
     <Compile Include="Gameplay\ShipComponent.cs" />

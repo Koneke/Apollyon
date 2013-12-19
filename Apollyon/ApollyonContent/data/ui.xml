@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <windows>
-  
   <window>
     <name>Fleet Overview</name>
     <type>ShipOverview</type>
@@ -127,7 +126,7 @@
   </window>
 
   <window>
-    <name>Selection Inventory</name>
+    <name>Inventory</name>
     <type>Inventory</type>
     <position>
       <x>220</x>

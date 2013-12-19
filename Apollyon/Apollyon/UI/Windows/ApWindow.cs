@@ -35,19 +35,20 @@ namespace Apollyon
 
         public static void Update()
         {
-            ApUI.Inventory.UpdateList();
-            //ApUI.ComponentOverview.UpdateList();
+
+            ((ApInventory)
+                WindowManager.GetWindowByName("Inventory")).
+                UpdateList();
             ((ApComponentOverview)
                 WindowManager.GetWindowByName("Component Overview")).
                 UpdateList();
-            //ApUI.HostileComponentOverview.UpdateList();
             ((ApComponentOverview)
                 WindowManager.GetWindowByName("Hostile Component Overview")).
                 UpdateList();
         }
         
         //handle window dragging (if draggable)
-        //pushes the window to the front as well.
+       //pushes the window to the front as well.
         //possible todo: push window to front even if not draggable? iunno
         //possible todo: snapping windows?
         public static void Input(

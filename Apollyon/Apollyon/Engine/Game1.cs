@@ -171,33 +171,8 @@ namespace Apollyon
 
             ApWindow.Windows = WindowManager.Windows;
 
-            /*ApUI.CombatLog =
-                (ApLogWindow)WindowManager.
-                GetWindowByName("Combat Log");*/
-
-            /*ApUI.ComponentOverview =
-                (ApComponentOverview)WindowManager.
-                GetWindowByName("Component Overview");
-
-            ApUI.HostileComponentOverview =
-                (ApComponentOverview)WindowManager.
-                GetWindowByName("Hostile Component Overview");*/
-
-            ApUI.SelectionStatus =
-                (ApStatusWindow)WindowManager.
-                GetWindowByName("Selection Status");
-
-            ApUI.HostileSelectionStatus =
-                (ApStatusWindow)WindowManager.
-                GetWindowByName("Target Status");
-
-            ApUI.Inventory =
-                (ApInventory)WindowManager.
-                GetWindowByName("Selection Inventory");
-
             foreach (ApWindow _w in WindowManager.Windows)
                 _w.SpecificUILoading();
-
         }
     }
 }
