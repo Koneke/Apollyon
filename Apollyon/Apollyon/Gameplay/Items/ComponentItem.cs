@@ -11,10 +11,11 @@ namespace Apollyon
 
         public ComponentItem(
             string _name = "",
+            int _id = -1,
             ShipComponent _component = null,
             bool _stacking = false,
             int _count = 1
-        ) : base(_name, _stacking, _count) {
+        ) : base(_name, _id, _stacking, _count) {
             Component = _component;
         }
 

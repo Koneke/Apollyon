@@ -8,10 +8,33 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
 {
+    class ApComponentOverviewPost {
+        public string Name;
+        public int ID;
+        public List<ShipComponent> Components;
+
+        public ApComponentOverviewPost(
+            string _name,
+            int _id,
+            int _count,
+            List<ShipComponent> _components
+            )
+        {
+            Name = _name;
+            ID = _id;
+            Components = _components;
+        }
+
+        public void Add(ShipComponent _sc)
+        {
+            Components.Add(_sc);
+        }
+    }
+    
     class ApComponentOverview : ApWindow
     {
         public string Ships;
-        public List<ShipComponent> ComponentList; //list to overview
+        public List<ApComponentOverviewPost> ComponentList; //list to overview
         int indent = 4;
         public int Selection = -1;
         DateTime lastLeftClick;
@@ -20,7 +43,7 @@ namespace Apollyon
             int _x, int _y, int _w, int _h
             )
             : base (_x, _y, _w, _h) {
-                ComponentList = new List<ShipComponent>();
+                ComponentList = new List<ApComponentOverviewPost>();
         }
 
         public override void SpecificUILoading()
@@ -30,7 +53,6 @@ namespace Apollyon
 
         public void UpdateList()
         {
-            //Ships = UIBindings.Get(_Ships);
             if (UIBindings.Get(Ships) == null) return;
             if (UIBindings.Get(Ships).Count == 0)
             {
@@ -39,32 +61,26 @@ namespace Apollyon
             }
 
             ComponentList.Clear();
-            ComponentList.AddRange(
-                UIBindings.Get(Ships)[0].Components
-            );
-
-            var names = ComponentList.Select(s => s.Name);
-            foreach (Ship _s in UIBindings.Get(Ships))
-            {
-                names =
-                    ComponentList.Select(s => s.Name);
-                var _snames =
-                    _s.Components.Select(s => s.Name);
-                names = names.Intersect(_snames);
-                names = names.ToList(); //finallize so linq doens't fuck with it
-            }
-
-            ComponentList.Clear();
             foreach (Ship _s in UIBindings.Get(Ships))
             {
                 foreach (ShipComponent _c in _s.Components)
                 {
-                    if (names.Contains(_c.Name))
+                    if (!ComponentList.Any(x => x.ID == _c.ID))
                     {
-                        if (ComponentList.Find(x => x.Name == _c.Name) == null)
-                        {
-                            ComponentList.Add(_c);
-                        }
+                        ComponentList.Add(
+                            new ApComponentOverviewPost(
+                                _c.Name,
+                                _c.ID,
+                                1,
+                                new List<ShipComponent>{ _c }
+                            )
+                        );
+                    }
+                    else
+                    {
+                        ApComponentOverviewPost _acop =
+                            ComponentList.Find(x => x.ID == _c.ID);
+                        _acop.Components.Add(_c);
                     }
                 }
             }
@@ -88,9 +104,15 @@ namespace Apollyon
                 Utility.MultiplyColours(
                     ApLogWindow.StandardBackground,
                     Tint
+                    /*Utility.MultiplyColours(
+                        Tint,
+                        UIBindings.Get(Ships).Count > 1 ?
+                            new Color(0.5f, 0.5f, 0.5f, 1f) : Color.White
+                        )*/
                 )
             );
 
+            //if (ComponentList != null && UIBindings.Get(Ships) != null)
             if (ComponentList != null && UIBindings.Get(Ships) != null)
             {
                 spriteBatch.Begin();
@@ -100,7 +122,8 @@ namespace Apollyon
 
                 for(int i = 0; i < ComponentList.Count; i++)
                 {
-                    ShipComponent _c = ComponentList[i];
+                    //ShipComponent _c = ComponentList[i];
+                    ApComponentOverviewPost _acop = ComponentList[i];
                     if (Selection == i)
                     {
                         spriteBatch.Draw(
@@ -118,17 +141,22 @@ namespace Apollyon
                         );
                     }
 
+                    Color _textColour = Color.White;
+                    if (_acop.Components.All(x => x.Active))
+                        _textColour = Color.Yellow;
+                    else if (_acop.Components.Any(x => x.Active))
+                        _textColour = Color.Blue;
+
                     spriteBatch.DrawString(
                         Res.LogFont,
-                        _c.Name + " ("+
-                            Math.Round(
-                                100f*_c.Timer/_c.Frequency
-                            ) + "%)",
+                        _acop.ID + " : " +
+                        _acop.Components.Count + "x " +
+                        _acop.Name,
                         new Vector2(
                             indent,
                             _currentY
                         ),
-                        _c.Active ? Color.Yellow : Color.White
+                        _textColour
                     );
                     _currentY += _offs;
                 }
@@ -162,62 +190,52 @@ namespace Apollyon
                     (DateTime.Now - lastLeftClick).Milliseconds < 200 &&
                     //HACK BELOW: DO SOMETHING ABOUT THIS. THERE SHOULD BE A
                     //BETTER WAY OF GROUPING UI ELEMENTS TOGETHER.
-                    this == ApUI.ComponentOverview
+                    this == WindowManager.GetWindowByName("Component Overview")
+                    //ApUI.ComponentOverview
                 ) {
                     if (Selection != -1)
                     {
-                            if(Game.Verbose) Game.Log(
-                                "CO : Would fire " +
-                                ComponentList[Selection].Name +
-                                " from " +
-                                String.Join(
-                                    ", ",
-                                    //Game.Selected.Select(
-                                    UIBindings.Get("Selected").Select(
-                                        x => x.Name)
-                                    ) + " to " +
-                                String.Join(
-                                    ", ",
-                                    UIBindings.Get("Targeted").Select(
-                                        x => x.Name)
-                                    ) + "."
-                            );
+                        if(Game.Verbose) Game.Log(
+                            "CO : Would fire " +
+                            ComponentList[Selection].Name +
+                            " from " +
+                            String.Join(
+                                ", ",
+                                //Game.Selected.Select(
+                                UIBindings.Get("Selected").Select(
+                                    x => x.Name)
+                                ) + " to " +
+                            String.Join(
+                                ", ",
+                                UIBindings.Get("Targeted").Select(
+                                    x => x.Name)
+                                ) + "."
+                        );
 
-                            if (!ComponentList[Selection].Active)
+                        if(!ComponentList[Selection].Components.
+                            Any(x => x.Active))
+                        {
+                            if (Game.Targeted.Count > 0)
                             {
-                                if (
-                                    Game.Targeted.Count > 0 ||
-                                    ComponentList[Selection].
-                                        NeedsTarget == false
-                                    )
+                                foreach (ShipComponent _c in
+                                    ComponentList[Selection].Components)
                                 {
-                                    ComponentList[Selection].Targets =
-                                        new List<Ship>(UIBindings.Get("Targeted"));
-                                    ComponentList[Selection].Active = true;
+                                    _c.Active = true;
+                                    _c.Targets = new List<Ship>(
+                                        UIBindings.Get("Targeted"));
                                 }
-                                else Game.Log("No target.");
                             }
-                            else
-                            {
-                                ComponentList[Selection].Targets = null;
-                                ComponentList[Selection].Active = false;
-                            }
-                       /* }
+                            else Game.Log("No target.");
+                        }
                         else
                         {
-                            if (Game.Verbose) Game.Log(
-                                 "CO : Would fire " +
-                                 ComponentList[Selection].Name +
-                                 " from " +
-                                 String.Join(
-                                     ", ",
-                                     UIBindings.Get("Selected").Select(
-                                         x => x.Name)
-                                     ) +
-                                 " but had no target."
-                             );
-                            else Game.Log("No target.");
-                        }*/
+                            foreach (ShipComponent _c in
+                                ComponentList[Selection].Components)
+                            {
+                                _c.Active = false;
+                                _c.Targets = null;
+                            }
+                        }
                     }
                 }
 

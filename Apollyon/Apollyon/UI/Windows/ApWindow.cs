@@ -36,8 +36,14 @@ namespace Apollyon
         public static void Update()
         {
             ApUI.Inventory.UpdateList();
-            ApUI.ComponentOverview.UpdateList();
-            ApUI.HostileComponentOverview.UpdateList();
+            //ApUI.ComponentOverview.UpdateList();
+            ((ApComponentOverview)
+                WindowManager.GetWindowByName("Component Overview")).
+                UpdateList();
+            //ApUI.HostileComponentOverview.UpdateList();
+            ((ApComponentOverview)
+                WindowManager.GetWindowByName("Hostile Component Overview")).
+                UpdateList();
         }
         
         //handle window dragging (if draggable)

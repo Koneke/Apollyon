@@ -59,27 +59,30 @@ namespace Apollyon
             world.Ships.Add(_s);
             Game.Fleet.Add(_s);
             _s.AddComponent(
-                new Weapon("Railgun")
+                new Weapon("Railgun", 1001)
             );
-            Weapon _blaster = new Weapon("Heavy Blaster");
+            Weapon _blaster = new Weapon("Heavy Blaster", 1002);
             _blaster.Frequency = 140;
             _blaster.Damage = 7;
             _blaster.BeamThickness = 3;
             ComponentItem _ci = new ComponentItem(
                 "Heavy Blaster",
+                2002, //1000-2000 weapons
+                      //2000-3000 the items for those weapons
                 _blaster);
             _s.Inventory.Add(_ci);
-            _s.Inventory.Add(new Item("Coal", true, 5));
 
             _s = new Ship();
             _s.Position = new Vector2(300, 100);
             _s.Speed = 1;
-            _s.Inventory.Add(new Item("Coal", true, 5));
-            _s.Inventory.Add(new Item("Railgun", true, 1));
             world.Ships.Add(_s);
             Game.Fleet.Add(_s);
+            _s.AddComponent(
+                new Weapon("Railgun", 1001)
+            );
 
-            ApUI.CombatLog.Log.Add(
+            ((ApLogWindow)WindowManager.GetWindowByName("Combat Log"))
+                .Log.Add(//ApUI.CombatLog.Log.Add(
                 "Hi! I'm a combat log!");
         }
 
@@ -168,17 +171,17 @@ namespace Apollyon
 
             ApWindow.Windows = WindowManager.Windows;
 
-            ApUI.CombatLog =
+            /*ApUI.CombatLog =
                 (ApLogWindow)WindowManager.
-                GetWindowByName("Combat Log");
+                GetWindowByName("Combat Log");*/
 
-            ApUI.ComponentOverview =
+            /*ApUI.ComponentOverview =
                 (ApComponentOverview)WindowManager.
                 GetWindowByName("Component Overview");
 
             ApUI.HostileComponentOverview =
                 (ApComponentOverview)WindowManager.
-                GetWindowByName("Hostile Component Overview");
+                GetWindowByName("Hostile Component Overview");*/
 
             ApUI.SelectionStatus =
                 (ApStatusWindow)WindowManager.

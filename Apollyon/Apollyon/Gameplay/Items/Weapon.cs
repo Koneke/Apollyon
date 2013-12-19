@@ -12,7 +12,7 @@ namespace Apollyon
         public int BeamThickness; //we don't really want this here
         //make more data driven etc., never repeated enough
 
-        public Weapon(string _name) : base(_name)
+        public Weapon(string _name, int _id) : base(_name, _id)
         {
             Frequency = 60;
             Damage = 3;

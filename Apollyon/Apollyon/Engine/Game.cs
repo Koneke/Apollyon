@@ -33,7 +33,9 @@ namespace Apollyon
 
         public static void Log(string _message)
         {
-            ApUI.CombatLog.Log.Add(_message);
+            //ApUI.CombatLog.Log.Add(_message);
+            ((ApLogWindow)WindowManager.GetWindowByName("Combat Log")).
+                Log.Add(_message);
         }
     }
 }

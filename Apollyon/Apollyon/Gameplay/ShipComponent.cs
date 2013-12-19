@@ -10,6 +10,8 @@ namespace Apollyon
         public Ship Parent;
         public string Name;
 
+        public int ID;
+
         public bool Active = false;
         public int Frequency; //time ticks per component tick
         public int Timer;
@@ -19,9 +21,10 @@ namespace Apollyon
         public List<Ship> Targets;
         public Game.TargetingType TargetingType;
 
-        public ShipComponent(string _name)
+        public ShipComponent(string _name, int _id)
         {
             Name = _name;
+            ID = _id;
 
             //choose random from the list of targets.
             //adding support for weakest, strongest etc. later on
