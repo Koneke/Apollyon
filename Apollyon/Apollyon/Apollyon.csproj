@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\LineParticle.cs" />
     <Compile Include="Gameplay\Items\ComponentItem.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Gameplay\Items\Item.cs" />

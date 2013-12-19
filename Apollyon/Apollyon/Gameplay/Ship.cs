@@ -38,7 +38,6 @@ namespace Apollyon
             Shield = new Shield(Game.Random.Next(50, 100), 100);
 
             Inventory = new List<Item>();
-
         }
 
         public void AddComponent(ShipComponent _sc)
@@ -47,30 +46,30 @@ namespace Apollyon
             _sc.Parent = this;
         }
 
-        public void Update()
+        public void Update() //goes once per tick
         {
-            //move to ctor
             if (Speed > 0.1f)
             {
+                //would love to save this somewhere else and just spawn here
                 new ParticleSpawn(
-                    20,
+                    10,
                     new Particle(
                         new Vector2(
                             Position.X,
                             Position.Y),
                         Res.OneByOne,
                         new Color(1f, 0.2f, 0f, 1f),
-                        new Vector4(0f, 0f, 0f, -0.5f), //does not work
-                        //why does xna seem to drop the A of the colour above
-                        //completely all of a sudden..?
                         300,
+                        new Vector4(0f, 0f, 0f, -0.5f), //does not work
+                    //why does xna seem to drop the A of the colour above
+                    //completely all of a sudden..?
                         Direction + Math.PI,
                         Speed * Speed,
                         0.1f
                     )
-                ) //and just spawn and random here
+                )
                 .RandomizeSpeed(1.5f)
-                .RandomizePosition(new Vector2(8,8))
+                .RandomizePosition(new Vector2(8, 8))
                 .RandomizeDirection((float)Math.PI / 8f)
                 .RandomizeColor(new Color(0f, 1f, 0f, 0f))
                 .Spawn();

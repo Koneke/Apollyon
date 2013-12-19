@@ -128,15 +128,6 @@ namespace Apollyon
                     UIBindings.Get(Selection).
                         Add(UIBindings.Get(Ships)[(int)_item]);
                 }
-
-                //HACK: UGLY, UGLY HACK. DO SOMETHING ABOUT IT.
-                /*if (this == ApUI.ShipOverview)
-                {
-                    ApUI.ComponentOverview.UpdateList();
-                    ApUI.Inventory.UpdateList();
-                }
-                else
-                    ApUI.HostileComponentOverview.UpdateList();*/
             }
         }
     }

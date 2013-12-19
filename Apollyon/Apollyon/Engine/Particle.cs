@@ -19,8 +19,42 @@ namespace Apollyon
             Count = _count;
 
             particles = new List<Particle>();
+            Renew();
+        }
+
+        public ParticleSpawn Renew()
+        {
+            particles.Clear();
             for (int i = 0; i < Count; i++)
-                particles.Add(Particle.Copy);
+                particles.Add(Particle.Copy());
+            return this;
+        }
+
+        public ParticleSpawn SetSpeed(float _speed)
+        {
+            foreach (Particle _p in particles)
+            {
+                _p.Speed = _speed;
+            }
+            return this;
+        }
+
+        public ParticleSpawn SetDirection(double _direction)
+        {
+            foreach (Particle _p in particles)
+            {
+                _p.Direction = _direction;
+            }
+            return this;
+        }
+
+        public ParticleSpawn SetPosition(Vector2 _amount)
+        {
+            foreach (Particle _p in particles)
+            {
+                _p.Position = _amount;
+            }
+            return this;
         }
 
         public ParticleSpawn RandomizeSpeed(float _amount)
@@ -93,7 +127,7 @@ namespace Apollyon
         public Vector2 Position;
         public Texture2D Texture;
         public Color Colour;
-        public Vector4 DeltaColour;
+        public Vector4? DeltaColour;
         public int LifeTime;
         public double Direction;
         public float Speed;
@@ -102,34 +136,31 @@ namespace Apollyon
         public float AngularVelocity;
         public float Depth = -1f; //below 0 = under game, above = above game
 
-        public Particle Copy
+        public virtual Particle Copy ()
         {
-            get
-            {
-                Particle _p = new Particle(
-                    Position,
-                    Texture,
-                    Colour,
-                    DeltaColour,
-                    LifeTime,
-                    Direction,
-                    Speed,
-                    Friction,
-                    Rotation,
-                    AngularVelocity
-                );
-                _p.Created = Created;
-                _p.Depth = Depth;
-                return _p;
-            }
+            Particle _p = new Particle(
+                Position,
+                Texture,
+                Colour,
+                LifeTime,
+                DeltaColour,
+                Direction,
+                Speed,
+                Friction,
+                Rotation,
+                AngularVelocity
+            );
+            _p.Created = Created;
+            _p.Depth = Depth;
+            return _p;
         }
 
         public Particle(
             Vector2 _position,
             Texture2D _texture,
             Color _colour,
-            Vector4 _deltaColour,
             int _lifeTime,
+            Vector4? _deltaColour = null,
             double _direction = 0,
             float _speed = 0,
             float _friction = 0,

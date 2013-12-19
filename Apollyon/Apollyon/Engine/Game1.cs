@@ -64,6 +64,7 @@ namespace Apollyon
             Weapon _blaster = new Weapon("Heavy Blaster");
             _blaster.Frequency = 140;
             _blaster.Damage = 7;
+            _blaster.BeamThickness = 3;
             ComponentItem _ci = new ComponentItem(
                 "Heavy Blaster",
                 _blaster);
@@ -111,7 +112,6 @@ namespace Apollyon
             world.Input(ms, oms);
             world.Update(gameTime);
             ApWindow.Update();
-            //Particle.UpdateParticles();
 
             Particle.Particles =
                 Particle.Particles.FindAll(
@@ -171,10 +171,6 @@ namespace Apollyon
             ApUI.CombatLog =
                 (ApLogWindow)WindowManager.
                 GetWindowByName("Combat Log");
-
-            ApUI.HostileOverview =
-                (ApShipOverview)WindowManager.
-                GetWindowByName("Hostile Overview");
 
             ApUI.ComponentOverview =
                 (ApComponentOverview)WindowManager.

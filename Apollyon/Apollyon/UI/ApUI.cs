@@ -9,7 +9,7 @@ namespace Apollyon
     class ApUI
     {
         //public static ApShipOverview ShipOverview;
-        public static ApShipOverview HostileOverview;
+        //public static ApShipOverview HostileOverview;
 
         public static ApComponentOverview ComponentOverview;
         public static ApComponentOverview HostileComponentOverview;
