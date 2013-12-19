@@ -12,6 +12,8 @@ namespace Apollyon
         string GetName();
         Texture2D GetTexture();
         Vector2 GetPosition();
+        Vector2 GetSize();
+        double GetRotation();
         List<string> GetTags();
         bool GetVisible();
     }

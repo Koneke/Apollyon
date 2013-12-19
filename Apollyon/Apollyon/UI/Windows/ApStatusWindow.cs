@@ -8,7 +8,6 @@ namespace Apollyon
     class ApStatusWindow : ApWindow
     {
         public string Ships; //ships to read from, e.g. "selected"
-        //public List<Ship> Ships;
 
         public ApStatusWindow(
             int _x, int _y, int _w, int _h
@@ -32,7 +31,6 @@ namespace Apollyon
 
             int _sideMargin = 4;
             int _topMargin = 12; //between top bar and top, vv bottom
-            //int _padding = 4; //between bars
 
             float _percentage = 0;
             if (UIBindings.Get(Ships) != null)
@@ -64,7 +62,6 @@ namespace Apollyon
 
             if (UIBindings.Get(Ships) != null)
             {
-                //if ((Ships ?? new List<Ship> { }).Count != 0)
                 if (UIBindings.Get(Ships).Count != 0)
                 {
                     spriteBatch.Draw(

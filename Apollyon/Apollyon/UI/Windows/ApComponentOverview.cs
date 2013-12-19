@@ -180,7 +180,7 @@ namespace Apollyon
                 }
 
                 if (
-                    (DateTime.Now - lastLeftClick).Milliseconds < 200 &&
+                    (DateTime.Now - lastLeftClick).TotalMilliseconds < 200 &&
                     //still a bit hacky, but...
                     this == WindowManager.GetWindowByName("Component Overview")
                 ) {

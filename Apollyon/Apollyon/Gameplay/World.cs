@@ -8,15 +8,12 @@ namespace Apollyon
 {
     class World
     {
-        
-        //public Rectangle Camera;
         public Camera Camera;
         public Vector2 CameraPosition
         {
             get { return new Vector2(Camera.X, Camera.Y); }
         }
-        public List<Ship> Ships;
-        //public List<SpaceItem> Items; //items in space
+        //public List<Ship> Ships;
         public List<ISpaceObject> SpaceObjects;
 
         public float Timer; //ms timer
@@ -26,11 +23,10 @@ namespace Apollyon
 
         public World()
         {
-            Ships = new List<Ship>();
-            //Items = new List<SpaceItem>();
+            //Ships = new List<Ship>();
             SpaceObjects = new List<ISpaceObject>();
             Camera = new Camera();
-            UIBindings.Bind("All", Ships);
+            //UIBindings.Bind("All", Ships);
         }
 
         public void Input(
@@ -39,7 +35,8 @@ namespace Apollyon
         {
             Camera.Input(ms, oms);
 
-            foreach (Ship _s in Ships)
+            foreach (Ship _s in SpaceObjects.FindAll(
+                x => x.GetTags().Contains("Ship")))
             {
                 _s.Input(ks, oks, ms, oms);
             }
@@ -72,9 +69,10 @@ namespace Apollyon
                 oms.LeftButton == ButtonState.Pressed &&
                 selecting
             ) {
-                //ApUI.ShipOverview.Selection.Clear();
                 Game.Selected.Clear();
-                foreach (Ship _s in Ships)
+                foreach (Ship _s in SpaceObjects.FindAll(
+                    x => x.GetTags().Contains("Ship")))
+                //foreach (Ship _s in Ships)
                 {
                     Rectangle _box = boxSelection;
 
@@ -90,9 +88,10 @@ namespace Apollyon
                         _box.Height *= -1;
                     }
 
-                    List<Ship> _list = UIBindings.Get(
-                        ((ApShipOverview)WindowManager.
-                        GetWindowByName("Fleet Overview")).Ships);
+                    List<ISpaceObject> _list;
+
+                    _list = Game.World.SpaceObjects.FindAll(
+                        x => x.GetTags().Contains("Ship"));
 
                     if (_list != null)
                     {
@@ -150,169 +149,170 @@ namespace Apollyon
             Timer += gameTime.ElapsedGameTime.Milliseconds;
             while (Timer > Game.TickTime)
             {
-                foreach (Ship _s in Ships)
+                foreach (Ship _s in SpaceObjects.FindAll(
+                    x => x.GetTags().Contains("Ship")))
                 {
                     _s.Update();
                 }
-                foreach (Ship _s in Ships.FindAll(
-                    x => x.Shield.Current <= 0))
+                foreach (Ship _s in SpaceObjects
+                    .FindAll(x => x.GetTags().Contains("Ship"))
+                    .FindAll(x => ((Ship)x).Shield.Current <= 0))
                 {
                     _s.Die();
                     Game.Fleet.Remove(_s);
                 }
-                Ships = Ships.FindAll(x => x.Shield.Current > 0);
+                //Ships = Ships.FindAll(x => x.Shield.Current > 0);
+                SpaceObjects = SpaceObjects.FindAll
+                    (x =>
+                        !x.GetTags().Contains("Ship") ||
+                        ((Ship)x).Shield.Current > 0);
                 Timer -= Game.TickTime;
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (Ship _s in Ships)
+            foreach (ISpaceObject _so in SpaceObjects)
             {
-                //selection box
-                if (boxSelection.Width != 0)
-                {
-                    Rectangle _screenRectangle = boxSelection;
-
-                    _screenRectangle.Offset(
-                        new Point(-Camera.X, -Camera.Y));
-
-                    if (_screenRectangle.Width < 0)
-                    {
-                        _screenRectangle.X += _screenRectangle.Width;
-                        _screenRectangle.Width *= -1;
-                    }
-
-                    if (_screenRectangle.Height < 0)
-                    {
-                        _screenRectangle.Y += _screenRectangle.Height;
-                        _screenRectangle.Height *= -1;
-                    }
-
-                    _screenRectangle.X =
-                        (int)(_screenRectangle.X * Camera.GetZoom());
-                    _screenRectangle.Y =
-                        (int)(_screenRectangle.Y * Camera.GetZoom());
-
-                    _screenRectangle.Width =
-                        (int)(_screenRectangle.Width * Camera.GetZoom());
-                    _screenRectangle.Height =
-                        (int)(_screenRectangle.Height * Camera.GetZoom());
-
-                    Utility.DrawOutlinedRectangle(
-                        spriteBatch,
-                        _screenRectangle,
-                        new Color(0f, 1f, 0f, 1f)
-                    );
-                }
-
+                if(!_so.GetVisible()) continue;
                 spriteBatch.Begin();
 
-                Vector2 _sp = Game.Camera.WorldToScreen(_s.Position);
+                Vector2 _sp = Game.Camera.WorldToScreen(_so.GetPosition());
+
                 Rectangle _shipRect =
                     new Rectangle(
                         (int)(_sp.X),
                         (int)(_sp.Y),
-                        (int)(32 * Camera.GetZoom()),
-                        (int)(32 * Camera.GetZoom())
+                        (int)(_so.GetSize().X * Camera.GetZoom()),
+                        (int)(_so.GetSize().Y * Camera.GetZoom())
                     );
-
-                spriteBatch.Draw(
-                    Res.Ship,
-                    _shipRect,
-                    null,
-                    Color.White,
-                    (float)_s.Direction,
-                    new Vector2(Res.Ship.Width / 2, Res.Ship.Height / 2),
-                    SpriteEffects.None, 0f
-
-                );
-
-                spriteBatch.End();
-
-                Rectangle _shipRectOffset = _shipRect;
-                _shipRectOffset.Offset(
-                    (int)(-16 * Camera.GetZoom()),
-                    (int)(-16 * Camera.GetZoom())
-                );
-
-                if(Game.Targeted.Contains(_s)) {
-                    Utility.DrawOutlinedRectangle(
-                        spriteBatch,
-                        _shipRectOffset,
-                        new Color(1f, 0f, 0f, 0.5f)
-                    );
-                } else if(Game.Selected.Contains(_s)) {
-                    Utility.DrawOutlinedRectangle(
-                        spriteBatch,
-                        _shipRectOffset,
-                        new Color(0f, 1f, 0f, 0.5f)
-                    );
-                }
-
-                MouseState _ms = Mouse.GetState();
-                if(_shipRectOffset.Contains(new Point(_ms.X, _ms.Y))) {
-                    Utility.DropShadowText(
-                        spriteBatch,
-                        Res.LogFont,
-                        _s.Name,
-                        new Vector2(
-                            _ms.X - Res.LogFont.MeasureString(_s.Name).X/2 + 10,
-                            _ms.Y - 20
-                        ),
-                        Color.Black,
-                        Color.White
-                    );
-                }
-            }
-
-            foreach (ISpaceObject _so in SpaceObjects)
-            {
-                if (!_so.GetVisible()) continue;
-                Rectangle _itemRect = new Rectangle(
-                    (int)Game.Camera.WorldToScreen(_so.GetPosition()).X,
-                    (int)Game.Camera.WorldToScreen(_so.GetPosition()).Y,
-                    16,
-                    16
-                );
-
-                Rectangle _itemRectOffset =
-                    new Rectangle(
-                        _itemRect.X, _itemRect.Y,
-                        _itemRect.Width, _itemRect.Height
-                    );
-                _itemRectOffset.Offset(new Point(-8, -8));
-                
-                spriteBatch.Begin();
 
                 spriteBatch.Draw(
                     _so.GetTexture(),
-                    _itemRect,
+                    _shipRect,
                     null,
                     Color.White,
-                    0,
-                    new Vector2(8, 8),
-                    SpriteEffects.None,
-                    0f
+                    (float)_so.GetRotation(),
+                    new Vector2(
+                        _so.GetSize().X / 2,
+                        _so.GetSize().Y / 2
+                        ),
+                    SpriteEffects.None, 0f
                 );
 
                 spriteBatch.End();
+            }
 
-                MouseState _ms = Mouse.GetState();
-                if(_itemRectOffset.Contains(new Point(_ms.X, _ms.Y))) {
-                    Utility.DropShadowText(
-                        spriteBatch,
-                        Res.LogFont,
-                        _so.GetName(),
-                        new Vector2(
-                            _ms.X - Res.LogFont.MeasureString(
-                                _so.GetName()).X/2 + 10,
-                            _ms.Y - 20
-                        ),
-                        Color.Black,
-                        Color.White
-                    );
+
+            string _hoverText = "";
+            MouseState _ms = Mouse.GetState();
+
+            foreach (ISpaceObject _so in SpaceObjects)
+            {
+                Rectangle _screenRect = new Rectangle(
+                    (int)(Camera.WorldToScreen(_so.GetPosition()).X),
+                    (int)(Camera.WorldToScreen(_so.GetPosition()).Y),
+                    (int)(_so.GetSize().X * Camera.GetZoom()),
+                    (int)(_so.GetSize().Y * Camera.GetZoom())
+                );
+
+                _screenRect.Offset(
+                    new Point(
+                        -_screenRect.Width / 2,
+                        -_screenRect.Width / 2
+                    )
+                );
+
+                if (_so.GetTags().Contains("Ship"))
+                {
+                    bool _selected = UIBindings.Get("Selected").
+                        Contains((Ship)_so);
+
+                    bool _targeted = UIBindings.Get("Targeted").
+                        Contains((Ship)_so);
+
+                    if(_selected)
+                    {
+                        if(_targeted) _screenRect.Offset(new Point(1, 1));
+                        Utility.DrawOutlinedRectangle(
+                            spriteBatch,
+                            _screenRect,
+                            new Color(0f, 1f, 0f, 0.5f)
+                        );
+                        if(_targeted) _screenRect.Offset(new Point(-1, -1));
+                    }
+                    if(_targeted)
+                    {
+                        if(_selected) _screenRect.Offset(new Point(-1, -1));
+                        Utility.DrawOutlinedRectangle(
+                            spriteBatch,
+                            _screenRect,
+                            new Color(1f, 0f, 0f, 0.5f)
+                        );
+                        if(_selected) _screenRect.Offset(new Point(1, 1));
+                    }
                 }
+
+                if(_screenRect.Contains(new Point(_ms.X, _ms.Y))) {
+                    _hoverText += "\n" + _so.GetName();
+                }
+            }
+
+            Utility.DropShadowText(
+                spriteBatch,
+                Res.LogFont,
+                _hoverText,
+                new Vector2(
+                    _ms.X -
+                        Res.LogFont.MeasureString(_hoverText).X/2 + 10,
+                    _ms.Y - 
+                        Res.LogFont.MeasureString(_hoverText).Y
+                ),
+                Color.Black,
+                Color.White
+            );
+
+            drawBoxSelection(spriteBatch);
+        }
+
+        //stuff like this feels like it should be in game, idk
+        void drawBoxSelection(SpriteBatch spriteBatch)
+        {
+            //box selection drawing
+            if (boxSelection.Width != 0)
+            {
+                Rectangle _screenRectangle = boxSelection;
+
+                _screenRectangle.Offset(
+                    new Point(-Camera.X, -Camera.Y));
+
+                if (_screenRectangle.Width < 0)
+                {
+                    _screenRectangle.X += _screenRectangle.Width;
+                    _screenRectangle.Width *= -1;
+                }
+
+                if (_screenRectangle.Height < 0)
+                {
+                    _screenRectangle.Y += _screenRectangle.Height;
+                    _screenRectangle.Height *= -1;
+                }
+
+                _screenRectangle.X =
+                    (int)(_screenRectangle.X * Camera.GetZoom());
+                _screenRectangle.Y =
+                    (int)(_screenRectangle.Y * Camera.GetZoom());
+
+                _screenRectangle.Width =
+                    (int)(_screenRectangle.Width * Camera.GetZoom());
+                _screenRectangle.Height =
+                    (int)(_screenRectangle.Height * Camera.GetZoom());
+
+                Utility.DrawOutlinedRectangle(
+                    spriteBatch,
+                    _screenRectangle,
+                    new Color(0f, 1f, 0f, 1f)
+                );
             }
         }
     }

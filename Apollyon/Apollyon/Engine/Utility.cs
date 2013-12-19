@@ -9,6 +9,16 @@ namespace Apollyon
 {
     class Utility
     {
+        public static List<ISpaceObject> QuerySpace(List<string> _tags)
+        {
+            List<ISpaceObject> _r = Game.World.SpaceObjects;
+            foreach (string _tag in _tags)
+            {
+                _r = _r.FindAll(x => x.GetTags().Contains(_tag));
+            }
+            return _r;
+        }
+
         public static Color AddColours(Color _a, Color _b)
         {
             return new Color(

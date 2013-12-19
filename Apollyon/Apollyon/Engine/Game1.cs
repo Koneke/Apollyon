@@ -45,6 +45,7 @@ namespace Apollyon
             Game.Targeted = new List<Ship>();
             UIBindings.Bind("Selected", Game.Selected);
             UIBindings.Bind("Targeted", Game.Targeted);
+            UIBindings.Bind("All", Game.Fleet);
 
             LoadUI();
             world = new World();
@@ -53,7 +54,8 @@ namespace Apollyon
 
             //test stuff
             Ship _s = new Ship(new Vector2(100, 300));
-            world.Ships.Add(_s);
+            //world.Ships.Add(_s);
+            world.SpaceObjects.Add(_s);
             Game.Fleet.Add(_s);
 
             _s.AddComponent(new Weapon("Railgun", 1001));
@@ -67,7 +69,8 @@ namespace Apollyon
                       //2000-3000 the items for those weapons
                 _blaster);
             _ci.Carrier = _s;
-            _s.Inventory.Add(_ci);
+            //_s.Inventory.Add(_ci);
+            _s.AddItem(_ci);
 
             _ci = new ComponentItem(
                 "Railgun",
@@ -78,7 +81,8 @@ namespace Apollyon
             Game.World.SpaceObjects.Add(_ci);
 
             _s = new Ship(new Vector2(300, 100));
-            world.Ships.Add(_s);
+            //world.Ships.Add(_s);
+            world.SpaceObjects.Add(_s);
             Game.Fleet.Add(_s);
             _s.AddComponent(
                 new Weapon("Railgun", 1001)

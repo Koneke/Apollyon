@@ -49,48 +49,46 @@ namespace Apollyon
                 )
             );
 
-            if (UIBindings.Get(Ships) != null)
+            spriteBatch.Begin();
+
+            float _currentY = 0;
+            float _offs = Res.LogFont.MeasureString("ship").Y;
+
+            foreach (Ship _s in
+                Game.World.SpaceObjects.FindAll(
+                x => x.GetTags().Contains("Ship"))
+                )
             {
-                spriteBatch.Begin();
-
-                float _currentY = 0;
-                float _offs = Res.LogFont.MeasureString("ship").Y;
-
-                foreach (Ship _s in UIBindings.Get(Ships))
+                if (UIBindings.Get(Selection).Contains(_s))
                 {
-                    if (UIBindings.Get(Selection).Contains(_s))
-                    {
-                        spriteBatch.Draw(
-                            Res.OneByOne,
-                            new Rectangle(
-                                0,
-                                +1 + (int)_currentY,
-                                (int)w,
-                                -1 + (int)_offs
-                            ),
-                            Utility.MultiplyColours(
-                                ApWindow.StandardBorder,
-                                new Color(1f, 1f, 1f, 0.3f)
-                            )
-                        );
-                    }
-
-                    spriteBatch.DrawString(
-                        Res.LogFont,
-                        _s.Name,
-                        new Vector2(
-                            indent,
-                            _currentY
+                    spriteBatch.Draw(
+                        Res.OneByOne,
+                        new Rectangle(
+                            0,
+                            +1 + (int)_currentY,
+                            (int)w,
+                            -1 + (int)_offs
                         ),
-                        //UIBindings.Get(Selection).Contains(_s)
-                        //? Color.Yellow : Color.White
-                        Color.White
+                        Utility.MultiplyColours(
+                            ApWindow.StandardBorder,
+                            new Color(1f, 1f, 1f, 0.3f)
+                        )
                     );
-                    _currentY += _offs;
                 }
 
-                spriteBatch.End();
+                spriteBatch.DrawString(
+                    Res.LogFont,
+                    _s.Name,
+                    new Vector2(
+                        indent,
+                        _currentY
+                    ),
+                    Color.White
+                );
+                _currentY += _offs;
             }
+
+            spriteBatch.End();
 
             DrawBorder(spriteBatch, ApWindow.StandardBorder);
         }
@@ -105,17 +103,38 @@ namespace Apollyon
                 float _mouseY = ms.Y - y1;
                 float _item = _mouseY - (_mouseY % _itemHeight);
                 _item /= _itemHeight;
+                int _index = (int)_item;
 
-                if (_item >= UIBindings.Get(Ships).Count) {
+                List<ISpaceObject> _q =
+                    Utility.QuerySpace(new List<string> { "Ship" });
+
+                //if (_item >= UIBindings.Get(Ships).Count) {
+                if (_index >= _q.Count)
+                {
                     UIBindings.Get(Selection).Clear();
                     return;
                 }
 
-                int _shipIndex = UIBindings.Get(Selection).IndexOf(
+                /*int _shipIndex = UIBindings.Get(Ships).IndexOf(
                     UIBindings.Get(Ships)[(int)_item]
-                );
+                );*/
 
-                //deselect
+                if (_q.Count == 0) return;
+
+                Ship _s = (Ship)_q[_index];
+                /*Ship _s = (Ship)Utility.QuerySpace(
+                    new List<string> { "Ship" })[_index];*/
+
+                if (UIBindings.Get(Selection).Contains(_s))
+                {
+                    UIBindings.Get(Selection).Remove(_s);
+                }
+                else
+                {
+                    UIBindings.Get(Selection).Add(_s);
+                }
+
+                /*//deselect
                 if (_shipIndex != -1)
                 {
                     UIBindings.Get(Selection).
@@ -126,8 +145,8 @@ namespace Apollyon
                 else
                 {
                     UIBindings.Get(Selection).
-                        Add(UIBindings.Get(Ships)[(int)_item]);
-                }
+                        Add(UIBindings.Get(Selection)[(int)_item]);
+                }*/
             }
         }
     }

@@ -19,6 +19,9 @@ namespace Apollyon
         public Vector2 GetPosition() {
             return Position; }
 
+        public Vector2 GetSize() {
+            return new Vector2(32, 32); }
+
         public Texture2D GetTexture() {
             return Res.Ship; }
 
@@ -28,6 +31,9 @@ namespace Apollyon
 
         public bool GetVisible() {
             return true; }
+
+        public double GetRotation() {
+            return Direction; }
 
 
         public double Direction;
@@ -67,6 +73,13 @@ namespace Apollyon
         {
             Components.Add(_sc);
             _sc.Parent = this;
+        }
+
+        public void AddItem(Item _i)
+        {
+            _i.Carrier = this;
+            //check already contains?
+            Inventory.Add(_i);
         }
 
         public void Input(
