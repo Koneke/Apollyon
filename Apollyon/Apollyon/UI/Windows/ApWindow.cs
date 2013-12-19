@@ -107,6 +107,8 @@ namespace Apollyon
             return false;
         }
 
+        //stop hardbinding to keys! skip _key, keep _type, get _key/_action
+        //combo from data (to allow freely remapping keys to actions). 
         public void BindKey(
             Keys _key,
             KeyBindType _type,

@@ -22,5 +22,6 @@ namespace Apollyon
         }
 
         //resistances and stuff here later
+        //or not? have it on the ship and this as a component? idk
     }
 }

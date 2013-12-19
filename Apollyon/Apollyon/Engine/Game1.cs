@@ -77,18 +77,17 @@ namespace Apollyon
             world.Ships.Add(_s);
             Game.Fleet.Add(_s);
 
-            //ApUI.CombatLog.BindKey(Keys.C, KeyBindType.Press, "Clear log");
             ApUI.CombatLog.Log.Add(
                 "Hi! I'm a combat log!");
-            //end of test stuff
         }
 
         protected override void LoadContent()
         {
+            //data-driven pls
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Res.OneByOne = Content.Load<Texture2D>("1x1");
-            Res.Background = Content.Load<Texture2D>("background");
-            Res.Ship = Content.Load<Texture2D>("ship");
+            Res.OneByOne = Content.Load<Texture2D>("gfx/1x1");
+            Res.Background = Content.Load<Texture2D>("gfx/background");
+            Res.Ship = Content.Load<Texture2D>("gfx/ship");
             Res.LogFont = Content.Load<SpriteFont>("Logfont");
         }
 
