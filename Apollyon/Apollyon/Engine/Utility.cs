@@ -122,5 +122,29 @@ namespace Apollyon
 
             spriteBatch.End();
         }
+
+        public static void DropShadowText(
+            SpriteBatch spriteBatch,
+            SpriteFont _font,
+            string _text,
+            Vector2 _position,
+            Color _colorA,
+            Color _colorB)
+        {
+            spriteBatch.Begin();
+            spriteBatch.DrawString(
+                _font,
+                _text,
+                _position+new Vector2(1, 1),
+                _colorA
+            );
+            spriteBatch.DrawString(
+                _font,
+                _text,
+                _position,
+                _colorB 
+            );
+            spriteBatch.End();
+        }
     }
 }

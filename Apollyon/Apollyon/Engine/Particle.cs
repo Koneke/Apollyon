@@ -57,6 +57,17 @@ namespace Apollyon
             return this;
         }
 
+        public ParticleSpawn RandomizeLifeTime(int _amount)
+        {
+            foreach (Particle _p in particles)
+            {
+                _p.LifeTime -= _amount / 2;
+                _p.LifeTime += (int)(Game.Random.NextDouble() * _amount);
+
+            }
+            return this;
+        }
+
         public ParticleSpawn RandomizeSpeed(float _amount)
         {
             foreach (Particle _p in particles)

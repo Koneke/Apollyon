@@ -171,6 +171,32 @@ namespace Apollyon
 
         public override void OwnInput(MouseState ms, MouseState oms)
         {
+            if(UIBindings.Get("Selected").Count == 1) {
+                if (ms.RightButton == ButtonState.Pressed &&
+                    oms.RightButton == ButtonState.Released)
+                {
+                    float _itemHeight = Res.LogFont.MeasureString("ship").Y;
+                    float _mouseY = ms.Y - y1;
+                    float _item = _mouseY - (_mouseY % _itemHeight);
+                    _item /= _itemHeight;
+                    if (_item < Items.Count)
+                    {
+                        SpaceItem _si = new SpaceItem(
+                            UIBindings.Get("Selected")[0].Position,
+                            //do something about this
+                            Res.Ship,
+                            Items[(int)_item].Items[0]
+                        );
+
+                        Game.World.Items.Add(_si);
+
+                        UIBindings.Get("Selected")[0].Inventory.RemoveAt(
+                            (int)_item
+                            );
+                    }
+                }
+            }
+
             if (
                 ms.LeftButton == ButtonState.Pressed &&
                 oms.LeftButton == ButtonState.Released)

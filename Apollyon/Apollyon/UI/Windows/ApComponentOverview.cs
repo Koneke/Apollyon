@@ -104,15 +104,9 @@ namespace Apollyon
                 Utility.MultiplyColours(
                     ApLogWindow.StandardBackground,
                     Tint
-                    /*Utility.MultiplyColours(
-                        Tint,
-                        UIBindings.Get(Ships).Count > 1 ?
-                            new Color(0.5f, 0.5f, 0.5f, 1f) : Color.White
-                        )*/
                 )
             );
 
-            //if (ComponentList != null && UIBindings.Get(Ships) != null)
             if (ComponentList != null && UIBindings.Get(Ships) != null)
             {
                 spriteBatch.Begin();
@@ -122,7 +116,6 @@ namespace Apollyon
 
                 for(int i = 0; i < ComponentList.Count; i++)
                 {
-                    //ShipComponent _c = ComponentList[i];
                     ApComponentOverviewPost _acop = ComponentList[i];
                     if (Selection == i)
                     {
@@ -188,10 +181,8 @@ namespace Apollyon
 
                 if (
                     (DateTime.Now - lastLeftClick).Milliseconds < 200 &&
-                    //HACK BELOW: DO SOMETHING ABOUT THIS. THERE SHOULD BE A
-                    //BETTER WAY OF GROUPING UI ELEMENTS TOGETHER.
+                    //still a bit hacky, but...
                     this == WindowManager.GetWindowByName("Component Overview")
-                    //ApUI.ComponentOverview
                 ) {
                     if (Selection != -1)
                     {
@@ -201,7 +192,6 @@ namespace Apollyon
                             " from " +
                             String.Join(
                                 ", ",
-                                //Game.Selected.Select(
                                 UIBindings.Get("Selected").Select(
                                     x => x.Name)
                                 ) + " to " +

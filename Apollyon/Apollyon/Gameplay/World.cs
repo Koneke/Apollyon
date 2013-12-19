@@ -16,6 +16,7 @@ namespace Apollyon
             get { return new Vector2(Camera.X, Camera.Y); }
         }
         public List<Ship> Ships;
+        public List<SpaceItem> Items; //items in space
 
         public float Timer; //ms timer
 
@@ -25,13 +26,21 @@ namespace Apollyon
         public World()
         {
             Ships = new List<Ship>();
+            Items = new List<SpaceItem>();
             Camera = new Camera();
             UIBindings.Bind("All", Ships);
         }
 
-        public void Input(MouseState ms, MouseState oms)
+        public void Input(
+            KeyboardState ks, KeyboardState oks,
+            MouseState ms, MouseState oms)
         {
             Camera.Input(ms, oms);
+
+            foreach (Ship _s in Ships)
+            {
+                _s.Input(ks, oks, ms, oms);
+            }
 
             if (
                 ms.LeftButton == ButtonState.Pressed
@@ -95,14 +104,12 @@ namespace Apollyon
                             )
                         )
                         {
-                            //ApUI.ShipOverview.Selection.Add(_s);
                             Game.Selected.Add(_s);
                         }
                     }
                 }
                 boxSelection.Width = 0;
                 selecting = false;
-                //ApUI.Inventory.UpdateList();
             }
 
             if (
@@ -145,6 +152,13 @@ namespace Apollyon
                 {
                     _s.Update();
                 }
+                foreach (Ship _s in Ships.FindAll(
+                    x => x.Shield.Current <= 0))
+                {
+                    _s.Die();
+                    Game.Fleet.Remove(_s);
+                }
+                Ships = Ships.FindAll(x => x.Shield.Current > 0);
                 Timer -= Game.TickTime;
             }
         }
@@ -231,6 +245,69 @@ namespace Apollyon
                         spriteBatch,
                         _shipRectOffset,
                         new Color(0f, 1f, 0f, 0.5f)
+                    );
+                }
+
+                MouseState _ms = Mouse.GetState();
+                if(_shipRectOffset.Contains(new Point(_ms.X, _ms.Y))) {
+                    Utility.DropShadowText(
+                        spriteBatch,
+                        Res.LogFont,
+                        _s.Name,
+                        new Vector2(
+                            _ms.X - Res.LogFont.MeasureString(_s.Name).X/2 + 10,
+                            _ms.Y - 20
+                        ),
+                        Color.Black,
+                        Color.White
+                    );
+                }
+            }
+
+            foreach (SpaceItem _i in Items)
+            {
+                Rectangle _itemRect = new Rectangle(
+                    (int)Game.Camera.WorldToScreen(_i.Position).X,
+                    (int)Game.Camera.WorldToScreen(_i.Position).Y,
+                    16,
+                    16
+                );
+
+                Rectangle _itemRectOffset =
+                    new Rectangle(
+                        _itemRect.X, _itemRect.Y,
+                        _itemRect.Width, _itemRect.Height
+                    );
+                _itemRectOffset.Offset(new Point(-8, -8));
+                
+                spriteBatch.Begin();
+
+                spriteBatch.Draw(
+                    _i.Texture,
+                    _itemRect,
+                    null,
+                    Color.White,
+                    0,
+                    new Vector2(8, 8),
+                    SpriteEffects.None,
+                    0f
+                );
+
+                spriteBatch.End();
+
+                MouseState _ms = Mouse.GetState();
+                if(_itemRectOffset.Contains(new Point(_ms.X, _ms.Y))) {
+                    Utility.DropShadowText(
+                        spriteBatch,
+                        Res.LogFont,
+                        _i.Item.Name,
+                        new Vector2(
+                            _ms.X - Res.LogFont.MeasureString(
+                                _i.Item.Name).X/2 + 10,
+                            _ms.Y - 20
+                        ),
+                        Color.Black,
+                        Color.White
                     );
                 }
             }

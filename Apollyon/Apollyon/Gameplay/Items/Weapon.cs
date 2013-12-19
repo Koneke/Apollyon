@@ -25,9 +25,20 @@ namespace Apollyon
             {
                 case Game.TargetingType.Random:
                     _target = Targets[Game.Random.Next(0, Targets.Count)];
+                    while (_target.Shield.Current <= 0 && Targets.Count > 0)
+                    {
+                        Targets.Remove(_target);
+                        if (Targets.Count == 0) break;
+                        _target = Targets[Game.Random.Next(0, Targets.Count)];
+                    }
                     break;
                 default:
                     break;
+            }
+            if (Targets.Count == 0)
+            {
+                Active = false;
+                return;
             }
 
             if (_target != null)
@@ -44,10 +55,12 @@ namespace Apollyon
                 _target.Position.Y - Parent.Position.Y,
                 _target.Position.X - Parent.Position.X
             );
+
             float _d = Vector2.Distance(
                 Parent.Position,
                 _target.Position
             ); //TODO: Change me when missing to see the shot whizz past
+
             double _rand = 0.07f;
             _ang -= _rand/2f;
             _ang += _rand * Game.Random.NextDouble();

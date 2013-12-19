@@ -9,6 +9,8 @@ namespace Apollyon
         public static Camera Camera;
         public static Vector2 ScreenSize;
 
+        public static World World;
+
         public static List<Ship> Fleet = new List<Ship>();
 
         public static float TickTime = 1000 / 60; //time in ms per time tick

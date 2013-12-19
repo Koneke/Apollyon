@@ -48,19 +48,15 @@ namespace Apollyon
 
             LoadUI();
             world = new World();
+            Game.World = world;
             Game.Camera = world.Camera;
 
             //test stuff
-            Ship _s = new Ship();
-            _s.Position = new Vector2(100, 300);
-            _s.Direction = 0;
-            _s.Speed = 1;
-            _s.TargetPosition = new Vector2(300, 100);
+            Ship _s = new Ship(new Vector2(100, 300));
             world.Ships.Add(_s);
             Game.Fleet.Add(_s);
-            _s.AddComponent(
-                new Weapon("Railgun", 1001)
-            );
+
+            _s.AddComponent(new Weapon("Railgun", 1001));
             Weapon _blaster = new Weapon("Heavy Blaster", 1002);
             _blaster.Frequency = 140;
             _blaster.Damage = 7;
@@ -72,18 +68,24 @@ namespace Apollyon
                 _blaster);
             _s.Inventory.Add(_ci);
 
-            _s = new Ship();
-            _s.Position = new Vector2(300, 100);
-            _s.Speed = 1;
+            _ci = new ComponentItem(
+                "Railgun",
+                2001,
+                new Weapon("Railgun", 1001)
+            );
+            SpaceItem _si = new SpaceItem(
+                _s.Position,
+                Res.Ship,
+                _ci
+            );
+            world.Items.Add(_si);
+
+            _s = new Ship(new Vector2(300, 100));
             world.Ships.Add(_s);
             Game.Fleet.Add(_s);
             _s.AddComponent(
                 new Weapon("Railgun", 1001)
             );
-
-            ((ApLogWindow)WindowManager.GetWindowByName("Combat Log"))
-                .Log.Add(//ApUI.CombatLog.Log.Add(
-                "Hi! I'm a combat log!");
         }
 
         protected override void LoadContent()
@@ -112,13 +114,13 @@ namespace Apollyon
             BindingsManager.HandleInput(ks.GetPressedKeys());
 
             ApWindow.Input(ms, oms);
-            world.Input(ms, oms);
+            world.Input(ks, oks, ms, oms);
             world.Update(gameTime);
             ApWindow.Update();
 
             Particle.Particles =
                 Particle.Particles.FindAll(
-                    x => (DateTime.Now - x.Created).Milliseconds < x.LifeTime);
+                    x => (DateTime.Now - x.Created).TotalMilliseconds < x.LifeTime);
             foreach (Particle _p in Particle.Particles)
                 _p.Update();
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Apollyon
 {
@@ -25,10 +26,13 @@ namespace Apollyon
 
         //public bool Friendly;
 
-        public Ship()
-        {
+        public Ship(
+            Vector2 _position
+        ) {
             Name = ShipNameGenerator.GenerateName();
-            Position = new Vector2(0, 0);
+            //Position = new Vector2(0, 0);
+            Position = _position;
+            TargetPosition = Position;
             Direction = Math.PI;
             Speed = 0;
             MaxSpeed = 3;
@@ -44,6 +48,67 @@ namespace Apollyon
         {
             Components.Add(_sc);
             _sc.Parent = this;
+        }
+
+        public void Input(
+            KeyboardState ks, KeyboardState oks,
+            MouseState ms, MouseState oms
+            )
+        {
+            if (ks.IsKeyDown(Keys.Z) && (!oks.IsKeyDown(Keys.Z)))
+            {
+                if (UIBindings.Get("Selected").Contains(this))
+                {
+                    foreach (SpaceItem _si in Game.World.Items)
+                    {
+                        if (Vector2.Distance(Position, _si.Position) < 100)
+                        {
+                            Game.World.Items.Remove(_si);
+                            Inventory.Add(_si.Item);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void Die()
+        {
+            foreach (Item _i in Inventory)
+            {
+                SpaceItem _si = new SpaceItem(
+                    Position + new Vector2(
+                        Game.Random.Next(-3, 4),
+                        Game.Random.Next(-3, 4)),
+                    Res.Ship,
+                    _i
+                );
+                Game.World.Items.Add(_si);
+            }
+
+            new ParticleSpawn(
+                1000,
+                new Particle(
+                    new Vector2(
+                        Position.X,
+                        Position.Y),
+                    Res.OneByOne,
+                    new Color(1f, 0.4f, 0f, 1f),
+                    900,
+                    new Vector4(0f, 0f, 0f, -0.5f), //does not work
+                //why does xna seem to drop the A of the colour above
+                //completely all of a sudden..?
+                    0,
+                    6,
+                    0.05f
+                )
+            )
+            .RandomizeLifeTime(200)
+            .RandomizeSpeed(5.5f)
+            .RandomizePosition(new Vector2(8, 8))
+            .RandomizeDirection((float)Math.PI*2f)
+            .RandomizeColor(new Color(0f, 1f, 0f, 0f))
+            .Spawn();
         }
 
         public void Update() //goes once per tick
