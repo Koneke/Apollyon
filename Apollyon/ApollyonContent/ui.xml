@@ -6,7 +6,7 @@
     <name>Fleet Overview</name>
     <type>ShipOverview</type>
     <position>
-      <x>225</x>
+      <x>220</x>
       <y>10</y>
       <w>200</w>
       <h>200</h>
@@ -21,4 +21,118 @@
     <ships>Game.Fleet</ships>
   </window>
 
+  <window>
+    <name>Hostile Overview</name>
+    <type>ShipOverview</type>
+    <position>
+      <x>430</x>
+      <y>10</y>
+      <w>200</w>
+      <h>200</h>
+    </position>
+    <tint>
+      <r>1</r>
+      <g>0</g>
+      <b>0</b>
+      <a>1</a>
+    </tint>
+    <bindings>
+      <bind>
+        <key>F</key>
+        <type>Press</type>
+        <action>Clear Selection</action>
+      </bind>
+    </bindings>
+    <ships>Game.Fleet</ships>
+  </window>
+
+  <window>
+    <name>Combat Log</name>
+    <type>CombatLog</type>
+    <position>
+      <x>10</x>
+      <y>10</y>
+      <w>200</w>
+      <h>200</h>
+    </position>
+    <bindings>
+      <bind>
+        <key>C</key>
+        <type>Press</type>
+        <action>Clear Log</action>
+      </bind>
+    </bindings>
+  </window>
+
+  <window>
+    <name>Component Overview</name>
+    <type>ComponentOverview</type>
+    <position>
+      <x>220</x>
+      <y>220</y>
+      <w>200</w>
+      <h>200</h>
+    </position>
+    <ships>ShipOverview.Selection</ships>
+  </window>
+
+  <window>
+    <name>Hostile Component Overview</name>
+    <type>ComponentOverview</type>
+    <position>
+      <x>10</x>
+      <y>310</y>
+      <w>200</w>
+      <h>200</h>
+    </position>
+    <tint>
+      <r>1</r>
+      <g>0</g>
+      <b>0</b>
+      <a>1</a>
+    </tint>
+    <ships>HostileOverview.Selection</ships>
+  </window>
+
+  <window>
+    <name>Selection Status</name>
+    <type>StatusWindow</type>
+    <position>
+      <x>10</x>
+      <y>220</y>
+      <w>200</w>
+      <h>80</h>
+    </position>
+    <ships>ShipOverview.Selection</ships>
+  </window>
+
+  <window>
+    <name>Target Status</name>
+    <type>StatusWindow</type>
+    <position>
+      <x>430</x>
+      <y>220</y>
+      <w>200</w>
+      <h>80</h>
+    </position>
+    <tint>
+      <r>1</r>
+      <g>0</g>
+      <b>0</b>
+      <a>1</a>
+    </tint>
+    <ships>HostileOverview.Selection</ships>
+  </window>
+
+  <window>
+    <name>Selection Inventory</name>
+    <type>Inventory</type>
+    <position>
+      <x>220</x>
+      <y>430</y>
+      <w>200</w>
+      <h>200</h>
+    </position>
+    <ships>ShipOverview.Selection</ships>
+  </window>
 </windows>

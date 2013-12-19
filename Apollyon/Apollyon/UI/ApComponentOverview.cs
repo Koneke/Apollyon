@@ -10,6 +10,7 @@ namespace Apollyon
 {
     class ApComponentOverview : ApWindow
     {
+        string shipsString;
         public List<Ship> Ships;
         public List<ShipComponent> ComponentList; //list to overview
         int indent = 4;
@@ -23,8 +24,27 @@ namespace Apollyon
                 ComponentList = new List<ShipComponent>();
         }
 
+        public List<Ship> GetListFromString(string _shipsString)
+        {
+            switch (_shipsString)
+            {
+                case "ShipOverview.Selection":
+                    return ApUI.ShipOverview.Selection;
+                case "HostileOverview.Selection":
+                    return ApUI.HostileOverview.Selection;
+                default:
+                    return null;
+            }
+        }
+
+        public override void SpecificUILoading()
+        {
+            shipsString = xml.Element("ships").Value;
+        }
+
         public void UpdateList()
         {
+            Ships = GetListFromString(shipsString);
             if (Ships == null) return;
             if (Ships.Count == 0)
             {

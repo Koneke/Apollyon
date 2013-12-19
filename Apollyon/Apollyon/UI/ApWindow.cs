@@ -21,6 +21,8 @@ namespace Apollyon
         public String Name;
         public Color Tint;
 
+        public XElement xml;
+
         public static List<ApWindow> Windows;
         public static void Setup()
         {
@@ -139,7 +141,7 @@ namespace Apollyon
         {
         }
 
-        public virtual void SpecificUILoading(XElement _e)
+        public virtual void SpecificUILoading()
         {
         }
 

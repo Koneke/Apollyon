@@ -29,9 +29,9 @@ namespace Apollyon
             Selection = new List<Ship>();
         }
 
-        public override void SpecificUILoading(XElement _e)
+        public override void SpecificUILoading()
         {
-            switch (_e.Element("ships").Value)
+            switch (xml.Element("ships").Value)
             {
                 case "Game.Fleet":
                     ShipList = Game.Fleet;
@@ -46,16 +46,6 @@ namespace Apollyon
             {
                 case "Clear Selection":
                     Selection.Clear();
-
-                    //HACK: UGLY, UGLY HACK. DO SOMETHING ABOUT IT.
-                    /*if (this == ApUI.ShipOverview)
-                    {
-                        ApUI.ComponentOverview.UpdateList();
-                        ApUI.Inventory.UpdateList();
-                    }
-                    else
-                        ApUI.HostileComponentOverview.UpdateList();*/
-
                     break;
                 default:
                     break;

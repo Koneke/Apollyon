@@ -15,6 +15,24 @@ namespace Apollyon
             : base (_x, _y, _w, _h) {
         }
 
+        public override void SpecificUILoading()
+        {
+            switch (xml.Element("ships").Value)
+            {
+                //in the future, let lists register themselves with a
+                //name so that we can do something like
+                //GetList("Selected Ships") or similar.
+
+                case "ShipOverview.Selection":
+                    Ships = ApUI.ShipOverview.Selection;
+                    break;
+                case "HostileOverview.Selection":
+                    Ships = ApUI.HostileOverview.Selection;
+                    break;
+                default: break;
+            }
+        }
+
         public override void ActualRender(SpriteBatch spriteBatch)
         {
             graphics.Clear(

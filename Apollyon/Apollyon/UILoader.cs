@@ -19,7 +19,6 @@ namespace Apollyon
         {
             IEnumerable<XElement> _elements =
                 (XElement.Load("Content/ui.xml")).Elements();
-
             foreach (var _e in _elements)
             {
                 string _name    = _e.Element("name").Value;
@@ -38,10 +37,17 @@ namespace Apollyon
                 switch (_type)
                 {
                     case "ShipOverview":
-                        _new = new ApShipOverview(
-                            _x, _y, _w, _h);
-                        break;
-                    default: break;
+                        _new = new ApShipOverview(_x, _y, _w, _h); break;
+                    case "CombatLog":
+                        _new = new ApLogWindow(_x, _y, _w, _h); break;
+                    case "ComponentOverview":
+                        _new = new ApComponentOverview(_x, _y, _w, _h); break;
+                    case "StatusWindow":
+                        _new = new ApStatusWindow(_x, _y, _w, _h); break;
+                    case "Inventory":
+                        _new = new ApInventory(_x, _y, _w, _h); break;
+                    default:
+                        throw new Exception("BAD UI TYPE");
                 }
 
                 _new.Name = _name;
@@ -65,31 +71,35 @@ namespace Apollyon
                 }
 
                 var _binds      = _e.Element("bindings");
-                foreach (var _bind in _binds.Elements())
+                if (_binds != null)
                 {
-                    string _key         = _bind.Element("key").Value.ToUpper();
-                    string _bindType    = _bind.Element("type").Value.ToLower();
-                    _bindType =
-                        Char.ToUpper(_bindType[0])+
-                        _bindType.Substring(1,_bindType.Length-1);
-                    string _action      = _bind.Element("action").Value;
+                    foreach (var _bind in _binds.Elements())
+                    {
+                        string _key = _bind.Element("key").Value.ToUpper();
+                        string _bindType = _bind.Element("type").Value.ToLower();
+                        _bindType =
+                            Char.ToUpper(_bindType[0]) +
+                            _bindType.Substring(1, _bindType.Length - 1);
+                        string _action = _bind.Element("action").Value;
 
-                    Keys _k = (Keys)Enum.Parse(
-                        typeof(Keys),
-                        _key
-                    );
-                    
-                    KeyBindType _t = (KeyBindType)Enum.Parse(
-                        typeof(KeyBindType),
-                        _bindType
-                    );
+                        Keys _k = (Keys)Enum.Parse(
+                            typeof(Keys),
+                            _key
+                        );
 
-                    _new.BindKey(
-                        _k, _t, _action
-                    );
+                        KeyBindType _t = (KeyBindType)Enum.Parse(
+                            typeof(KeyBindType),
+                            _bindType
+                        );
+
+                        _new.BindKey(
+                            _k, _t, _action
+                        );
+                    }
                 }
 
-                _new.SpecificUILoading(_e);
+                //_new.SpecificUILoading(_e);
+                _new.xml = _e;
                 WindowManager.Windows.Add(_new);
             }
         }

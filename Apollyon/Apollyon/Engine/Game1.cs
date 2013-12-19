@@ -42,87 +42,7 @@ namespace Apollyon
             Game.ScreenSize.X = graphics.PreferredBackBufferWidth;
             Game.ScreenSize.Y = graphics.PreferredBackBufferHeight;
 
-            ApWindow.graphics = graphics.GraphicsDevice;
-            ApWindow.Setup();
-
-            UILoader foo = new UILoader();
-            foo.Load();
-
-            ApUI.CombatLog = 
-                new ApLogWindow(
-                    10, 10, 200, 200
-                );
-            ApWindow.Windows.Add(ApUI.CombatLog);
-
-
-            /*ApUI.ShipOverview =
-                new ApShipOverview(
-                    220, 10, 200, 200
-                );
-            ApWindow.Windows.Add(ApUI.ShipOverview);
-            ApUI.ShipOverview.ShipList = Game.Fleet; //player fleet of ships
-            ApUI.ShipOverview.BindKey(
-                Keys.D,
-                KeyBindType.Press,
-                "Clear Selection"
-            );*/
-
-            ApUI.ShipOverview =
-                (ApShipOverview)WindowManager.GetWindowByName("Fleet Overview");
-
-            ApWindow.Windows = WindowManager.Windows;
-
-            ApUI.HostileOverview =
-                new ApShipOverview(
-                    430, 10, 200, 200
-                );
-            ApWindow.Windows.Add(ApUI.HostileOverview);
-            ApUI.HostileOverview.Tint = new Color(1f, 0f, 0f, 1f);
-            ApUI.HostileOverview.ShipList = Game.Fleet; //player fleet of ships
-            ApUI.HostileOverview.BindKey(
-                Keys.F,
-                KeyBindType.Press,
-                "Clear Selection"
-            );
-
-            ApUI.ComponentOverview =
-                new ApComponentOverview(
-                    220, 220, 200, 200
-                );
-            ApWindow.Windows.Add(ApUI.ComponentOverview);
-            ApUI.ComponentOverview.Ships = ApUI.ShipOverview.Selection;
-
-            ApUI.HostileComponentOverview =
-                new ApComponentOverview(
-                    10, 310, 200, 200
-                );
-            ApWindow.Windows.Add(ApUI.HostileComponentOverview);
-            ApUI.HostileComponentOverview.Tint = new Color(1f, 0f, 0f, 1f);
-            ApUI.HostileComponentOverview.Ships =
-                ApUI.HostileOverview.Selection;
-
-            ApUI.SelectionStatus =
-                new ApStatusWindow(
-                    10, 220, 200, 80
-                );
-            ApWindow.Windows.Add(ApUI.SelectionStatus);
-            ApUI.SelectionStatus.Ships = ApUI.ShipOverview.Selection;
-
-            ApUI.HostileSelectionStatus =
-                new ApStatusWindow(
-                    430, 220, 200, 80
-                );
-            ApWindow.Windows.Add(ApUI.HostileSelectionStatus);
-            ApUI.HostileSelectionStatus.Tint = new Color(1f, 0f, 0f, 1f);
-            ApUI.HostileSelectionStatus.Ships = ApUI.HostileOverview.Selection;
-
-            ApUI.Inventory =
-                new ApInventory(
-                    220, 430, 200, 200
-                    );
-            ApWindow.Windows.Add(ApUI.Inventory);
-            ApUI.Inventory.Ships = ApUI.ShipOverview.Selection;
-
+            LoadUI();
             world = new World();
 
             //test stuff
@@ -218,6 +138,53 @@ namespace Apollyon
                 w.Draw(spriteBatch);
 
             base.Draw(gameTime);
+        }
+
+        void LoadUI()
+        {
+            ApWindow.graphics = graphics.GraphicsDevice;
+            ApWindow.Setup();
+
+            UILoader foo = new UILoader();
+            foo.Load();
+
+            ApWindow.Windows = WindowManager.Windows;
+
+            ApUI.CombatLog =
+                (ApLogWindow)WindowManager.
+                GetWindowByName("Combat Log");
+
+            ApUI.ShipOverview =
+                (ApShipOverview)WindowManager.
+                GetWindowByName("Fleet Overview");
+
+            ApUI.HostileOverview =
+                (ApShipOverview)WindowManager.
+                GetWindowByName("Hostile Overview");
+
+            ApUI.ComponentOverview =
+                (ApComponentOverview)WindowManager.
+                GetWindowByName("Component Overview");
+
+            ApUI.HostileComponentOverview =
+                (ApComponentOverview)WindowManager.
+                GetWindowByName("Hostile Component Overview");
+
+            ApUI.SelectionStatus =
+                (ApStatusWindow)WindowManager.
+                GetWindowByName("Selection Status");
+
+            ApUI.HostileSelectionStatus =
+                (ApStatusWindow)WindowManager.
+                GetWindowByName("Target Status");
+
+            ApUI.Inventory =
+                (ApInventory)WindowManager.
+                GetWindowByName("Selection Inventory");
+
+            foreach (ApWindow _w in WindowManager.Windows)
+                _w.SpecificUILoading();
+
         }
     }
 }

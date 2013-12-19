@@ -77,16 +77,20 @@ namespace Apollyon
                         _box.Height *= -1;
                     }
 
-                    if (
-                        ApUI.ShipOverview.ShipList.Contains(_s) &&
-                        _box.Contains(
-                            new Point(
-                                (int)_s.Position.X,
-                                (int)_s.Position.Y
+                    if (ApUI.ShipOverview.ShipList != null)
+                    {
+                        if (
+                            ApUI.ShipOverview.ShipList.Contains(_s) &&
+                            _box.Contains(
+                                new Point(
+                                    (int)_s.Position.X,
+                                    (int)_s.Position.Y
+                                )
                             )
                         )
-                    ) {
-                        ApUI.ShipOverview.Selection.Add(_s);
+                        {
+                            ApUI.ShipOverview.Selection.Add(_s);
+                        }
                     }
                 }
                 boxSelection.Width = 0;
