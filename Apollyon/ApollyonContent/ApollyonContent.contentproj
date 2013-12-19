@@ -70,7 +70,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ui.xml">
+    <None Include="data\ui.xml">
       <Name>ui</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
