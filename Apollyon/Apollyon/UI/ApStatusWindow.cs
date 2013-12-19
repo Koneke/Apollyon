@@ -7,7 +7,8 @@ namespace Apollyon
 {
     class ApStatusWindow : ApWindow
     {
-        public List<Ship> Ships;
+        public string Ships; //ships to read from, e.g. "selected"
+        //public List<Ship> Ships;
 
         public ApStatusWindow(
             int _x, int _y, int _w, int _h
@@ -17,20 +18,7 @@ namespace Apollyon
 
         public override void SpecificUILoading()
         {
-            switch (xml.Element("ships").Value)
-            {
-                //in the future, let lists register themselves with a
-                //name so that we can do something like
-                //GetList("Selected Ships") or similar.
-
-                case "ShipOverview.Selection":
-                    Ships = ApUI.ShipOverview.Selection;
-                    break;
-                case "HostileOverview.Selection":
-                    Ships = ApUI.HostileOverview.Selection;
-                    break;
-                default: break;
-            }
+            Ships = xml.Element("ships").Value;
         }
 
         public override void ActualRender(SpriteBatch spriteBatch)
@@ -47,11 +35,11 @@ namespace Apollyon
             //int _padding = 4; //between bars
 
             float _percentage = 0;
-            if (Ships != null)
+            if (UIBindings.Get(Ships) != null)
             {
-                foreach (Ship _s in Ships)
+                foreach (Ship _s in UIBindings.Get(Ships))
                     _percentage += _s.Shield.getPercentage();
-                _percentage /= Ships.Count;
+                _percentage /= UIBindings.Get(Ships).Count;
             }
 
             Utility.DrawOutlinedRectangle(
@@ -74,21 +62,25 @@ namespace Apollyon
                 new Vector2(_sideMargin + 4, _topMargin + 2),
                 Color.White);
 
-            if ((Ships??new List<Ship>{}).Count != 0)
+            if (UIBindings.Get(Ships) != null)
             {
-                spriteBatch.Draw(
-                    Res.OneByOne,
-                    new Rectangle(
-                        _sideMargin+1,
-                        _topMargin+1,
-                        (int)((w - ((_sideMargin+1) * 2)) * _percentage / 100f),
-                        (int)h - ((_topMargin+1) * 2)
-                    ),
-                    Utility.MultiplyColours(
-                        ApWindow.StandardBorder,
-                        new Color(1f, 1f, 1f, 0.4f)
-                    )
-                );
+                //if ((Ships ?? new List<Ship> { }).Count != 0)
+                if (UIBindings.Get(Ships).Count != 0)
+                {
+                    spriteBatch.Draw(
+                        Res.OneByOne,
+                        new Rectangle(
+                            _sideMargin + 1,
+                            _topMargin + 1,
+                            (int)((w - ((_sideMargin + 1) * 2)) * _percentage / 100f),
+                            (int)h - ((_topMargin + 1) * 2)
+                        ),
+                        Utility.MultiplyColours(
+                            ApWindow.StandardBorder,
+                            new Color(1f, 1f, 1f, 0.4f)
+                        )
+                    );
+                }
             }
 
             spriteBatch.End();

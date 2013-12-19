@@ -26,6 +26,7 @@ namespace Apollyon
         {
             Ships = new List<Ship>();
             Camera = new Camera();
+            UIBindings.Bind("All", Ships);
         }
 
         public void Input(MouseState ms, MouseState oms)
@@ -60,7 +61,8 @@ namespace Apollyon
                 oms.LeftButton == ButtonState.Pressed &&
                 selecting
             ) {
-                ApUI.ShipOverview.Selection.Clear();
+                //ApUI.ShipOverview.Selection.Clear();
+                Game.Selected.Clear();
                 foreach (Ship _s in Ships)
                 {
                     Rectangle _box = boxSelection;
@@ -77,10 +79,14 @@ namespace Apollyon
                         _box.Height *= -1;
                     }
 
-                    if (ApUI.ShipOverview.ShipList != null)
+                    List<Ship> _list = UIBindings.Get(
+                        ((ApShipOverview)WindowManager.
+                        GetWindowByName("Fleet Overview")).Ships);
+
+                    if (_list != null)
                     {
                         if (
-                            ApUI.ShipOverview.ShipList.Contains(_s) &&
+                            _list.Contains(_s) &&
                             _box.Contains(
                                 new Point(
                                     (int)_s.Position.X,
@@ -89,7 +95,8 @@ namespace Apollyon
                             )
                         )
                         {
-                            ApUI.ShipOverview.Selection.Add(_s);
+                            //ApUI.ShipOverview.Selection.Add(_s);
+                            Game.Selected.Add(_s);
                         }
                     }
                 }
@@ -103,20 +110,20 @@ namespace Apollyon
                 oms.RightButton == ButtonState.Released &&
                 !ApWindow.PointInWindow(new Point(ms.X, ms.Y))
             ) {
-                if (ApUI.ShipOverview.Selection.Count > 0)
+                if (Game.Selected.Count > 0)
                 {
                     Vector2 _avgPosition = new Vector2(0, 0);
 
-                    foreach (Ship _s in ApUI.ShipOverview.Selection)
+                    foreach (Ship _s in Game.Selected)
                     {
                         _avgPosition.X += _s.Position.X;
                         _avgPosition.Y += _s.Position.Y;
                     }
 
                     _avgPosition =
-                        _avgPosition / ApUI.ShipOverview.Selection.Count;
+                        _avgPosition / Game.Selected.Count;
 
-                    foreach (Ship _s in ApUI.ShipOverview.Selection)
+                    foreach (Ship _s in Game.Selected)
                     {
                         Vector2 _avgPositionOffset =
                             _s.Position - _avgPosition;
@@ -174,13 +181,13 @@ namespace Apollyon
                     (int)(-16 * Camera.GetZoom())
                 );
 
-                if(ApUI.HostileOverview.Selection.Contains(_s)) {
+                if(Game.Targeted.Contains(_s)) {
                     Utility.DrawOutlinedRectangle(
                         spriteBatch,
                         _shipRectOffset,
                         new Color(1f, 0f, 0f, 0.5f)
                     );
-                } else if(ApUI.ShipOverview.Selection.Contains(_s)) {
+                } else if(Game.Selected.Contains(_s)) {
                     Utility.DrawOutlinedRectangle(
                         spriteBatch,
                         _shipRectOffset,

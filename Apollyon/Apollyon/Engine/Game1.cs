@@ -30,7 +30,6 @@ namespace Apollyon
             Content.RootDirectory = "Content";
         }
 
-        //clean me, holy shit
         protected override void Initialize()
         {
             base.Initialize();
@@ -41,6 +40,11 @@ namespace Apollyon
 
             Game.ScreenSize.X = graphics.PreferredBackBufferWidth;
             Game.ScreenSize.Y = graphics.PreferredBackBufferHeight;
+
+            Game.Selected = new List<Ship>();
+            Game.Targeted = new List<Ship>();
+            UIBindings.Bind("Selected", Game.Selected);
+            UIBindings.Bind("Targeted", Game.Targeted);
 
             LoadUI();
             world = new World();
@@ -63,7 +67,7 @@ namespace Apollyon
                 "Heavy Blaster",
                 _blaster);
             _s.Inventory.Add(_ci);
-            //_s.AddComponent(_blaster);
+            _s.Inventory.Add(new Item("Coal", true, 5));
 
             _s = new Ship();
             _s.Position = new Vector2(300, 100);
@@ -73,8 +77,7 @@ namespace Apollyon
             world.Ships.Add(_s);
             Game.Fleet.Add(_s);
 
-
-            ApUI.CombatLog.BindKey(Keys.C, KeyBindType.Press, "Clear log");
+            //ApUI.CombatLog.BindKey(Keys.C, KeyBindType.Press, "Clear log");
             ApUI.CombatLog.Log.Add(
                 "Hi! I'm a combat log!");
             //end of test stuff

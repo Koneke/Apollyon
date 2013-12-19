@@ -10,8 +10,7 @@ namespace Apollyon
 {
     class ApComponentOverview : ApWindow
     {
-        string shipsString;
-        public List<Ship> Ships;
+        public string Ships;
         public List<ShipComponent> ComponentList; //list to overview
         int indent = 4;
         public int Selection = -1;
@@ -24,39 +23,28 @@ namespace Apollyon
                 ComponentList = new List<ShipComponent>();
         }
 
-        public List<Ship> GetListFromString(string _shipsString)
-        {
-            switch (_shipsString)
-            {
-                case "ShipOverview.Selection":
-                    return ApUI.ShipOverview.Selection;
-                case "HostileOverview.Selection":
-                    return ApUI.HostileOverview.Selection;
-                default:
-                    return null;
-            }
-        }
-
         public override void SpecificUILoading()
         {
-            shipsString = xml.Element("ships").Value;
+            Ships = xml.Element("ships").Value;
         }
 
         public void UpdateList()
         {
-            Ships = GetListFromString(shipsString);
-            if (Ships == null) return;
-            if (Ships.Count == 0)
+            //Ships = UIBindings.Get(_Ships);
+            if (UIBindings.Get(Ships) == null) return;
+            if (UIBindings.Get(Ships).Count == 0)
             {
                 ComponentList.Clear();
                 return;
             }
 
             ComponentList.Clear();
-            ComponentList.AddRange(Ships[0].Components);
+            ComponentList.AddRange(
+                UIBindings.Get(Ships)[0].Components
+            );
 
             var names = ComponentList.Select(s => s.Name);
-            foreach (Ship _s in Ships)
+            foreach (Ship _s in UIBindings.Get(Ships))
             {
                 names =
                     ComponentList.Select(s => s.Name);
@@ -67,7 +55,7 @@ namespace Apollyon
             }
 
             ComponentList.Clear();
-            foreach (Ship _s in Ships)
+            foreach (Ship _s in UIBindings.Get(Ships))
             {
                 foreach (ShipComponent _c in _s.Components)
                 {
@@ -103,7 +91,7 @@ namespace Apollyon
                 )
             );
 
-            if (ComponentList != null && Ships != null)
+            if (ComponentList != null && UIBindings.Get(Ships) != null)
             {
                 spriteBatch.Begin();
 
@@ -178,50 +166,58 @@ namespace Apollyon
                 ) {
                     if (Selection != -1)
                     {
-                        if (ApUI.HostileOverview.Selection.Count > 0)
-                        {
                             if(Game.Verbose) Game.Log(
                                 "CO : Would fire " +
                                 ComponentList[Selection].Name +
                                 " from " +
                                 String.Join(
                                     ", ",
-                                    ApUI.ShipOverview.Selection.Select(
+                                    //Game.Selected.Select(
+                                    UIBindings.Get("Selected").Select(
                                         x => x.Name)
                                     ) + " to " +
                                 String.Join(
                                     ", ",
-                                    ApUI.HostileOverview.Selection.Select(
+                                    UIBindings.Get("Targeted").Select(
                                         x => x.Name)
                                     ) + "."
                             );
 
                             if (!ComponentList[Selection].Active)
                             {
-                                ComponentList[Selection].Targets =
-                                    ApUI.HostileOverview.Selection;
-                                ComponentList[Selection].Active = true;
+                                if (
+                                    Game.Targeted.Count > 0 ||
+                                    ComponentList[Selection].
+                                        NeedsTarget == false
+                                    )
+                                {
+                                    ComponentList[Selection].Targets =
+                                        new List<Ship>(UIBindings.Get("Targeted"));
+                                    ComponentList[Selection].Active = true;
+                                }
+                                else Game.Log("No target.");
                             }
                             else
                             {
                                 ComponentList[Selection].Targets = null;
                                 ComponentList[Selection].Active = false;
                             }
-                        }
+                       /* }
                         else
                         {
-                            if(Game.Verbose) Game.Log(
-                                "CO : Would fire " +
-                                ComponentList[Selection].Name +
-                                " from " +
-                                String.Join(
-                                    ", ",
-                                    ApUI.ShipOverview.Selection.Select(
-                                        x => x.Name)
-                                    ) +
-                                " but had no target."
-                            );
-                        }
+                            if (Game.Verbose) Game.Log(
+                                 "CO : Would fire " +
+                                 ComponentList[Selection].Name +
+                                 " from " +
+                                 String.Join(
+                                     ", ",
+                                     UIBindings.Get("Selected").Select(
+                                         x => x.Name)
+                                     ) +
+                                 " but had no target."
+                             );
+                            else Game.Log("No target.");
+                        }*/
                     }
                 }
 

@@ -12,32 +12,20 @@ namespace Apollyon
 {
     class ApShipOverview : ApWindow
     {
-        public List<Ship> ShipList; //list to overview
+        public string Ships;
+        public string Selection;
         int indent = 4;
-        public List<Ship> Selection;
 
         public ApShipOverview (
             int _x, int _y, int _w, int _h
             )
             : base (_x, _y, _w, _h) {
-
-            //other list is not created here since it is actually just taking
-            //a list from somewhere else to overview
-            //we'll have to occasionally cleanup the selection list from items
-            //not in the ordinary list, I guess.
-            //feels a bit clutzy atm
-            Selection = new List<Ship>();
         }
 
         public override void SpecificUILoading()
         {
-            switch (xml.Element("ships").Value)
-            {
-                case "Game.Fleet":
-                    ShipList = Game.Fleet;
-                    break;
-                default: break;
-            }
+            Ships = xml.Element("ships").Value;
+            Selection = xml.Element("selection").Value;
         }
             
         public override void GetAction(string _action)
@@ -45,7 +33,7 @@ namespace Apollyon
             switch (_action)
             {
                 case "Clear Selection":
-                    Selection.Clear();
+                    UIBindings.Get(Selection).Clear();
                     break;
                 default:
                     break;
@@ -61,16 +49,16 @@ namespace Apollyon
                 )
             );
 
-            if (ShipList != null)
+            if (UIBindings.Get(Ships) != null)
             {
                 spriteBatch.Begin();
 
                 float _currentY = 0;
                 float _offs = Res.LogFont.MeasureString("ship").Y;
 
-                foreach (Ship _s in ShipList)
+                foreach (Ship _s in UIBindings.Get(Ships))
                 {
-                    if (Selection.Contains(_s))
+                    if (UIBindings.Get(Selection).Contains(_s))
                     {
                         spriteBatch.Draw(
                             Res.OneByOne,
@@ -94,7 +82,9 @@ namespace Apollyon
                             indent,
                             _currentY
                         ),
-                        Selection.Contains(_s) ? Color.Yellow : Color.White
+                        //UIBindings.Get(Selection).Contains(_s)
+                        //? Color.Yellow : Color.White
+                        Color.White
                     );
                     _currentY += _offs;
                 }
@@ -116,25 +106,27 @@ namespace Apollyon
                 float _item = _mouseY - (_mouseY % _itemHeight);
                 _item /= _itemHeight;
 
-                if (_item >= ShipList.Count) {
-                    Selection.Clear();
+                if (_item >= UIBindings.Get(Ships).Count) {
+                    UIBindings.Get(Selection).Clear();
                     return;
                 }
 
-                int _shipIndex = Selection.IndexOf(
-                    ShipList[(int)_item]
+                int _shipIndex = UIBindings.Get(Selection).IndexOf(
+                    UIBindings.Get(Ships)[(int)_item]
                 );
 
                 //deselect
                 if (_shipIndex != -1)
                 {
-                    Selection.RemoveAt(_shipIndex);
+                    UIBindings.Get(Selection).
+                        RemoveAt(_shipIndex);
                 }
                 
                 //select
                 else
                 {
-                    Selection.Add(ShipList[(int)_item]);
+                    UIBindings.Get(Selection).
+                        Add(UIBindings.Get(Ships)[(int)_item]);
                 }
 
                 //HACK: UGLY, UGLY HACK. DO SOMETHING ABOUT IT.

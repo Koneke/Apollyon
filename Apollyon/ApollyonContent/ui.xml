@@ -18,7 +18,8 @@
         <action>Clear Selection</action>
       </bind>
     </bindings>
-    <ships>Game.Fleet</ships>
+    <ships>All</ships>
+    <selection>Selected</selection>
   </window>
 
   <window>
@@ -43,7 +44,8 @@
         <action>Clear Selection</action>
       </bind>
     </bindings>
-    <ships>Game.Fleet</ships>
+    <ships>All</ships>
+    <selection>Targeted</selection>
   </window>
 
   <window>
@@ -73,7 +75,7 @@
       <w>200</w>
       <h>200</h>
     </position>
-    <ships>ShipOverview.Selection</ships>
+    <ships>Selected</ships>
   </window>
 
   <window>
@@ -91,7 +93,7 @@
       <b>0</b>
       <a>1</a>
     </tint>
-    <ships>HostileOverview.Selection</ships>
+    <ships>Targeted</ships>
   </window>
 
   <window>
@@ -103,7 +105,7 @@
       <w>200</w>
       <h>80</h>
     </position>
-    <ships>ShipOverview.Selection</ships>
+    <ships>Selected</ships>
   </window>
 
   <window>
@@ -121,7 +123,7 @@
       <b>0</b>
       <a>1</a>
     </tint>
-    <ships>HostileOverview.Selection</ships>
+    <ships>Targeted</ships>
   </window>
 
   <window>
@@ -133,6 +135,6 @@
       <w>200</w>
       <h>200</h>
     </position>
-    <ships>ShipOverview.Selection</ships>
+    <ships>Selected</ships>
   </window>
 </windows>

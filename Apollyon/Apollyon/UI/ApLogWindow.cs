@@ -27,7 +27,6 @@ namespace Apollyon
             spriteBatch.Begin();
 
             float _currentY = 0;
-            //foreach(string message in Log) {
             for(int i = Log.Count-1; i >= 0; i--) {
                 string message = Log[i];
 
@@ -52,7 +51,7 @@ namespace Apollyon
         public override void GetAction(string _action)
         {
             switch(_action) {
-                case "Clear log":
+                case "Clear Log":
                     Log.Clear();
                     break;
                 default:

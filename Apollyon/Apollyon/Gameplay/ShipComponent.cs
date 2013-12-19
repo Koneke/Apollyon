@@ -15,6 +15,7 @@ namespace Apollyon
         public int Timer;
 
         //weapons and similar
+        public bool NeedsTarget = true; //add to ctor later
         public List<Ship> Targets;
         public Game.TargetingType TargetingType;
 

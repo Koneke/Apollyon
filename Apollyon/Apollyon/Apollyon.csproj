@@ -110,7 +110,8 @@
     <Compile Include="Gameplay\ComponentItem.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Gameplay\Item.cs" />
-    <Compile Include="UILoader.cs" />
+    <Compile Include="UI\UIBindings.cs" />
+    <Compile Include="UI\UILoader.cs" />
     <Compile Include="UI\ApStatusWindow.cs" />
     <Compile Include="Gameplay\Shield.cs" />
     <Compile Include="UI\ApShipOverview.cs" />
@@ -132,7 +133,7 @@
     <Compile Include="UI\ApComponentOverview.cs" />
     <Compile Include="UI\ApInventory.cs" />
     <Compile Include="Gameplay\Weapon.cs" />
-    <Compile Include="WindowManager.cs" />
+    <Compile Include="UI\WindowManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

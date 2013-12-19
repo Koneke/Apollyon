@@ -37,7 +37,7 @@ namespace Apollyon
 
     class ApInventory : ApWindow
     {
-        public List<Ship> Ships;
+        public string Ships;
         public List<ApInventoryPost> Items; //list to overview
         public List<ApInventoryPost> Selection;
         int indent = 4;
@@ -52,31 +52,27 @@ namespace Apollyon
 
         public override void SpecificUILoading()
         {
-            switch (xml.Element("ships").Value)
-            {
-                //in the future, let lists register themselves with a
-                //name so that we can do something like
-                //GetList("Selected Ships") or similar.
-
-                case "ShipOverview.Selection":
-                    Ships = ApUI.ShipOverview.Selection;
-                    break;
-                case "HostileOverview.Selection":
-                    Ships = ApUI.HostileOverview.Selection;
-                    break;
-                default: break;
-            }
+            Ships = xml.Element("ships").Value;
         }
 
         public void UpdateList()
         {
             Items.Clear();
-            if ((Ships??new List<Ship>{}).Count == 0) return;
+            if (UIBindings.Get(Ships) == null) return;
+            if (UIBindings.Get(Ships).Count == 0)
+            {
+                Selection.Clear();
+                return;
+            }
 
-            foreach (Ship _s in Ships)
+            var _iNames = Selection.Select(x => x.Name);
+
+            foreach (Ship _s in UIBindings.Get(Ships))
             {
                 foreach (Item _i in _s.Inventory)
                 {
+                    _iNames = _iNames.Intersect(
+                        _s.Inventory.Select(x => x.Name));
                     ApInventoryPost _post = Items.Find(x => x.Name == _i.Name);
                     if (_post == null)
                     {
@@ -91,6 +87,17 @@ namespace Apollyon
                     {
                         _post.Items.Add(_i);
                     }
+                }
+            }
+
+            if (UIBindings.Get(Ships).Count > 1) return;
+            //fix this in future (deselecting any item not present on any
+            //selected ship
+            for(int i = 0; i < Selection.Count; i++)
+            {
+                ApInventoryPost _i = Selection[i];
+                if(!_iNames.Contains(_i.Name)) {
+                    Selection.Remove(_i);
                 }
             }
         }
@@ -125,7 +132,8 @@ namespace Apollyon
 
                 foreach (ApInventoryPost _i in Items)
                 {
-                    if (Selection.Contains(_i))
+                    //if (Selection.Contains(_i))
+                    if (Selection.Find(x => x.Name.Equals(_i.Name)) != null)
                     {
                         spriteBatch.Draw(
                             Res.OneByOne,
@@ -149,7 +157,8 @@ namespace Apollyon
                             indent,
                             _currentY
                         ),
-                        Ships.Count > 1 ? Color.DarkGray : Color.White
+                        UIBindings.Get(Ships).Count > 1
+                            ? Color.DarkGray : Color.White
                     );
                     _currentY += _offs;
                 }
@@ -178,10 +187,13 @@ namespace Apollyon
                     return;
                 }
 
-                if (Selection.Contains(Items[_item]))
+                ApInventoryPost _find = 
+                    Selection.Find(
+                    x => x.Name.Equals(Items[_item].Name));
+                if (_find != null)
                 {
                     Selection.Remove(
-                        Items[_item]
+                        _find
                     );
                 }
                 else
@@ -193,9 +205,9 @@ namespace Apollyon
                 if (
                     (DateTime.Now - lastLeftClick).Milliseconds
                     < Game.DoubleClickTime
-                    && Ships.Count == 1
+                    && UIBindings.Get(Ships).Count == 1
                 ) {
-                    Items[_item].Items[0].Use(Ships[0]);
+                    Items[_item].Items[0].Use(UIBindings.Get(Ships)[0]);
                 }
 
                 lastLeftClick = DateTime.Now;

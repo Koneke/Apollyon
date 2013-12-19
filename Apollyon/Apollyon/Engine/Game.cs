@@ -19,6 +19,9 @@ namespace Apollyon
 
         public static bool HasFocus = true;
 
+        public static List<Ship> Selected;
+        public static List<Ship> Targeted;
+
         public enum TargetingType {
             Cycle,
             Weakest,
