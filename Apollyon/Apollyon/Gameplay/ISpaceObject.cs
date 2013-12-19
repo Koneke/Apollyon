@@ -16,5 +16,6 @@ namespace Apollyon
         double GetRotation();
         List<string> GetTags();
         bool GetVisible();
+        float GetDepth();
     }
 }

@@ -32,6 +32,9 @@ namespace Apollyon
 
         public double GetRotation() { return 0; }
 
+        public float GetDepth() {
+            return 0f; }
+
         /*-------*/
 
         public Ship Carrier;

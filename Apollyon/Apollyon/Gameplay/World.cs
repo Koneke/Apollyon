@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -161,7 +162,6 @@ namespace Apollyon
                     _s.Die();
                     Game.Fleet.Remove(_s);
                 }
-                //Ships = Ships.FindAll(x => x.Shield.Current > 0);
                 SpaceObjects = SpaceObjects.FindAll
                     (x =>
                         !x.GetTags().Contains("Ship") ||
@@ -172,24 +172,31 @@ namespace Apollyon
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (ISpaceObject _so in SpaceObjects)
+            string _hoverText = "";
+            MouseState _ms = Mouse.GetState();
+
+            //foreach (ISpaceObject _so in SpaceObjects)
+            foreach (ISpaceObject _so in
+                SpaceObjects.OrderBy(x => x.GetDepth())
+                )
             {
                 if(!_so.GetVisible()) continue;
+
+                #region maindrawing
                 spriteBatch.Begin();
 
                 Vector2 _sp = Game.Camera.WorldToScreen(_so.GetPosition());
 
-                Rectangle _shipRect =
-                    new Rectangle(
-                        (int)(_sp.X),
-                        (int)(_sp.Y),
-                        (int)(_so.GetSize().X * Camera.GetZoom()),
-                        (int)(_so.GetSize().Y * Camera.GetZoom())
-                    );
+                Rectangle _screenRect = new Rectangle(
+                    (int)(_sp.X),
+                    (int)(_sp.Y),
+                    (int)(_so.GetSize().X * Camera.GetZoom()),
+                    (int)(_so.GetSize().Y * Camera.GetZoom())
+                );
 
                 spriteBatch.Draw(
                     _so.GetTexture(),
-                    _shipRect,
+                    _screenRect,
                     null,
                     Color.White,
                     (float)_so.GetRotation(),
@@ -201,26 +208,11 @@ namespace Apollyon
                 );
 
                 spriteBatch.End();
-            }
+                #endregion
 
-
-            string _hoverText = "";
-            MouseState _ms = Mouse.GetState();
-
-            foreach (ISpaceObject _so in SpaceObjects)
-            {
-                Rectangle _screenRect = new Rectangle(
-                    (int)(Camera.WorldToScreen(_so.GetPosition()).X),
-                    (int)(Camera.WorldToScreen(_so.GetPosition()).Y),
-                    (int)(_so.GetSize().X * Camera.GetZoom()),
-                    (int)(_so.GetSize().Y * Camera.GetZoom())
-                );
-
+                #region selectionboxes
                 _screenRect.Offset(
-                    new Point(
-                        -_screenRect.Width / 2,
-                        -_screenRect.Width / 2
-                    )
+                    new Point(-_screenRect.Width / 2, -_screenRect.Width / 2)
                 );
 
                 if (_so.GetTags().Contains("Ship"))
@@ -252,8 +244,9 @@ namespace Apollyon
                         if(_selected) _screenRect.Offset(new Point(1, 1));
                     }
                 }
+                #endregion
 
-                if(_screenRect.Contains(new Point(_ms.X, _ms.Y))) {
+                if (_screenRect.Contains(new Point(_ms.X, _ms.Y))) {
                     _hoverText += "\n" + _so.GetName();
                 }
             }

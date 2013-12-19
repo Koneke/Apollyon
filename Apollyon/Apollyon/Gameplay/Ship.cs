@@ -35,6 +35,8 @@ namespace Apollyon
         public double GetRotation() {
             return Direction; }
 
+        public float GetDepth() { //0 middle, <0 behind, >0 in front
+            return 1; }
 
         public double Direction;
         public float Speed;
