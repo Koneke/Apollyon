@@ -229,7 +229,13 @@ namespace Apollyon
                     < Game.DoubleClickTime
                     && UIBindings.Get(Ships).Count == 1
                 ) {
-                    Items[_item].Items[0].Use(UIBindings.Get(Ships)[0]);
+
+                    for(int i = 0; i < Items[_item].Count; i++)
+                    {
+                        Item _i = Items[_item].Items[i];
+                        _i.Use();
+                    }
+
                 }
 
                 lastLeftClick = DateTime.Now;

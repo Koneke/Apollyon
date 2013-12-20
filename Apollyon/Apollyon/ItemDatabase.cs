@@ -54,7 +54,8 @@ namespace Apollyon
                     _template.Tags.Add(_tag.Value);
                 }
 
-                _template.Stacking = _e.Element("stacking").Equals("false") ?
+                _template.Stacking = _e.Element("stacking").
+                    Value.Equals("false") ?
                     false : true;
 
                 XElement _weapon = _e.Element("weapon");
@@ -83,8 +84,10 @@ namespace Apollyon
         {
             Item _i;
 
-            if (_template.Weapon == null)
+            if (_template.Weapon != null)
+            {
                 _i = new ComponentItem();
+            }
             else
                 _i = new Item();
 
@@ -94,7 +97,7 @@ namespace Apollyon
             _i.Tags = new List<string>(_template.Tags);
             _i.Stacking = _template.Stacking;
 
-            if (_template.Weapon == null)
+            if (_template.Weapon != null)
             {
                 ComponentItem _ci = (ComponentItem)_i;
                 Weapon _w = new Weapon(
@@ -105,6 +108,7 @@ namespace Apollyon
                 _w.BeamThickness = _template.Weapon.BeamThickness;
                 _ci.Component = _w;
                 _i = _ci;
+                return _ci;
             }
 
             return _i;

@@ -19,11 +19,11 @@ namespace Apollyon
             Component = _component;
         }
 
-        public override void RealUse(Ship _user)
+        public override void RealUse()
         {
-            _user.Inventory.Remove(this);
-            _user.Components.Add(Component);
-            Component.Parent = _user;
+            Carrier.Inventory.Remove(this);
+            Carrier.Components.Add(Component);
+            Component.Parent = Carrier;
         }
     }
 }

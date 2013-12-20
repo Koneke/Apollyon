@@ -7,6 +7,7 @@
     
     <tags>
       <tag>weapon</tag>
+      <tag>item</tag>
     </tags>
     
     <stacking>false</stacking>
@@ -20,12 +21,33 @@
   </item>
 
   <item>
+    <name>Heavy Blaster</name>
+    <id>1101</id>
+    <texture>generic</texture>
+
+    <tags>
+      <tag>weapon</tag>
+      <tag>item</tag>
+    </tags>
+
+    <stacking>false</stacking>
+
+    <weapon>
+      <!--info for when equipped-->
+      <damage>7</damage>
+      <frequency>140</frequency>
+      <beamthickness>3</beamthickness>
+    </weapon>
+  </item>
+
+  <item>
     <name>Coal</name>
     <id>1000</id>
     <texture>generic</texture>
     
     <tags>
       <tag>weapon</tag>
+      <tag>item</tag>
     </tags>
     
     <stacking>false</stacking>

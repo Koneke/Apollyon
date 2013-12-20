@@ -59,12 +59,12 @@ namespace Apollyon
             Tags.Add("Item");
         }
 
-        public void Use(Ship _user)
+        public void Use()
         {
-            RealUse(_user);
+            RealUse();
         }
 
-        public virtual void RealUse(Ship _user)
+        public virtual void RealUse()
         {
         }
     }

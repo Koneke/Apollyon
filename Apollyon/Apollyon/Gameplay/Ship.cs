@@ -54,7 +54,6 @@ namespace Apollyon
             Vector2 _position
         ) {
             Name = ShipNameGenerator.GenerateName();
-            //Position = new Vector2(0, 0);
             Position = _position;
             TargetPosition = Position;
             Direction = Math.PI;
@@ -102,7 +101,7 @@ namespace Apollyon
                 {
                     foreach (ISpaceObject _si in
                         Game.World.SpaceObjects.FindAll(
-                        x => x.GetTags().Contains("Item")))
+                        x => x.GetTags().Contains("item")))
                     {
                         Item _i = (Item)_si;
                         if (_i.Carrier == null)
@@ -188,7 +187,6 @@ namespace Apollyon
             }
 
             float _d = Vector2.Distance(Position, TargetPosition);
-            //Speed = 1;
             float _magicNumber = 60;
             float _targetSpeed = _d < _magicNumber * MaxSpeed ?
                 _d / (_magicNumber * MaxSpeed) : MaxSpeed;

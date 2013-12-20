@@ -55,43 +55,27 @@ namespace Apollyon
 
             //test stuff
             Ship _s = new Ship(new Vector2(100, 300));
-            //world.Ships.Add(_s);
             world.SpaceObjects.Add(_s);
             Game.Fleet.Add(_s);
 
-            _s.AddComponent(new Weapon("Railgun", 1100));
-            Weapon _blaster = new Weapon("Heavy Blaster", 1101);
-            _blaster.Frequency = 140;
-            _blaster.Damage = 7;
-            _blaster.BeamThickness = 3;
-            /*ComponentItem _ci = new ComponentItem(
-                "Heavy Blaster",
-                2002, //1000-2000 weapons
-                      //2000-3000 the items for those weapons
-                _blaster);
-            _ci.Carrier = _s;
-            _s.AddItem(_ci);*/
-            _s.AddItem(
-                ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1100)
-                )
-            );
+            _s.AddItem(ItemDatabase.Spawn(
+                ItemDatabase.Items.Find(x => x.ID == 1101)));
 
-            ComponentItem _ci = new ComponentItem(
-                "Railgun",
-                2001,
-                new Weapon("Railgun", 1100)
-            );
-            _ci.Position = _s.Position;
-            Game.World.SpaceObjects.Add(_ci);
+            _s.AddItem(ItemDatabase.Spawn(
+                ItemDatabase.Items.Find(x => x.ID == 1100)));
+
+            Item _i = ItemDatabase.Spawn(
+                ItemDatabase.Items.Find(x => x.ID == 1100));
+            _i.Position = new Vector2(150, 150);
+            //fluent interfaces for items pls
+            Game.World.SpaceObjects.Add(_i);
 
             _s = new Ship(new Vector2(300, 100));
-            //world.Ships.Add(_s);
             world.SpaceObjects.Add(_s);
             Game.Fleet.Add(_s);
-            _s.AddComponent(
-                new Weapon("Railgun", 1001)
-            );
+
+            _s.AddItem(ItemDatabase.Spawn(
+                ItemDatabase.Items.Find(x => x.ID == 1100)));
         }
 
         protected override void LoadContent()
