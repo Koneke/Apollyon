@@ -82,14 +82,15 @@ namespace Apollyon
 
         public static Item Spawn(ItemTemplate _template)
         {
-            Item _i;
+            Item _i = new Item();
 
             if (_template.Weapon != null)
             {
-                _i = new ComponentItem();
+                //_i = new ComponentItem();
+
             }
-            else
-                _i = new Item();
+            /*else {
+                _i = new Item();*/
 
             _i.Name = _template.Name;
             _i.ID = _template.ID;
@@ -99,16 +100,16 @@ namespace Apollyon
 
             if (_template.Weapon != null)
             {
-                ComponentItem _ci = (ComponentItem)_i;
+                //ComponentItem _ci = (ComponentItem)_i;
                 Weapon _w = new Weapon(
                     _template.Name,
                     _template.ID);
                 _w.Damage = _template.Weapon.Damage;
                 _w.Frequency = _template.Weapon.Frequency;
                 _w.BeamThickness = _template.Weapon.BeamThickness;
-                _ci.Component = _w;
-                _i = _ci;
-                return _ci;
+                _i.Component = _w;
+                //_i = _ci;
+                //return _ci;
             }
 
             return _i;

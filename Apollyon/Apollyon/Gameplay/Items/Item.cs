@@ -59,6 +59,9 @@ namespace Apollyon
             Tags.Add("Item");
         }
 
+        /*optional bits*/
+        public ShipComponent Component;
+
         public void Use()
         {
             RealUse();
@@ -66,6 +69,12 @@ namespace Apollyon
 
         public virtual void RealUse()
         {
+            if (Component != null)
+            {
+                Carrier.Inventory.Remove(this);
+                Carrier.Components.Add(Component);
+                Component.Parent = Carrier;
+            }
         }
     }
 }
