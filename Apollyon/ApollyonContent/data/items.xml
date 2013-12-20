@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<items>
+  <item>
+    <name>Railgun</name>
+    <id>1100</id>
+    <texture>generic</texture>
+    
+    <tags>
+      <tag>weapon</tag>
+    </tags>
+    
+    <stacking>false</stacking>
+
+    <weapon>
+      <!--info for when equipped-->
+      <damage>3</damage>
+      <frequency>60</frequency>
+      <beamthickness>1</beamthickness>
+    </weapon>
+  </item>
+
+  <item>
+    <name>Coal</name>
+    <id>1000</id>
+    <texture>generic</texture>
+    
+    <tags>
+      <tag>weapon</tag>
+    </tags>
+    
+    <stacking>false</stacking>
+  </item>
+
+</items>

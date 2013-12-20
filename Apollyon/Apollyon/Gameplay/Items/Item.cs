@@ -20,8 +20,9 @@ namespace Apollyon
         public Vector2 GetSize() {
             return new Vector2(16, 16); }
 
+        public Texture2D Texture;
         public Texture2D GetTexture() {
-            return Res.Ship; }
+            return Texture; }
 
         public List<string> Tags;
         public List<string> GetTags() {

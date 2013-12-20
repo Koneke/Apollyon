@@ -175,7 +175,6 @@ namespace Apollyon
             string _hoverText = "";
             MouseState _ms = Mouse.GetState();
 
-            //foreach (ISpaceObject _so in SpaceObjects)
             foreach (ISpaceObject _so in
                 SpaceObjects.OrderBy(x => x.GetDepth())
                 )
@@ -195,7 +194,7 @@ namespace Apollyon
                 );
 
                 spriteBatch.Draw(
-                    _so.GetTexture(),
+                    _so.GetTexture()??Res.Textures["generic"],
                     _screenRect,
                     null,
                     Color.White,

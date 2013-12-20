@@ -113,6 +113,7 @@
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Gameplay\Items\Item.cs" />
     <Compile Include="Engine\Particle.cs" />
+    <Compile Include="ItemDatabase.cs" />
     <Compile Include="UI\UIBindings.cs" />
     <Compile Include="UI\UILoader.cs" />
     <Compile Include="UI\Windows\ApStatusWindow.cs" />

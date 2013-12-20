@@ -48,6 +48,7 @@ namespace Apollyon
             UIBindings.Bind("All", Game.Fleet);
 
             LoadUI();
+            ItemDatabase.LoadData();
             world = new World();
             Game.World = world;
             Game.Camera = world.Camera;
@@ -58,24 +59,28 @@ namespace Apollyon
             world.SpaceObjects.Add(_s);
             Game.Fleet.Add(_s);
 
-            _s.AddComponent(new Weapon("Railgun", 1001));
-            Weapon _blaster = new Weapon("Heavy Blaster", 1002);
+            _s.AddComponent(new Weapon("Railgun", 1100));
+            Weapon _blaster = new Weapon("Heavy Blaster", 1101);
             _blaster.Frequency = 140;
             _blaster.Damage = 7;
             _blaster.BeamThickness = 3;
-            ComponentItem _ci = new ComponentItem(
+            /*ComponentItem _ci = new ComponentItem(
                 "Heavy Blaster",
                 2002, //1000-2000 weapons
                       //2000-3000 the items for those weapons
                 _blaster);
             _ci.Carrier = _s;
-            //_s.Inventory.Add(_ci);
-            _s.AddItem(_ci);
+            _s.AddItem(_ci);*/
+            _s.AddItem(
+                ItemDatabase.Spawn(
+                ItemDatabase.Items.Find(x => x.ID == 1100)
+                )
+            );
 
-            _ci = new ComponentItem(
+            ComponentItem _ci = new ComponentItem(
                 "Railgun",
                 2001,
-                new Weapon("Railgun", 1001)
+                new Weapon("Railgun", 1100)
             );
             _ci.Position = _s.Position;
             Game.World.SpaceObjects.Add(_ci);
@@ -97,6 +102,7 @@ namespace Apollyon
             Res.Background = Content.Load<Texture2D>("gfx/background");
             Res.Ship = Content.Load<Texture2D>("gfx/ship");
             Res.LogFont = Content.Load<SpriteFont>("Logfont");
+            Res.Textures.Add("generic", Content.Load<Texture2D>("gfx/generic"));
         }
 
         protected override void UnloadContent()
@@ -121,7 +127,8 @@ namespace Apollyon
 
             Particle.Particles =
                 Particle.Particles.FindAll(
-                    x => (DateTime.Now - x.Created).TotalMilliseconds < x.LifeTime);
+                    x => (DateTime.Now - x.Created).TotalMilliseconds
+                        < x.LifeTime);
             foreach (Particle _p in Particle.Particles)
                 _p.Update();
 

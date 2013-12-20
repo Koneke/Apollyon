@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
@@ -10,6 +11,9 @@ namespace Apollyon
         public static Texture2D Background;
         public static Texture2D Ship;
         public static SpriteFont LogFont;
+
+        public static Dictionary<string, Texture2D> Textures =
+            new Dictionary<string,Texture2D>();
 
         /* word wrapping fr http://www.xnawiki.com/index.php/Basic_Word_Wrapping
          * because I can't be arsed with writing this again */
