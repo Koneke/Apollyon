@@ -18,7 +18,7 @@ namespace Apollyon
 
         //weapons and similar
         public bool NeedsTarget = true; //add to ctor later
-        public List<ISpaceObject> Targets;
+        public List<SpaceObject> Targets;
         public Game.TargetingType TargetingType;
 
         public ShipComponent(string _name, int _id)

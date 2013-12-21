@@ -198,12 +198,12 @@ namespace Apollyon
                             String.Join(
                                 ", ",
                                 UIBindings.Get("Selected").Select(
-                                    x => x.GetName())
+                                    x => x.Name)
                                 ) + " to " +
                             String.Join(
                                 ", ",
                                 UIBindings.Get("Targeted").Select(
-                                    x => x.GetName())
+                                    x => x.Name)
                                 ) + "."
                         );
 
@@ -217,7 +217,7 @@ namespace Apollyon
                                 {
                                     _c.Active = true;
                                     _c.Targets =
-                                        new List<ISpaceObject>(
+                                        new List<SpaceObject>(
                                         UIBindings.Get("Targeted"));
                                 }
                             }

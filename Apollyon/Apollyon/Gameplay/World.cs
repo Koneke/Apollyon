@@ -14,7 +14,7 @@ namespace Apollyon
         {
             get { return new Vector2(Camera.X, Camera.Y); }
         }
-        public List<ISpaceObject> SpaceObjects;
+        public List<SpaceObject> SpaceObjects;
 
         public float Timer; //ms timer
 
@@ -23,7 +23,7 @@ namespace Apollyon
 
         public World()
         {
-            SpaceObjects = new List<ISpaceObject>();
+            SpaceObjects = new List<SpaceObject>();
             Camera = new Camera();
         }
 
@@ -34,7 +34,7 @@ namespace Apollyon
             Camera.Input(ms, oms);
 
             foreach (Ship _s in SpaceObjects.FindAll(
-                x => x.GetTags().Contains("ship")))
+                x => x.Tags.Contains("ship")))
             {
                 _s.Input(ks, oks, ms, oms);
             }
@@ -69,7 +69,7 @@ namespace Apollyon
             ) {
                 Game.Selected.Clear();
                 foreach (Ship _s in SpaceObjects.FindAll(
-                    x => x.GetTags().Contains("ship")))
+                    x => x.Tags.Contains("ship")))
                 {
                     Rectangle _box = boxSelection;
 
@@ -85,10 +85,10 @@ namespace Apollyon
                         _box.Height *= -1;
                     }
 
-                    List<ISpaceObject> _list;
+                    List<SpaceObject> _list;
 
                     _list = Game.World.SpaceObjects.FindAll(
-                        x => x.GetTags().Contains("ship"));
+                        x => x.Tags.Contains("ship"));
 
                     if (_list != null)
                     {
@@ -147,12 +147,12 @@ namespace Apollyon
             while (Timer > Game.TickTime)
             {
                 foreach (Ship _s in SpaceObjects.FindAll(
-                    x => x.GetTags().Contains("ship")))
+                    x => x.Tags.Contains("ship")))
                 {
                     _s.Update();
                 }
                 foreach (Ship _s in SpaceObjects
-                    .FindAll(x => x.GetTags().Contains("ship"))
+                    .FindAll(x => x.Tags.Contains("ship"))
                     .FindAll(x => ((Ship)x).Shield.Current <= 0))
                 {
                     _s.Die();
@@ -160,7 +160,7 @@ namespace Apollyon
                 }
                 SpaceObjects = SpaceObjects.FindAll
                     (x =>
-                        !x.GetTags().Contains("ship") ||
+                        !x.Tags.Contains("ship") ||
                         ((Ship)x).Shield.Current > 0);
                 Timer -= Game.TickTime;
             }
@@ -171,35 +171,35 @@ namespace Apollyon
             string _hoverText = "";
             MouseState _ms = Mouse.GetState();
 
-            foreach (ISpaceObject _so in
+            foreach (SpaceObject _so in
                 SpaceObjects
                 .FindAll(x => !x.HasTag("carried"))
-                .OrderBy(x => x.GetDepth())
+                .OrderBy(x => x.Depth)
                 )
             {
-                if(!_so.GetVisible()) continue;
+                if(!_so.Visible) continue;
 
                 #region maindrawing
                 spriteBatch.Begin();
 
-                Vector2 _sp = Game.Camera.WorldToScreen(_so.GetPosition());
+                Vector2 _sp = Game.Camera.WorldToScreen(_so.Position);
 
                 Rectangle _screenRect = new Rectangle(
                     (int)(_sp.X),
                     (int)(_sp.Y),
-                    (int)(_so.GetSize().X * Camera.GetZoom()),
-                    (int)(_so.GetSize().Y * Camera.GetZoom())
+                    (int)(_so.Size.X * Camera.GetZoom()),
+                    (int)(_so.Size.Y * Camera.GetZoom())
                 );
 
                 spriteBatch.Draw(
-                    _so.GetTexture()??Res.Textures["generic"],
+                    _so.Texture??Res.Textures["generic"],
                     _screenRect,
                     null,
                     Color.White,
-                    (float)_so.GetRotation(),
+                    (float)_so.Rotation,
                     new Vector2(
-                        _so.GetSize().X / 2,
-                        _so.GetSize().Y / 2
+                        _so.Size.X / 2,
+                        _so.Size.Y / 2
                         ),
                     SpriteEffects.None, 0f
                 );
@@ -212,7 +212,7 @@ namespace Apollyon
                     new Point(-_screenRect.Width / 2, -_screenRect.Width / 2)
                 );
 
-                if (_so.GetTags().Contains("ship"))
+                if (_so.Tags.Contains("ship"))
                 {
                     bool _selected = UIBindings.Get("Selected").
                         Contains((Ship)_so);
@@ -244,7 +244,7 @@ namespace Apollyon
                 #endregion
 
                 if (_screenRect.Contains(new Point(_ms.X, _ms.Y))) {
-                    _hoverText += "\n" + _so.GetName();
+                    _hoverText += "\n" + _so.Name;
                 }
             }
 

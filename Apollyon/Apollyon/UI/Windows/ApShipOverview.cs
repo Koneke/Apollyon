@@ -56,7 +56,7 @@ namespace Apollyon
 
             foreach (Ship _s in
                 Game.World.SpaceObjects.FindAll(
-                x => x.GetTags().Contains("ship"))
+                x => x.Tags.Contains("ship"))
                 )
             {
                 if (UIBindings.Get(Selection).Contains(_s))
@@ -105,7 +105,7 @@ namespace Apollyon
                 _item /= _itemHeight;
                 int _index = (int)_item;
 
-                List<ISpaceObject> _q =
+                List<SpaceObject> _q =
                     Utility.QuerySpace(new List<string> { "ship" });
 
                 if (_index >= _q.Count)

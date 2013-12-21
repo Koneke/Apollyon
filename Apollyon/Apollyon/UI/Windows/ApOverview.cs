@@ -18,7 +18,7 @@ namespace Apollyon
         public bool Any; //search for ANY tag or ALL tags
         public List<string> Sources; //list of all tags looked for in space
         public List<string> Filters;
-        List<ISpaceObject> list;
+        List<SpaceObject> list;
 
         public ApOverview(
             int _x, int _y, int _w, int _h
@@ -60,11 +60,11 @@ namespace Apollyon
             float _offs = Res.LogFont.MeasureString("ship").Y;
 
             spriteBatch.Begin();
-            foreach (ISpaceObject _i in list)
+            foreach (SpaceObject _i in list)
             {
                 spriteBatch.DrawString(
                     Res.LogFont,
-                    _i.GetName(),
+                    _i.Name,
                     new Vector2(indent, _currentY),
                     Color.White
                 );

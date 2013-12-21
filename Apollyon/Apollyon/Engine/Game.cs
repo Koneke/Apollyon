@@ -22,9 +22,9 @@ namespace Apollyon
         public static bool HasFocus = true;
 
         //public static List<Ship> Selected;
-        public static List<ISpaceObject> Fleet = new List<ISpaceObject>();
-        public static List<ISpaceObject> Selected = new List<ISpaceObject>();
-        public static List<ISpaceObject> Targeted = new List<ISpaceObject>();
+        public static List<SpaceObject> Fleet = new List<SpaceObject>();
+        public static List<SpaceObject> Selected = new List<SpaceObject>();
+        public static List<SpaceObject> Targeted = new List<SpaceObject>();
 
         public enum TargetingType {
             Cycle,

@@ -9,15 +9,16 @@ namespace Apollyon
 {
     class Utility
     {
-        public static List<ISpaceObject> QuerySpace(
+        public static List<SpaceObject> QuerySpace(
             List<string> _tags,
             //any or all, any = objects having any one tag, all is obv
             bool any = false
         ) {
-            List<ISpaceObject> _r = Game.World.SpaceObjects;
+            List<SpaceObject> _r = Game.World.SpaceObjects;
             if (any)
             {
-                _r = _r.FindAll(x => x.GetTags().Any(y => _tags.Contains(y)));
+                //_r = _r.FindAll(x => x.GetTags().Any(y => _tags.Contains(y)));
+                _r = _r.FindAll(x => x.Tags.Any(y => _tags.Contains(y)));
             }
             else
             {
@@ -29,10 +30,11 @@ namespace Apollyon
             return _r;
         }
 
-        public static void Tag(ISpaceObject _i, string _tag)
+        public static void Tag(SpaceObject _i, string _tag)
         {
-            _i.GetTags().Add(_tag);
-            _i.SetTags(_i.GetTags().Distinct().ToList());
+            _i.Tags.Add(_tag);
+            _i.Tags = _i.Tags.Distinct().ToList();
+            //_i.SetTags(_i.GetTags().Distinct().ToList());
         }
 
         //put the colour stuff somewhere else, this class is a bit messy AON 

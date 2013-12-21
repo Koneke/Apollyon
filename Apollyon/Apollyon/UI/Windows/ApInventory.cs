@@ -179,7 +179,7 @@ namespace Apollyon
             if(UIBindings.Get("Selected").Count == 1) {
                 if (ms.RightButton == ButtonState.Pressed &&
                     oms.RightButton == ButtonState.Released &&
-                    UIBindings.Get("Selected")[0].GetTags().Contains("ship")
+                    UIBindings.Get("Selected")[0].Tags.Contains("ship")
                     )
                 {
                     float _itemHeight = Res.LogFont.MeasureString("ship").Y;

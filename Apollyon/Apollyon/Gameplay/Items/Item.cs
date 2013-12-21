@@ -6,39 +6,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
 {
-    class Item : ISpaceObject
+    class Item : SpaceObject
     {
-        //iso impl
-        public string Name;
-        public string GetName() {
-            return Name; }
-
-        public Vector2 Position;
-        public Vector2 GetPosition() {
-            return Position; }
-
-        public Vector2 GetSize() {
-            return new Vector2(16, 16); }
-
-        public Texture2D Texture;
-        public Texture2D GetTexture() {
-            return Texture; }
-
-        public List<string> Tags;
-        public List<string> GetTags() {
-            return Tags; }
-        public void SetTags(List<string> _tags) {
-            Tags = _tags; }
-        public bool HasTag(string _tag) {
-            return Tags.Contains(_tag.ToLower()); }
-
-        public bool GetVisible() {
-            return Carrier == null; }
-
-        public double GetRotation() { return 0; }
-
-        public float GetDepth() {
-            return 0f; }
+        public override bool Visible
+        {
+            get { return Carrier == null; }
+        }
 
         /*-------*/
 
@@ -62,6 +35,7 @@ namespace Apollyon
             Carrier = null;
             Tags = new List<string>();
             Tags.Add("Item");
+            Size = new Vector2(16, 16);
 
             if (_inSpace) {
                 Game.World.SpaceObjects.Add(this); }

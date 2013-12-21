@@ -8,39 +8,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
 {
-    class Ship : ISpaceObject
+    class Ship : SpaceObject
     {
-        //ISpaceObject impl
-        public string Name;
-        public string GetName() {
-            return Name; }
-
-        public Vector2 Position;
-        public Vector2 GetPosition() {
-            return Position; }
-
-        public Vector2 GetSize() {
-            return new Vector2(32, 32); }
-
-        public Texture2D GetTexture() {
-            return Res.Ship; }
-
-        public List<string> Tags;
-        public List<string> GetTags() {
-            return Tags; }
-        public void SetTags(List<string> _tags) {
-            Tags = _tags; }
-        public bool HasTag(string _tag) {
-            return Tags.Contains(_tag.ToLower()); }
-
-        public bool GetVisible() {
-            return true; }
-
-        public double GetRotation() {
-            return Direction; }
-
-        public float GetDepth() { //0 middle, <0 behind, >0 in front
-            return 1; }
+        public override double Rotation {
+            get { return Direction; } }
 
         public double Direction;
         public float Speed;
@@ -58,7 +29,9 @@ namespace Apollyon
             Vector2 _position
         ) {
             Name = ShipNameGenerator.GenerateName();
+            Texture = Res.Ship;
             Position = _position;
+            Size = new Vector2(32, 32);
             TargetPosition = Position;
             Direction = Math.PI;
             Speed = 0;
@@ -72,6 +45,9 @@ namespace Apollyon
 
             Tags = new List<string>();
             Tags.Add("ship");
+
+            Visible = true;
+            Depth = 1;
         }
 
         public void AddComponent(ShipComponent _sc)
@@ -123,16 +99,16 @@ namespace Apollyon
             {
                 if (UIBindings.Get("Selected").Contains(this))
                 {
-                    foreach (ISpaceObject _si in
+                    foreach (SpaceObject _si in
                         Game.World.SpaceObjects.FindAll(
-                        x => x.GetTags().Contains("item")))
+                        x => x.Tags.Contains("item")))
                     {
                         Item _i = (Item)_si;
                         if (_i.Carrier == null)
                         {
                             if (Vector2.Distance(
                                     Position,
-                                    _si.GetPosition()
+                                    _si.Position
                                 ) < 100)
                             {
                                 AddItem(_i);
@@ -148,7 +124,6 @@ namespace Apollyon
 
         public void Die()
         {
-            //foreach (Item _i in Inventory)
             while(Inventory.Count > 0)
             {
                 Item _i = Inventory[0];
@@ -156,12 +131,6 @@ namespace Apollyon
                 _i.Position = Position + new Vector2(
                         Game.Random.Next(-3, 4),
                         Game.Random.Next(-3, 4));
-                /*
-                _i.Carrier = null;
-                _i.Position = Position + new Vector2(
-                        Game.Random.Next(-3, 4),
-                        Game.Random.Next(-3, 4));
-                Game.World.SpaceObjects.Add(_i);*/
             }
 
             new ParticleSpawn(

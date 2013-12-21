@@ -7,8 +7,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
 {
-    class Container : ISpaceObject
+    class Container : SpaceObject
     {
+        /*
         public string Name;
         public string GetName() {
             return Name; }
@@ -39,5 +40,6 @@ namespace Apollyon
 
         public float GetDepth() { //0 middle, <0 behind, >0 in front
             return 1; }
+         * */
     }
 }
