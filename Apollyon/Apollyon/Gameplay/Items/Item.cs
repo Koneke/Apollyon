@@ -15,7 +15,9 @@ namespace Apollyon
 
         /*-------*/
 
-        public Ship Carrier;
+        //switch to SpaceObject to account for containers and such
+        //public Ship Carrier;
+        public SpaceObject Carrier;
 
         public int Count;
         public Boolean Stacking;
@@ -57,11 +59,14 @@ namespace Apollyon
 
         public virtual void RealUse()
         {
+            //for now, only ships use items
+            if (!Carrier.HasTag("ship")) return;
             if (Component != null)
             {
-                Carrier.Inventory.Remove(this);
-                Carrier.Components.Add(Component);
-                Component.Parent = Carrier;
+                Ship _carrier = Carrier as Ship;
+                _carrier.Inventory.Remove(this);
+                _carrier.Components.Add(Component);
+                Component.Parent = _carrier;
             }
         }
     }

@@ -103,7 +103,6 @@ namespace Apollyon
                             )
                         )
                         {
-                            //Game.Selected.Add(_s);
                             UIBindings.Get("Selected").Add(_s);
                         }
                     }
@@ -117,12 +116,10 @@ namespace Apollyon
                 oms.RightButton == ButtonState.Released &&
                 !ApWindow.PointInWindow(new Point(ms.X, ms.Y))
             ) {
-                //if (Game.Selected.Count > 0)
                 if (UIBindings.Get("Selected").Count > 0)
                 {
                     Vector2 _avgPosition = new Vector2(0, 0);
 
-                    //foreach (Ship _s in Game.Selected)
                     foreach (Ship _s in UIBindings.Get("Selected"))
                     {
                         _avgPosition.X += _s.Position.X;
@@ -150,8 +147,6 @@ namespace Apollyon
             Timer += gameTime.ElapsedGameTime.Milliseconds;
             while (Timer > Game.TickTime)
             {
-                /*foreach (Ship _s in SpaceObjects.FindAll(
-                    x => x.Tags.Contains("ship")))*/
                 foreach(SpaceObject _so in SpaceObjects)
                 {
                     _so.Update();
@@ -160,20 +155,9 @@ namespace Apollyon
                     x => x.Health <= 0)) {
                         _so.Die();
                 }
-                /*
-                foreach (Ship _s in SpaceObjects
-                    .FindAll(x => x.Tags.Contains("ship"))
-                    .FindAll(x => ((Ship)x).Shield.Current <= 0))
-                {
-                    _s.Die();
-                    //Game.Fleet.Remove(_s);
-                    UIBindings.Get("All").Remove(_s);
-                }*/
                 SpaceObjects = SpaceObjects.FindAll
                     (x =>
                         x.Health > 0);
-                        //!x.Tags.Contains("ship") ||
-                        //((Ship)x).Shield.Current > 0);
                 Timer -= Game.TickTime;
             }
         }

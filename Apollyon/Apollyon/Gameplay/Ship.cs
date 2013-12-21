@@ -84,7 +84,6 @@ namespace Apollyon
         public void AddItem(Item _i)
         {
             _i.Carrier = this;
-            //check already contains?
             Utility.Tag(_i, "carried");
             Inventory.Add(_i);
         }
@@ -92,9 +91,11 @@ namespace Apollyon
         public void DropItem(Item _i)
         {
             _i.Carrier = null;
-            //check already contains?
             _i.Position = Position;
             _i.Tags.Remove("carried");
+            _i.Velocity = new Vector2(
+                -0.5f + (float)Game.Random.NextDouble(),
+                -0.5f + (float)Game.Random.NextDouble());
             Inventory.Remove(_i);
         }
 

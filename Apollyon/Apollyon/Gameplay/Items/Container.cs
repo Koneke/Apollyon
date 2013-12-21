@@ -9,14 +9,59 @@ namespace Apollyon
 {
     class Container : Item
     {
+        public List<Item> Inventory;
+
         public Container()
         {
             Name = "Generic Container";
             Texture = Res.Textures["generic"];
             Size = new Vector2(24, 24);
 
-            Utility.Tag(this, "item");
+            Inventory = new List<Item>();
 
+            Utility.Tag(this, "item");
+            Utility.Tag(this, "container");
+
+            //test stuff
+            AddItem(
+                ItemDatabase.Spawn(
+                ItemDatabase.Items.Find(x => x.ID == 1101)));
+        }
+
+        public override void Die()
+        {
+            while (Inventory.Count > 0)
+            {
+                Item _i = Inventory[0];
+                /*
+                _i.Carrier = null;
+                _i.Tags = _i.Tags.FindAll(x => !x.Equals("carried"));
+                _i.Position = Position;
+                _i.Velocity = new Vector2(
+                    -0.5f + (float)Game.Random.NextDouble(),
+                    -0.5f + (float)Game.Random.NextDouble());
+                Inventory.Remove(_i);*/
+                DropItem(_i);
+            }
+        }
+
+        //below two are clutzily ripped from ship.cs
+        public void AddItem(Item _i)
+        {
+            _i.Carrier = this;
+            Utility.Tag(_i, "carried");
+            Inventory.Add(_i);
+        }
+
+        public void DropItem(Item _i)
+        {
+            _i.Carrier = null;
+            _i.Position = Position;
+            _i.Tags.Remove("carried");
+            _i.Velocity = new Vector2(
+                -0.5f + (float)Game.Random.NextDouble(),
+                -0.5f + (float)Game.Random.NextDouble());
+            Inventory.Remove(_i);
         }
     }
 }
