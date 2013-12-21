@@ -70,8 +70,32 @@ namespace Apollyon
                 );
                 _currentY += _offs;
             }
+            
             spriteBatch.End();
+
+            DrawBorder(spriteBatch, ApWindow.StandardBorder);
         }
-        public override void OwnInput(MouseState ms, MouseState oms) { }
+        public override void OwnInput(MouseState ms, MouseState oms)
+        {
+            if (
+                ms.LeftButton == ButtonState.Pressed &&
+                oms.LeftButton == ButtonState.Released)
+            {
+
+                float _itemHeight = Res.LogFont.MeasureString("item").Y;
+                float _mouseY = ms.Y - y1;
+                int _item =
+                    (int)((_mouseY - (_mouseY % _itemHeight)) / _itemHeight);
+                int _index = (int)_item;
+
+                if (_index >= list.Count)
+                {
+                    UIBindings.Get("Selected").Clear();
+                    return;
+                }
+
+                UIBindings.Get("Selected").Add(list[_index]);
+            }
+        }
     }
 }

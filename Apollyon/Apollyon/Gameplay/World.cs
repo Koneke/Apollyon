@@ -155,6 +155,11 @@ namespace Apollyon
                 {
                     _s.Update();
                 }
+                foreach (SpaceObject _so in SpaceObjects.FindAll(
+                    x => x.Health <= 0)) {
+                        _so.Die();
+                }
+                /*
                 foreach (Ship _s in SpaceObjects
                     .FindAll(x => x.Tags.Contains("ship"))
                     .FindAll(x => ((Ship)x).Shield.Current <= 0))
@@ -162,11 +167,12 @@ namespace Apollyon
                     _s.Die();
                     //Game.Fleet.Remove(_s);
                     UIBindings.Get("All").Remove(_s);
-                }
+                }*/
                 SpaceObjects = SpaceObjects.FindAll
                     (x =>
-                        !x.Tags.Contains("ship") ||
-                        ((Ship)x).Shield.Current > 0);
+                        x.Health > 0);
+                        //!x.Tags.Contains("ship") ||
+                        //((Ship)x).Shield.Current > 0);
                 Timer -= Game.TickTime;
             }
         }
@@ -217,13 +223,14 @@ namespace Apollyon
                     new Point(-_screenRect.Width / 2, -_screenRect.Width / 2)
                 );
 
-                if (_so.Tags.Contains("ship"))
+                //if (_so.Tags.Contains("ship"))
+                if(true)
                 {
                     bool _selected = UIBindings.Get("Selected").
-                        Contains((Ship)_so);
+                        Contains(_so);
 
                     bool _targeted = UIBindings.Get("Targeted").
-                        Contains((Ship)_so);
+                        Contains(_so);
 
                     if(_selected)
                     {

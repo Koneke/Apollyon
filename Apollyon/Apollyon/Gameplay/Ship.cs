@@ -21,7 +21,31 @@ namespace Apollyon
         public float TurnSpeed = 0.01f; //rad/s
 
         public List<ShipComponent> Components;
-        public Shield Shield;
+
+        int health, maxHealth;
+        public override int Health
+        {
+            get { return Shield.Current + health; }
+            set { health = value; }
+        }
+
+        public override int MaxHealth
+        {
+            get { return Shield.Max + maxHealth; }
+            set { maxHealth = value; }
+        }
+
+        Shield Shield;
+        public override void Damage(int _damage)
+        {
+            if (Shield.Current > 0)
+            {
+                Shield.Current -= _damage;
+                _damage -= Shield.Current;
+                _damage = Math.Max(_damage, 0);
+            }
+            Health -= _damage;
+        }
 
         public List<Item> Inventory;
 
@@ -40,6 +64,7 @@ namespace Apollyon
 
             Components = new List<ShipComponent>();
             Shield = new Shield(Game.Random.Next(50, 100), 100);
+            Health = MaxHealth = 100;
 
             Inventory = new List<Item>();
 
@@ -122,7 +147,7 @@ namespace Apollyon
             }
         }
 
-        public void Die()
+        public override void Die()
         {
             while(Inventory.Count > 0)
             {
@@ -156,6 +181,8 @@ namespace Apollyon
             .RandomizeDirection((float)Math.PI*2f)
             .RandomizeColor(new Color(0f, 1f, 0f, 0f))
             .Spawn();
+
+            UIBindings.Get("All").Remove(this);
         }
 
         public void Update() //goes once per tick

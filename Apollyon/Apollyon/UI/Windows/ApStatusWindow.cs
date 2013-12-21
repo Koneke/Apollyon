@@ -35,8 +35,13 @@ namespace Apollyon
             float _percentage = 0;
             if (UIBindings.Get(Ships) != null)
             {
-                foreach (Ship _s in UIBindings.Get(Ships))
-                    _percentage += _s.Shield.getPercentage();
+                foreach (Ship _s in
+                    UIBindings.Get(Ships).FindAll(x => x.HasTag("ship")))
+                    //semi hackish, mainly here to let it keep workign while we
+                    //implement targeting things which are not ships
+                //foreach (Ship _s in UIBindings.Get(Ships))
+                    //_percentage += _s.Shield.getPercentage();
+                    _percentage += 100*((float)_s.Health/_s.MaxHealth);
                 _percentage /= UIBindings.Get(Ships).Count;
             }
 

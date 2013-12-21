@@ -17,6 +17,10 @@ namespace Apollyon
         public List<String> Tags { get; set; }
         public virtual bool Visible { get; set; }
         public float Depth { get; set; }
+        public virtual int Health { get; set; }
+        public virtual int MaxHealth { get; set; }
+        //let ship etc. override to account for shield
+        public virtual void Damage(int _damage) { }
 
         //fluent for conveniency and Vector2 is a dumb struct;
         public SpaceObject SetPosition(Vector2 _p)
@@ -29,6 +33,8 @@ namespace Apollyon
         {
             Visible = true;
             Tags = new List<string>();
+            Health = 1;
+            MaxHealth = 1;
         }
 
         public void SetTags(List<string> _tags)
@@ -37,6 +43,10 @@ namespace Apollyon
         }
         public bool HasTag(string _tag) {
             return Tags.Contains(_tag);
+        }
+
+        public virtual void Die()
+        {
         }
     }
 }

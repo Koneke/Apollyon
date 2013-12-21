@@ -7,13 +7,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
 {
-    class Container : SpaceObject
+    class Container : Item
     {
         public Container()
         {
             Name = "Generic Container";
             Texture = Res.Textures["generic"];
             Size = new Vector2(24, 24);
+
+            Utility.Tag(this, "item");
+
         }
     }
 }

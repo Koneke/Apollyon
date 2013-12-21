@@ -72,7 +72,11 @@ namespace Apollyon
 
             var _iNames = Selection.Select(x => x.Name);
 
-            foreach (Ship _s in UIBindings.Get(Ships))
+            //foreach (Ship _s in UIBindings.Get(Ships))
+            foreach (Ship _s in
+                UIBindings.Get(Ships).FindAll(x => x.HasTag("ship")))
+                //semi hackish, mainly here to let it keep workign while we
+                //implement targeting things which are not ships
             {
                 foreach (Item _i in _s.Inventory)
                 {

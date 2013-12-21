@@ -41,7 +41,6 @@ namespace Apollyon
             Game.ScreenSize.X = graphics.PreferredBackBufferWidth;
             Game.ScreenSize.Y = graphics.PreferredBackBufferHeight;
 
-            //UIBindings.Bind("Selected", Game.Selected);
             UIBindings.Bind("Selected", new List<SpaceObject>());
             UIBindings.Bind("Targeted", new List<SpaceObject>());
             UIBindings.Bind("All", new List<SpaceObject>());
@@ -52,29 +51,36 @@ namespace Apollyon
             Game.World = world;
             Game.Camera = world.Camera;
 
+            //REMEMBER: convenience while deving
+            //(so i can spawn at 0,0 and still see stuff)
+            Game.Camera.X -= 600;
+            Game.Camera.Y -= 400;
+
             //test stuff
             Ship _s = new Ship(new Vector2(100, 300));
             world.SpaceObjects.Add(_s);
-            //Game.Fleet.Add(_s);
             UIBindings.Get("All").Add(_s);
 
             _s.AddItem(ItemDatabase.Spawn(
                 ItemDatabase.Items.Find(x => x.ID == 1101)));
 
-            _s.AddItem(ItemDatabase.Spawn(
+            _s.AddItem(ItemDatabase.Spawn( //spawn into inventory
                 ItemDatabase.Items.Find(x => x.ID == 1100)));
 
-            ItemDatabase.Spawn(
+            ItemDatabase.Spawn( //spawn into space
                 ItemDatabase.Items.Find(x => x.ID == 1100))
-                .SetPosition(new Vector2(150, 150));
+                .SetPosition(new Vector2(100, 100));
+
 
             _s = new Ship(new Vector2(300, 100));
             world.SpaceObjects.Add(_s);
-            //Game.Fleet.Add(_s);
             UIBindings.Get("All").Add(_s);
 
             _s.AddItem(ItemDatabase.Spawn(
                 ItemDatabase.Items.Find(x => x.ID == 1100)));
+
+
+            Container _c = new Container();
         }
 
         protected override void LoadContent()

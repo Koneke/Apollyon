@@ -24,7 +24,7 @@ namespace Apollyon
         public Item(
             string _name = "",
             int _id = -1,
-            bool _inSpace = true,
+            bool _inSpace = true, //debuggish, leave for now
             bool _stacking = false,
             int _count = 1
         ) {
