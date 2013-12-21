@@ -66,7 +66,7 @@ namespace Apollyon
                 ItemDatabase.Items.Find(x => x.ID == 1100));
             _i.Position = new Vector2(150, 150);
             //fluent interfaces for items pls
-            Game.World.SpaceObjects.Add(_i);
+            //Game.World.SpaceObjects.Add(_i);
 
             _s = new Ship(new Vector2(300, 100));
             world.SpaceObjects.Add(_s);

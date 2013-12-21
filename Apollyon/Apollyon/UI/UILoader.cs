@@ -46,6 +46,8 @@ namespace Apollyon
                         _new = new ApStatusWindow(_x, _y, _w, _h); break;
                     case "Inventory":
                         _new = new ApInventory(_x, _y, _w, _h); break;
+                    case "Overview":
+                        _new = new ApOverview(_x, _y, _w, _h); break;
                     default:
                         throw new Exception("BAD UI TYPE");
                 }

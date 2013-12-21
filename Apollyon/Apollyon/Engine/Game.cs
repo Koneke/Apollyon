@@ -11,7 +11,6 @@ namespace Apollyon
 
         public static World World;
 
-
         public static float TickTime = 1000 / 60; //time in ms per time tick
 
         public static Boolean Verbose = false;

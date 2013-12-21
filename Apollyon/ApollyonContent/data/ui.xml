@@ -2,6 +2,24 @@
 
 <windows>
   <window>
+    <name>Generic Overview</name>
+    <type>Overview</type>
+    <position>
+      <x>640</x>
+      <y>10</y>
+      <w>200</w>
+      <h>200</h>
+    </position>
+    <tags>
+      <tag>ship</tag>
+      <tag>item</tag>
+    </tags>
+    <filters>
+      <tag>carried</tag>
+    </filters>
+  </window>
+
+  <window>
     <name>Fleet Overview</name>
     <type>ShipOverview</type>
     <position>

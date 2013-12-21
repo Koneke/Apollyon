@@ -27,6 +27,8 @@ namespace Apollyon
         public List<string> Tags;
         public List<string> GetTags() {
             return Tags; }
+        public void SetTags(List<string> _tags) {
+            Tags = _tags; }
         public bool HasTag(string _tag) {
             return Tags.Contains(_tag.ToLower()); }
 
@@ -49,6 +51,7 @@ namespace Apollyon
         public Item(
             string _name = "",
             int _id = -1,
+            bool _inSpace = true,
             bool _stacking = false,
             int _count = 1
         ) {
@@ -59,6 +62,9 @@ namespace Apollyon
             Carrier = null;
             Tags = new List<string>();
             Tags.Add("Item");
+
+            if (_inSpace) {
+                Game.World.SpaceObjects.Add(this); }
         }
 
         /*optional bits*/

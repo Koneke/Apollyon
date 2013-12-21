@@ -28,6 +28,8 @@ namespace Apollyon
         public List<string> Tags;
         public List<string> GetTags() {
             return Tags; }
+        public void SetTags(List<string> _tags) {
+            Tags = _tags; }
         public bool HasTag(string _tag) {
             return Tags.Contains(_tag.ToLower()); }
 
@@ -82,7 +84,17 @@ namespace Apollyon
         {
             _i.Carrier = this;
             //check already contains?
+            Utility.Tag(_i, "carried");
             Inventory.Add(_i);
+        }
+
+        public void DropItem(Item _i)
+        {
+            _i.Carrier = null;
+            //check already contains?
+            _i.Position = Position;
+            _i.Tags.Remove("carried");
+            Inventory.Remove(_i);
         }
 
         public void Input(
@@ -95,6 +107,16 @@ namespace Apollyon
                 if (UIBindings.Get("Selected").Contains(this))
                 {
                     Shield.Current = -1;
+                }
+            }
+            if (ks.IsKeyDown(Keys.S) && (!oks.IsKeyDown(Keys.S)))
+            {
+                if (UIBindings.Get("Selected").Contains(this))
+                {
+                    this.TargetPosition = Position+
+                        new Vector2(
+                            (float)Math.Cos(Direction)*Speed*15,
+                            (float)Math.Sin(Direction)*Speed*15);
                 }
             }
             if (ks.IsKeyDown(Keys.Z) && (!oks.IsKeyDown(Keys.Z)))
@@ -113,8 +135,9 @@ namespace Apollyon
                                     _si.GetPosition()
                                 ) < 100)
                             {
-                                _i.Carrier = this;
-                                Inventory.Add(_i);
+                                AddItem(_i);
+                                /*_i.Carrier = this;
+                                Inventory.Add(_i);*/
                                 break;
                             }
                         }
@@ -188,7 +211,15 @@ namespace Apollyon
                 .Spawn();
             }
 
+            foreach (ShipComponent _c in Components)
+            {
+                _c.Tick();
+            }
+
             float _d = Vector2.Distance(Position, TargetPosition);
+
+            //if (_d < 0.5f) return; //do something to stop on the spot turning
+
             float _magicNumber = 60;
             float _targetSpeed = _d < _magicNumber * MaxSpeed ?
                 _d / (_magicNumber * MaxSpeed) : MaxSpeed;
@@ -222,11 +253,6 @@ namespace Apollyon
                 Direction -= Math.PI * 2;
             while (Direction < 0)
                 Direction += Math.PI * 2;
-
-            foreach (ShipComponent _c in Components)
-            {
-                _c.Tick();
-            }
         }
     }
 }

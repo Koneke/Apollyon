@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gameplay\Items\Container.cs" />
     <Compile Include="Engine\LineParticle.cs" />
     <Compile Include="Gameplay\ISpaceObject.cs" />
     <Compile Include="Engine\Camera.cs" />

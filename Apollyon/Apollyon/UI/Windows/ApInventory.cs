@@ -189,14 +189,12 @@ namespace Apollyon
                     if (_item < Items.Count)
                     {
                         Item _i = Items[(int)_item].Items[0];
-                        _i.Position = _i.Carrier.Position;
-                        _i.Carrier = null;
-                        Game.World.SpaceObjects.Add(_i);
+                        //_i.Position = _i.Carrier.Position;
+                        /*_i.Carrier = null;
+                        Game.World.SpaceObjects.Add(_i);*/
 
-                        (UIBindings.Get("Selected")[0] as Ship).
-                            Inventory.RemoveAt(
-                            (int)_item
-                            );
+                        Ship _s = (UIBindings.Get("Selected")[0] as Ship);
+                        _s.DropItem(_s.Inventory[(int)_item]);
                     }
                 }
             }

@@ -15,6 +15,7 @@ namespace Apollyon
         Vector2 GetSize();
         double GetRotation();
         List<string> GetTags();
+        void SetTags(List<string> _tags);
         bool HasTag(string _tag);
         bool GetVisible();
         float GetDepth();
