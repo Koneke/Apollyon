@@ -13,12 +13,12 @@ namespace Apollyon
 
         public static void Bind(string _key, List<SpaceObject> _list)
         {
-            ShipLists.Add(_key, _list);
+            ShipLists.Add(_key.ToLower(), _list);
         }
 
         public static List<SpaceObject> Get(string _key)
         {
-            return ShipLists[_key];
+            return ShipLists[_key.ToLower()];
         }
     }
 }

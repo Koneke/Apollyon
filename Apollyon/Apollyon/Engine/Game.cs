@@ -21,10 +21,9 @@ namespace Apollyon
 
         public static bool HasFocus = true;
 
-        //public static List<Ship> Selected;
-        public static List<SpaceObject> Fleet = new List<SpaceObject>();
-        public static List<SpaceObject> Selected = new List<SpaceObject>();
-        public static List<SpaceObject> Targeted = new List<SpaceObject>();
+        //public static List<SpaceObject> Fleet = new List<SpaceObject>();
+        //public static List<SpaceObject> Selected = new List<SpaceObject>();
+        //public static List<SpaceObject> Targeted = new List<SpaceObject>();
 
         public enum TargetingType {
             Cycle,
@@ -35,7 +34,6 @@ namespace Apollyon
 
         public static void Log(string _message)
         {
-            //ApUI.CombatLog.Log.Add(_message);
             ((ApLogWindow)WindowManager.GetWindowByName("Combat Log")).
                 Log.Add(_message);
         }

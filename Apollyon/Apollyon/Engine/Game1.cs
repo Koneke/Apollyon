@@ -41,9 +41,10 @@ namespace Apollyon
             Game.ScreenSize.X = graphics.PreferredBackBufferWidth;
             Game.ScreenSize.Y = graphics.PreferredBackBufferHeight;
 
-            UIBindings.Bind("Selected", Game.Selected);
-            UIBindings.Bind("Targeted", Game.Targeted);
-            UIBindings.Bind("All", Game.Fleet);
+            //UIBindings.Bind("Selected", Game.Selected);
+            UIBindings.Bind("Selected", new List<SpaceObject>());
+            UIBindings.Bind("Targeted", new List<SpaceObject>());
+            UIBindings.Bind("All", new List<SpaceObject>());
 
             LoadUI();
             ItemDatabase.LoadData();
@@ -54,7 +55,8 @@ namespace Apollyon
             //test stuff
             Ship _s = new Ship(new Vector2(100, 300));
             world.SpaceObjects.Add(_s);
-            Game.Fleet.Add(_s);
+            //Game.Fleet.Add(_s);
+            UIBindings.Get("All").Add(_s);
 
             _s.AddItem(ItemDatabase.Spawn(
                 ItemDatabase.Items.Find(x => x.ID == 1101)));
@@ -62,15 +64,14 @@ namespace Apollyon
             _s.AddItem(ItemDatabase.Spawn(
                 ItemDatabase.Items.Find(x => x.ID == 1100)));
 
-            Item _i = ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1100));
-            _i.Position = new Vector2(150, 150);
-            //fluent interfaces for items pls
-            //Game.World.SpaceObjects.Add(_i);
+            ItemDatabase.Spawn(
+                ItemDatabase.Items.Find(x => x.ID == 1100))
+                .SetPosition(new Vector2(150, 150));
 
             _s = new Ship(new Vector2(300, 100));
             world.SpaceObjects.Add(_s);
-            Game.Fleet.Add(_s);
+            //Game.Fleet.Add(_s);
+            UIBindings.Get("All").Add(_s);
 
             _s.AddItem(ItemDatabase.Spawn(
                 ItemDatabase.Items.Find(x => x.ID == 1100)));

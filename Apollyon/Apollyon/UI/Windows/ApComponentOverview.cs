@@ -210,7 +210,8 @@ namespace Apollyon
                         if(!ComponentList[Selection].Components.
                             Any(x => x.Active))
                         {
-                            if (Game.Targeted.Count > 0)
+                            //if (Game.Targeted.Count > 0)
+                            if (UIBindings.Get("Targeted").Count > 0)
                             {
                                 foreach (ShipComponent _c in
                                     ComponentList[Selection].Components)

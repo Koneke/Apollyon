@@ -109,7 +109,7 @@
   <ItemGroup>
     <Compile Include="Gameplay\Items\Container.cs" />
     <Compile Include="Engine\LineParticle.cs" />
-    <Compile Include="Gameplay\ISpaceObject.cs" />
+    <Compile Include="Gameplay\SpaceObject.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Gameplay\Items\Item.cs" />
     <Compile Include="Engine\Particle.cs" />

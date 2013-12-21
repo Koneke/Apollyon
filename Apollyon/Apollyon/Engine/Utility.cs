@@ -17,7 +17,6 @@ namespace Apollyon
             List<SpaceObject> _r = Game.World.SpaceObjects;
             if (any)
             {
-                //_r = _r.FindAll(x => x.GetTags().Any(y => _tags.Contains(y)));
                 _r = _r.FindAll(x => x.Tags.Any(y => _tags.Contains(y)));
             }
             else
@@ -34,7 +33,6 @@ namespace Apollyon
         {
             _i.Tags.Add(_tag);
             _i.Tags = _i.Tags.Distinct().ToList();
-            //_i.SetTags(_i.GetTags().Distinct().ToList());
         }
 
         //put the colour stuff somewhere else, this class is a bit messy AON 
