@@ -55,6 +55,11 @@ namespace Apollyon
             Ships = xml.Element("ships").Value;
         }
 
+        public override void Update()
+        {
+            UpdateList();
+        }
+
         public void UpdateList()
         {
             Items.Clear();
@@ -173,7 +178,9 @@ namespace Apollyon
         {
             if(UIBindings.Get("Selected").Count == 1) {
                 if (ms.RightButton == ButtonState.Pressed &&
-                    oms.RightButton == ButtonState.Released)
+                    oms.RightButton == ButtonState.Released &&
+                    UIBindings.Get("Selected")[0].GetTags().Contains("ship")
+                    )
                 {
                     float _itemHeight = Res.LogFont.MeasureString("ship").Y;
                     float _mouseY = ms.Y - y1;
@@ -186,7 +193,8 @@ namespace Apollyon
                         _i.Carrier = null;
                         Game.World.SpaceObjects.Add(_i);
 
-                        UIBindings.Get("Selected")[0].Inventory.RemoveAt(
+                        (UIBindings.Get("Selected")[0] as Ship).
+                            Inventory.RemoveAt(
                             (int)_item
                             );
                     }

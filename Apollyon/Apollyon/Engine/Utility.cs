@@ -19,6 +19,7 @@ namespace Apollyon
             return _r;
         }
 
+        //put the colour stuff somewhere else, this class is a bit messy AON 
         public static Color AddColours(Color _a, Color _b)
         {
             return new Color(

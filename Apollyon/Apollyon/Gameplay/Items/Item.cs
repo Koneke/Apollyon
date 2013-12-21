@@ -27,6 +27,8 @@ namespace Apollyon
         public List<string> Tags;
         public List<string> GetTags() {
             return Tags; }
+        public bool HasTag(string _tag) {
+            return Tags.Contains(_tag.ToLower()); }
 
         public bool GetVisible() {
             return Carrier == null; }

@@ -41,8 +41,6 @@ namespace Apollyon
             Game.ScreenSize.X = graphics.PreferredBackBufferWidth;
             Game.ScreenSize.Y = graphics.PreferredBackBufferHeight;
 
-            Game.Selected = new List<Ship>();
-            Game.Targeted = new List<Ship>();
             UIBindings.Bind("Selected", Game.Selected);
             UIBindings.Bind("Targeted", Game.Targeted);
             UIBindings.Bind("All", Game.Fleet);
@@ -107,7 +105,8 @@ namespace Apollyon
             ApWindow.Input(ms, oms);
             world.Input(ks, oks, ms, oms);
             world.Update(gameTime);
-            ApWindow.Update();
+            foreach (ApWindow _w in ApWindow.Windows)
+                _w.Update();
 
             Particle.Particles =
                 Particle.Particles.FindAll(

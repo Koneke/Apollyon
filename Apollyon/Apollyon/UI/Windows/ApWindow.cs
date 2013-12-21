@@ -33,22 +33,10 @@ namespace Apollyon
         static ApWindow grabbed = null;
         static Vector2 grabOffset = new Vector2(0,0);
 
-        public static void Update()
-        {
-
-            ((ApInventory)
-                WindowManager.GetWindowByName("Inventory")).
-                UpdateList();
-            ((ApComponentOverview)
-                WindowManager.GetWindowByName("Component Overview")).
-                UpdateList();
-            ((ApComponentOverview)
-                WindowManager.GetWindowByName("Hostile Component Overview")).
-                UpdateList();
-        }
+        public virtual void Update() { }
         
         //handle window dragging (if draggable)
-       //pushes the window to the front as well.
+        //pushes the window to the front as well.
         //possible todo: push window to front even if not draggable? iunno
         //possible todo: snapping windows?
         public static void Input(

@@ -51,6 +51,11 @@ namespace Apollyon
             Ships = xml.Element("ships").Value;
         }
 
+        public override void Update()
+        {
+            UpdateList();
+        }
+
         public void UpdateList()
         {
             if (UIBindings.Get(Ships) == null) return;
@@ -193,12 +198,12 @@ namespace Apollyon
                             String.Join(
                                 ", ",
                                 UIBindings.Get("Selected").Select(
-                                    x => x.Name)
+                                    x => x.GetName())
                                 ) + " to " +
                             String.Join(
                                 ", ",
                                 UIBindings.Get("Targeted").Select(
-                                    x => x.Name)
+                                    x => x.GetName())
                                 ) + "."
                         );
 
@@ -211,7 +216,8 @@ namespace Apollyon
                                     ComponentList[Selection].Components)
                                 {
                                     _c.Active = true;
-                                    _c.Targets = new List<Ship>(
+                                    _c.Targets =
+                                        new List<ISpaceObject>(
                                         UIBindings.Get("Targeted"));
                                 }
                             }

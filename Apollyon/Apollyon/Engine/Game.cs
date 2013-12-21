@@ -11,7 +11,6 @@ namespace Apollyon
 
         public static World World;
 
-        public static List<Ship> Fleet = new List<Ship>();
 
         public static float TickTime = 1000 / 60; //time in ms per time tick
 
@@ -23,8 +22,10 @@ namespace Apollyon
 
         public static bool HasFocus = true;
 
-        public static List<Ship> Selected;
-        public static List<Ship> Targeted;
+        //public static List<Ship> Selected;
+        public static List<ISpaceObject> Fleet = new List<ISpaceObject>();
+        public static List<ISpaceObject> Selected = new List<ISpaceObject>();
+        public static List<ISpaceObject> Targeted = new List<ISpaceObject>();
 
         public enum TargetingType {
             Cycle,

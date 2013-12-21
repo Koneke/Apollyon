@@ -56,7 +56,7 @@ namespace Apollyon
 
             foreach (Ship _s in
                 Game.World.SpaceObjects.FindAll(
-                x => x.GetTags().Contains("Ship"))
+                x => x.GetTags().Contains("ship"))
                 )
             {
                 if (UIBindings.Get(Selection).Contains(_s))
@@ -106,24 +106,17 @@ namespace Apollyon
                 int _index = (int)_item;
 
                 List<ISpaceObject> _q =
-                    Utility.QuerySpace(new List<string> { "Ship" });
+                    Utility.QuerySpace(new List<string> { "ship" });
 
-                //if (_item >= UIBindings.Get(Ships).Count) {
                 if (_index >= _q.Count)
                 {
                     UIBindings.Get(Selection).Clear();
                     return;
                 }
 
-                /*int _shipIndex = UIBindings.Get(Ships).IndexOf(
-                    UIBindings.Get(Ships)[(int)_item]
-                );*/
-
                 if (_q.Count == 0) return;
 
                 Ship _s = (Ship)_q[_index];
-                /*Ship _s = (Ship)Utility.QuerySpace(
-                    new List<string> { "Ship" })[_index];*/
 
                 if (UIBindings.Get(Selection).Contains(_s))
                 {
@@ -133,20 +126,6 @@ namespace Apollyon
                 {
                     UIBindings.Get(Selection).Add(_s);
                 }
-
-                /*//deselect
-                if (_shipIndex != -1)
-                {
-                    UIBindings.Get(Selection).
-                        RemoveAt(_shipIndex);
-                }
-                
-                //select
-                else
-                {
-                    UIBindings.Get(Selection).
-                        Add(UIBindings.Get(Selection)[(int)_item]);
-                }*/
             }
         }
     }

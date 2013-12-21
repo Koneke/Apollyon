@@ -41,6 +41,27 @@
   </item>
 
   <item>
+    <name>Mining Laser</name>
+    <id>1102</id>
+    <texture>generic</texture>
+
+    <tags>
+      <tag>miner</tag>
+      <tag>item</tag>
+    </tags>
+
+    <stacking>false</stacking>
+
+    <weapon>
+      <!--info for when equipped-->
+      <damage>1</damage>
+      <frequency>40</frequency>
+      <beamthickness>1</beamthickness>
+      <!--beamtint pls-->
+    </weapon>
+  </item>
+
+  <item>
     <name>Coal</name>
     <id>1000</id>
     <texture>generic</texture>

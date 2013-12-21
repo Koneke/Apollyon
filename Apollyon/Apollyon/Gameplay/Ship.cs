@@ -28,6 +28,8 @@ namespace Apollyon
         public List<string> Tags;
         public List<string> GetTags() {
             return Tags; }
+        public bool HasTag(string _tag) {
+            return Tags.Contains(_tag.ToLower()); }
 
         public bool GetVisible() {
             return true; }
@@ -67,7 +69,7 @@ namespace Apollyon
             Inventory = new List<Item>();
 
             Tags = new List<string>();
-            Tags.Add("Ship");
+            Tags.Add("ship");
         }
 
         public void AddComponent(ShipComponent _sc)

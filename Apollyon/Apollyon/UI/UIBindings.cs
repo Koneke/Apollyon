@@ -8,14 +8,15 @@ namespace Apollyon
     class UIBindings
     {
         public static Dictionary<
-            string, List<Ship>> ShipLists = new Dictionary<string,List<Ship>>();
+            string, List<ISpaceObject>>
+        ShipLists = new Dictionary<string,List<ISpaceObject>>();
 
-        public static void Bind(string _key, List<Ship> _list)
+        public static void Bind(string _key, List<ISpaceObject> _list)
         {
             ShipLists.Add(_key, _list);
         }
 
-        public static List<Ship> Get(string _key)
+        public static List<ISpaceObject> Get(string _key)
         {
             return ShipLists[_key];
         }

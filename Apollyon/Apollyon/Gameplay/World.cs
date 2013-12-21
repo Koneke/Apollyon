@@ -37,7 +37,7 @@ namespace Apollyon
             Camera.Input(ms, oms);
 
             foreach (Ship _s in SpaceObjects.FindAll(
-                x => x.GetTags().Contains("Ship")))
+                x => x.GetTags().Contains("ship")))
             {
                 _s.Input(ks, oks, ms, oms);
             }
@@ -72,7 +72,7 @@ namespace Apollyon
             ) {
                 Game.Selected.Clear();
                 foreach (Ship _s in SpaceObjects.FindAll(
-                    x => x.GetTags().Contains("Ship")))
+                    x => x.GetTags().Contains("ship")))
                 //foreach (Ship _s in Ships)
                 {
                     Rectangle _box = boxSelection;
@@ -92,7 +92,7 @@ namespace Apollyon
                     List<ISpaceObject> _list;
 
                     _list = Game.World.SpaceObjects.FindAll(
-                        x => x.GetTags().Contains("Ship"));
+                        x => x.GetTags().Contains("ship"));
 
                     if (_list != null)
                     {
@@ -151,12 +151,12 @@ namespace Apollyon
             while (Timer > Game.TickTime)
             {
                 foreach (Ship _s in SpaceObjects.FindAll(
-                    x => x.GetTags().Contains("Ship")))
+                    x => x.GetTags().Contains("ship")))
                 {
                     _s.Update();
                 }
                 foreach (Ship _s in SpaceObjects
-                    .FindAll(x => x.GetTags().Contains("Ship"))
+                    .FindAll(x => x.GetTags().Contains("ship"))
                     .FindAll(x => ((Ship)x).Shield.Current <= 0))
                 {
                     _s.Die();
@@ -164,7 +164,7 @@ namespace Apollyon
                 }
                 SpaceObjects = SpaceObjects.FindAll
                     (x =>
-                        !x.GetTags().Contains("Ship") ||
+                        !x.GetTags().Contains("ship") ||
                         ((Ship)x).Shield.Current > 0);
                 Timer -= Game.TickTime;
             }
@@ -214,7 +214,7 @@ namespace Apollyon
                     new Point(-_screenRect.Width / 2, -_screenRect.Width / 2)
                 );
 
-                if (_so.GetTags().Contains("Ship"))
+                if (_so.GetTags().Contains("ship"))
                 {
                     bool _selected = UIBindings.Get("Selected").
                         Contains((Ship)_so);

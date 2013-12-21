@@ -20,12 +20,18 @@ namespace Apollyon
         }
 
         public override void Fire() {
-            Ship _target = null;
+            ISpaceObject _target = null;
+
             switch (TargetingType)
             {
                 case Game.TargetingType.Random:
                     _target = Targets[Game.Random.Next(0, Targets.Count)];
-                    while (_target.Shield.Current <= 0 && Targets.Count > 0)
+                    while (
+                        ((_target as Ship).Shield.Current <= 0 ||
+                        !_target.GetTags().Contains("ship"))
+                        &&
+                        Targets.Count > 0
+                        )
                     {
                         Targets.Remove(_target);
                         if (Targets.Count == 0) break;
@@ -43,22 +49,23 @@ namespace Apollyon
 
             if (_target != null)
             {
-                _target.Shield.Current -= Damage;
+                //we know we can safely cast here
+                ((Ship)_target).Shield.Current -= Damage;
                 Game.Log(Parent.Name + " dealt " + Damage +
-                    " points of damage to " + _target.Name + " using " +
+                    " points of damage to " + _target.GetName() + " using " +
                     this.Name + ".");
             }
 
-            Vector2 _hitPosition = _target.Position;
+            Vector2 _hitPosition = _target.GetPosition();
             
             double _ang = Math.Atan2(
-                _target.Position.Y - Parent.Position.Y,
-                _target.Position.X - Parent.Position.X
+                _target.GetPosition().Y - Parent.Position.Y,
+                _target.GetPosition().X - Parent.Position.X
             );
 
             float _d = Vector2.Distance(
                 Parent.Position,
-                _target.Position
+                _target.GetPosition()
             ); //TODO: Change me when missing to see the shot whizz past
 
             double _rand = 0.07f;
