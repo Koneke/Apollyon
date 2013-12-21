@@ -6,17 +6,36 @@ using Microsoft.Xna.Framework;
 
 namespace Apollyon
 {
+    class AttackInfo
+    {
+        public Weapon Weapon;
+        public int Damage;
+        public SpaceObject Source; //null = world/unknown
+
+        public AttackInfo(
+            Weapon _w,
+            int _dmg,
+            SpaceObject _src
+        ) {
+            Weapon = _w;
+            Damage = _dmg;
+            Source = _src;
+        }
+    }
+
     class Weapon : ShipComponent
     {
         public int Damage;
         public int BeamThickness; //we don't really want this here
         //make more data driven etc., never repeated enough
+        public Color BeamTint; //important ok
 
         public Weapon(string _name, int _id) : base(_name, _id)
         {
             Frequency = 60;
             Damage = 3;
             BeamThickness = 1;
+            BeamTint = new Color(1f, 0.7f, 0f, 1f);
         }
 
         public override void Fire() {
@@ -26,12 +45,7 @@ namespace Apollyon
             {
                 case Game.TargetingType.Random:
                     _target = Targets[Game.Random.Next(0, Targets.Count)];
-                    while (
-                        _target.Health <= 0/* ||
-                        !_target.Tags.Contains("ship"))*/
-                        &&
-                        Targets.Count > 0
-                        )
+                    while (_target.Health <= 0 && Targets.Count > 0)
                     {
                         Targets.Remove(_target);
                         if (Targets.Count == 0) break;
@@ -49,12 +63,12 @@ namespace Apollyon
 
             if (_target != null)
             {
-                //((Ship)_target).Shield.Current -= Damage;
-                //(_target as Ship).Damage(Damage);
-                _target.Damage(Damage);
-                Game.Log(Parent.Name + " dealt " + Damage +
+                _target.Damage(new AttackInfo(
+                    this, Damage, Parent));
+                //_target.Damage(Damage);
+                /*Game.Log(Parent.Name + " dealt " + Damage +
                     " points of damage to " + _target.Name + " using " +
-                    this.Name + ".");
+                    this.Name + ".");*/
             }
 
             Vector2 _hitPosition = _target.Position;
@@ -80,7 +94,7 @@ namespace Apollyon
                     Parent.Position,
                     _hitPosition,
                     BeamThickness,
-                    new Color(1f, 0.7f, 0f, 1f),
+                    BeamTint,
                     100
                 )
             );

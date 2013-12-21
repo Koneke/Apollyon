@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
@@ -13,6 +14,7 @@ namespace Apollyon
         public int Damage;
         public int Frequency;
         public int BeamThickness;
+        public Color BeamTint;
     }
 
     class ItemTemplate
@@ -74,6 +76,24 @@ namespace Apollyon
                     Int32.TryParse(
                         _weapon.Element("beamthickness").Value,
                         out _template.Weapon.BeamThickness);
+
+                    XElement _tint = _weapon.Element("beamtint");
+                    if (_tint != null)
+                    {
+                        string _rs = _tint.Element("r").Value;
+                        string _gs = _tint.Element("g").Value;
+                        string _bs = _tint.Element("b").Value;
+                        string _as = _tint.Element("a").Value;
+
+                        int _r, _g, _b, _a;
+                        Int32.TryParse(_rs, out _r);
+                        Int32.TryParse(_gs, out _g);
+                        Int32.TryParse(_bs, out _b);
+                        Int32.TryParse(_as, out _a);
+
+                        Color _beamtint = new Color(_r, _g, _b, _a);
+                        _template.Weapon.BeamTint = _beamtint;
+                    }
                 }
 
                 Items.Add(_template);
@@ -107,6 +127,8 @@ namespace Apollyon
                 _w.Damage = _template.Weapon.Damage;
                 _w.Frequency = _template.Weapon.Frequency;
                 _w.BeamThickness = _template.Weapon.BeamThickness;
+                if(Utility.SumColour(_template.Weapon.BeamTint) != 0)
+                    _w.BeamTint = _template.Weapon.BeamTint;
                 _i.Component = _w;
                 //_i = _ci;
                 //return _ci;

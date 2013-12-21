@@ -49,10 +49,10 @@
       <h>200</h>
     </position>
     <tint>
-      <r>1</r>
+      <r>255</r>
       <g>0</g>
       <b>0</b>
-      <a>1</a>
+      <a>255</a>
     </tint>
     <bindings>
       <bind>
@@ -105,10 +105,10 @@
       <h>200</h>
     </position>
     <tint>
-      <r>1</r>
+      <r>255</r>
       <g>0</g>
       <b>0</b>
-      <a>1</a>
+      <a>255</a>
     </tint>
     <ships>Targeted</ships>
   </window>
@@ -135,10 +135,10 @@
       <h>80</h>
     </position>
     <tint>
-      <r>1</r>
+      <r>255</r>
       <g>0</g>
       <b>0</b>
-      <a>1</a>
+      <a>255</a>
     </tint>
     <ships>Targeted</ships>
   </window>

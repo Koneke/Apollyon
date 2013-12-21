@@ -99,6 +99,12 @@ namespace Apollyon
             );
         }
 
+        public static int SumColour(Color _a)
+        {
+            return _a.R + _a.G + _a.B + _a.A;
+        }
+
+
         public static void DrawOutlinedRectangle(
             SpriteBatch spriteBatch,
             Rectangle _r,

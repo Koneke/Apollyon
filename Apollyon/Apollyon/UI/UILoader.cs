@@ -62,11 +62,11 @@ namespace Apollyon
                     string _bs = _tint.Element("b").Value;
                     string _as = _tint.Element("a").Value;
 
-                    float _r, _g, _b, _a;
-                    float.TryParse(_rs, out _r);
-                    float.TryParse(_gs, out _g);
-                    float.TryParse(_bs, out _b);
-                    float.TryParse(_as, out _a);
+                    Int32 _r, _g, _b, _a;
+                    Int32.TryParse(_rs, out _r);
+                    Int32.TryParse(_gs, out _g);
+                    Int32.TryParse(_bs, out _b);
+                    Int32.TryParse(_as, out _a);
                     Color _colour = new Color(_r, _g, _b, _a);
 
                     _new.Tint = _colour;

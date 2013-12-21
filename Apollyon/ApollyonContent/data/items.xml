@@ -54,10 +54,15 @@
 
     <weapon>
       <!--info for when equipped-->
-      <damage>1</damage>
-      <frequency>40</frequency>
+      <damage>0</damage>
+      <frequency>20</frequency>
       <beamthickness>1</beamthickness>
-      <!--beamtint pls-->
+      <beamtint>
+        <r>0</r>
+        <g>128</g>
+        <b>255</b>
+        <a>255</a>
+      </beamtint>
     </weapon>
   </item>
 

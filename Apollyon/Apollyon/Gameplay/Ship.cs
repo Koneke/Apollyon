@@ -36,8 +36,10 @@ namespace Apollyon
         }
 
         Shield Shield;
-        public override void Damage(int _damage)
+        //public override void Damage(int _damage)
+        public override void Damage(AttackInfo _attack)
         {
+            int _damage = _attack.Damage;
             if (Shield.Current > 0)
             {
                 Shield.Current -= _damage;
@@ -138,9 +140,7 @@ namespace Apollyon
                                 ) < 100)
                             {
                                 AddItem(_i);
-                                /*_i.Carrier = this;
-                                Inventory.Add(_i);*/
-                                break;
+                                //break;
                             }
                         }
                     }

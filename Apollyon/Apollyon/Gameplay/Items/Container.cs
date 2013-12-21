@@ -33,14 +33,6 @@ namespace Apollyon
             while (Inventory.Count > 0)
             {
                 Item _i = Inventory[0];
-                /*
-                _i.Carrier = null;
-                _i.Tags = _i.Tags.FindAll(x => !x.Equals("carried"));
-                _i.Position = Position;
-                _i.Velocity = new Vector2(
-                    -0.5f + (float)Game.Random.NextDouble(),
-                    -0.5f + (float)Game.Random.NextDouble());
-                Inventory.Remove(_i);*/
                 DropItem(_i);
             }
         }
