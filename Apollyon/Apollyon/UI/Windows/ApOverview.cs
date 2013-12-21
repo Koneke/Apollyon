@@ -62,6 +62,19 @@ namespace Apollyon
             spriteBatch.Begin();
             foreach (SpaceObject _i in list)
             {
+                if (UIBindings.Get("Selected").Contains(_i))
+                    spriteBatch.Draw(
+                        Res.OneByOne,
+                        new Rectangle(
+                            0,
+                            (int)_currentY,
+                            (int)w,
+                            (int)_offs),
+                        Utility.MultiplyColours(
+                            ApWindow.StandardBorder,
+                            new Color(1f, 1f, 1f, 0.3f)
+                        )
+                    );
                 spriteBatch.DrawString(
                     Res.LogFont,
                     _i.Name,
@@ -78,8 +91,11 @@ namespace Apollyon
         public override void OwnInput(MouseState ms, MouseState oms)
         {
             if (
-                ms.LeftButton == ButtonState.Pressed &&
-                oms.LeftButton == ButtonState.Released)
+                (ms.LeftButton == ButtonState.Pressed &&
+                oms.LeftButton == ButtonState.Released) ||
+                (ms.RightButton == ButtonState.Pressed &&
+                oms.RightButton == ButtonState.Released)
+                )
             {
 
                 float _itemHeight = Res.LogFont.MeasureString("item").Y;
@@ -88,13 +104,22 @@ namespace Apollyon
                     (int)((_mouseY - (_mouseY % _itemHeight)) / _itemHeight);
                 int _index = (int)_item;
 
+                string _list =
+                    (ms.LeftButton == ButtonState.Pressed &&
+                    oms.LeftButton == ButtonState.Released) ?
+                    "Selected" : "Targeted";
                 if (_index >= list.Count)
                 {
-                    UIBindings.Get("Selected").Clear();
+                    UIBindings.Get(_list).Clear();
                     return;
                 }
 
-                UIBindings.Get("Selected").Add(list[_index]);
+                if (UIBindings.Get(_list).Contains(list[_index]))
+                {
+                    UIBindings.Get(_list).Remove(list[_index]);
+                    return;
+                }
+                UIBindings.Get(_list).Add(list[_index]);
             }
         }
     }

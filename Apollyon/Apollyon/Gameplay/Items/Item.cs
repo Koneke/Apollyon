@@ -41,6 +41,12 @@ namespace Apollyon
                 Game.World.SpaceObjects.Add(this); }
         }
 
+        public override void Die()
+        {
+            Game.World.SpaceObjects.Remove(this);
+            Game.Log(Name + " was destroyed.");
+        }
+
         /*optional bits*/
         public ShipComponent Component;
 

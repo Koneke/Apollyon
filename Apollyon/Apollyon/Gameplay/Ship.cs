@@ -44,7 +44,7 @@ namespace Apollyon
                 _damage -= Shield.Current;
                 _damage = Math.Max(_damage, 0);
             }
-            Health -= _damage;
+            health -= _damage;
         }
 
         public List<Item> Inventory;
@@ -185,7 +185,7 @@ namespace Apollyon
             UIBindings.Get("All").Remove(this);
         }
 
-        public void Update() //goes once per tick
+        public override void Update() //goes once per tick
         {
             if (Speed > 0.1f)
             {

@@ -27,8 +27,8 @@ namespace Apollyon
                 case Game.TargetingType.Random:
                     _target = Targets[Game.Random.Next(0, Targets.Count)];
                     while (
-                        ((_target as Ship).Health <= 0 ||
-                        !_target.Tags.Contains("ship"))
+                        _target.Health <= 0/* ||
+                        !_target.Tags.Contains("ship"))*/
                         &&
                         Targets.Count > 0
                         )
@@ -49,9 +49,9 @@ namespace Apollyon
 
             if (_target != null)
             {
-                //we know we can safely cast here
                 //((Ship)_target).Shield.Current -= Damage;
-                (_target as Ship).Damage(Damage);
+                //(_target as Ship).Damage(Damage);
+                _target.Damage(Damage);
                 Game.Log(Parent.Name + " dealt " + Damage +
                     " points of damage to " + _target.Name + " using " +
                     this.Name + ".");

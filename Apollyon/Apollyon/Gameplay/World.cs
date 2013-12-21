@@ -150,10 +150,11 @@ namespace Apollyon
             Timer += gameTime.ElapsedGameTime.Milliseconds;
             while (Timer > Game.TickTime)
             {
-                foreach (Ship _s in SpaceObjects.FindAll(
-                    x => x.Tags.Contains("ship")))
+                /*foreach (Ship _s in SpaceObjects.FindAll(
+                    x => x.Tags.Contains("ship")))*/
+                foreach(SpaceObject _so in SpaceObjects)
                 {
-                    _s.Update();
+                    _so.Update();
                 }
                 foreach (SpaceObject _so in SpaceObjects.FindAll(
                     x => x.Health <= 0)) {
@@ -202,6 +203,8 @@ namespace Apollyon
                     (int)(_so.Size.Y * Camera.GetZoom())
                 );
 
+                var _z = Camera.GetZoom();//debug
+
                 spriteBatch.Draw(
                     _so.Texture??Res.Textures["generic"],
                     _screenRect,
@@ -209,8 +212,10 @@ namespace Apollyon
                     Color.White,
                     (float)_so.Rotation,
                     new Vector2(
-                        _so.Size.X / 2,
-                        _so.Size.Y / 2
+                        //_so.Size.X / 2,
+                        //_so.Size.Y / 2
+                        _so.Texture.Width/2f,
+                        _so.Texture.Height/2f
                         ),
                     SpriteEffects.None, 0f
                 );
@@ -220,7 +225,10 @@ namespace Apollyon
 
                 #region selectionboxes
                 _screenRect.Offset(
-                    new Point(-_screenRect.Width / 2, -_screenRect.Width / 2)
+                    //new Point(-_screenRect.Width / 2, -_screenRect.Width / 2)
+                    new Point(
+                        (int)(-_so.Size.X * _z / 2f),
+                        (int)(-_so.Size.Y * _z / 2f))
                 );
 
                 //if (_so.Tags.Contains("ship"))
