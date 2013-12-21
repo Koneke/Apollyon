@@ -14,7 +14,6 @@ namespace Apollyon
         {
             get { return new Vector2(Camera.X, Camera.Y); }
         }
-        //public List<Ship> Ships;
         public List<ISpaceObject> SpaceObjects;
 
         public float Timer; //ms timer
@@ -24,10 +23,8 @@ namespace Apollyon
 
         public World()
         {
-            //Ships = new List<Ship>();
             SpaceObjects = new List<ISpaceObject>();
             Camera = new Camera();
-            //UIBindings.Bind("All", Ships);
         }
 
         public void Input(
@@ -73,7 +70,6 @@ namespace Apollyon
                 Game.Selected.Clear();
                 foreach (Ship _s in SpaceObjects.FindAll(
                     x => x.GetTags().Contains("ship")))
-                //foreach (Ship _s in Ships)
                 {
                     Rectangle _box = boxSelection;
 
@@ -176,7 +172,9 @@ namespace Apollyon
             MouseState _ms = Mouse.GetState();
 
             foreach (ISpaceObject _so in
-                SpaceObjects.OrderBy(x => x.GetDepth())
+                SpaceObjects
+                .FindAll(x => !x.HasTag("carried"))
+                .OrderBy(x => x.GetDepth())
                 )
             {
                 if(!_so.GetVisible()) continue;

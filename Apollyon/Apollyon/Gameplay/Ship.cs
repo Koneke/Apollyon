@@ -148,13 +148,20 @@ namespace Apollyon
 
         public void Die()
         {
-            foreach (Item _i in Inventory)
+            //foreach (Item _i in Inventory)
+            while(Inventory.Count > 0)
             {
+                Item _i = Inventory[0];
+                DropItem(_i);
+                _i.Position = Position + new Vector2(
+                        Game.Random.Next(-3, 4),
+                        Game.Random.Next(-3, 4));
+                /*
                 _i.Carrier = null;
                 _i.Position = Position + new Vector2(
                         Game.Random.Next(-3, 4),
                         Game.Random.Next(-3, 4));
-                Game.World.SpaceObjects.Add(_i);
+                Game.World.SpaceObjects.Add(_i);*/
             }
 
             new ParticleSpawn(
