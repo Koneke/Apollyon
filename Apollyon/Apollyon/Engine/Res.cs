@@ -42,6 +42,5 @@ namespace Apollyon
             }
             return sb.ToString();
         }
-
     }
 }

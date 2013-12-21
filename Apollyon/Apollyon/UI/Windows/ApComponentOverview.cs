@@ -211,7 +211,8 @@ namespace Apollyon
                         );
 
                         if(!ComponentList[Selection].Components.
-                            Any(x => x.Active))
+                            //Any(x => x.Active))
+                            All(x => x.Active))
                         {
                             if (UIBindings.Get("Targeted").Count > 0)
                             {

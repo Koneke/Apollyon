@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asteroid.cs" />
     <Compile Include="Gameplay\Items\Container.cs" />
     <Compile Include="Engine\LineParticle.cs" />
     <Compile Include="Gameplay\SpaceObject.cs" />

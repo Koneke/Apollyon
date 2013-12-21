@@ -129,6 +129,7 @@ namespace Apollyon
                 _w.BeamThickness = _template.Weapon.BeamThickness;
                 if(Utility.SumColour(_template.Weapon.BeamTint) != 0)
                     _w.BeamTint = _template.Weapon.BeamTint;
+                _w.Item = _i;
                 _i.Component = _w;
                 //_i = _ci;
                 //return _ci;

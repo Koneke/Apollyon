@@ -147,7 +147,7 @@ namespace Apollyon
             Timer += gameTime.ElapsedGameTime.Milliseconds;
             while (Timer > Game.TickTime)
             {
-                foreach(SpaceObject _so in SpaceObjects)
+                foreach(SpaceObject _so in SpaceObjects.FindAll(x=>true))
                 {
                     _so.Update();
                 }

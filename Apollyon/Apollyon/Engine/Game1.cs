@@ -61,6 +61,7 @@ namespace Apollyon
             world.SpaceObjects.Add(_s);
             UIBindings.Get("All").Add(_s);
 
+            for(int i = 0;i<3;i++)
             _s.AddItem(ItemDatabase.Spawn(
                 ItemDatabase.Items.Find(x => x.ID == 1102)));
 
@@ -71,7 +72,6 @@ namespace Apollyon
                 ItemDatabase.Items.Find(x => x.ID == 1100))
                 .SetPosition(new Vector2(100, 100));
 
-
             _s = new Ship(new Vector2(300, 100));
             world.SpaceObjects.Add(_s);
             UIBindings.Get("All").Add(_s);
@@ -79,6 +79,8 @@ namespace Apollyon
             _s.AddItem(ItemDatabase.Spawn(
                 ItemDatabase.Items.Find(x => x.ID == 1100)));
 
+            Asteroid _a = new Asteroid();
+            _a.Position = new Vector2(400, 400);
 
             Container _c = new Container();
         }
@@ -91,7 +93,16 @@ namespace Apollyon
             Res.Background = Content.Load<Texture2D>("gfx/background");
             Res.Ship = Content.Load<Texture2D>("gfx/ship");
             Res.LogFont = Content.Load<SpriteFont>("Logfont");
-            Res.Textures.Add("generic", Content.Load<Texture2D>("gfx/generic"));
+
+            Res.Textures.Add(
+                "generic",
+                Content.Load<Texture2D>("gfx/generic")
+            );
+
+            Res.Textures.Add(
+                "asteroid",
+                Content.Load<Texture2D>("gfx/asteroid")
+            );
         }
 
         protected override void UnloadContent()

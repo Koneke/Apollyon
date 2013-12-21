@@ -29,6 +29,7 @@ namespace Apollyon
         public int BeamThickness; //we don't really want this here
         //make more data driven etc., never repeated enough
         public Color BeamTint; //important ok
+        public Item Item;
 
         public Weapon(string _name, int _id) : base(_name, _id)
         {

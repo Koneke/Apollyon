@@ -193,10 +193,6 @@ namespace Apollyon
                     if (_item < Items.Count)
                     {
                         Item _i = Items[(int)_item].Items[0];
-                        //_i.Position = _i.Carrier.Position;
-                        /*_i.Carrier = null;
-                        Game.World.SpaceObjects.Add(_i);*/
-
                         Ship _s = (UIBindings.Get("Selected")[0] as Ship);
                         _s.DropItem(_s.Inventory[(int)_item]);
                     }
@@ -212,7 +208,6 @@ namespace Apollyon
                 float _mouseY = ms.Y - y1;
                 int _item =
                     (int)((_mouseY - (_mouseY % _itemHeight))/_itemHeight);
-                //_item /= _itemHeight;
 
                 if (_item >= Items.Count) {
                     Selection.Clear();
@@ -235,16 +230,20 @@ namespace Apollyon
 
                 //dblclick
                 if (
-                    (DateTime.Now - lastLeftClick).Milliseconds
+                    (DateTime.Now - lastLeftClick).TotalMilliseconds
                     < Game.DoubleClickTime
                     && UIBindings.Get(Ships).Count == 1
                 ) {
 
+                    //use one
+                    Items[_item].Items[0].Use();
+                    //use all at once
+                    /*
                     for(int i = 0; i < Items[_item].Count; i++)
                     {
                         Item _i = Items[_item].Items[i];
                         _i.Use();
-                    }
+                    }*/
 
                 }
 

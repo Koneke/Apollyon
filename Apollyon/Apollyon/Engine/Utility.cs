@@ -21,9 +21,7 @@ namespace Apollyon
             }
             else
             {
-                _r = _r.FindAll(
-                    x => _tags.All(y => x.HasTag(y))
-                );
+                _r = _r.FindAll(x => _tags.All(y => x.HasTag(y)));
             }
 
             return _r;
@@ -32,6 +30,12 @@ namespace Apollyon
         public static void Tag(SpaceObject _i, string _tag)
         {
             _i.Tags.Add(_tag);
+            _i.Tags = _i.Tags.Distinct().ToList();
+        }
+
+        public static void Untag(SpaceObject _i, string _tag)
+        {
+            _i.Tags = _i.Tags.FindAll(x => !x.Equals(_tag));
             _i.Tags = _i.Tags.Distinct().ToList();
         }
 

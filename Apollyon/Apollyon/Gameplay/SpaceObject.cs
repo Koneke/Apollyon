@@ -35,10 +35,10 @@ namespace Apollyon
 
         //fluent for conveniency and Vector2 is a dumb struct;
         public SpaceObject SetPosition(Vector2 _p)
-        {
-            Position = _p;
-            return this;
-        }
+            { Position = _p; return this; }
+
+        public SpaceObject SetVelocity(Vector2 _v)
+            { Velocity = _v; return this; }
 
         public SpaceObject()
         {
