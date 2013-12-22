@@ -125,7 +125,7 @@ namespace Apollyon
             spriteBatch.Begin();
 
             spriteBatch.Draw(
-                Res.OneByOne,
+                Res.Textures["1x1"],
                 new Rectangle(
                     (int)_r.X,
                     (int)_r.Y,
@@ -136,7 +136,7 @@ namespace Apollyon
             );
 
             spriteBatch.Draw(
-                Res.OneByOne,
+                Res.Textures["1x1"],
                 new Rectangle(
                     (int)_r.X,
                     (int)_r.Y + (int)_r.Height-1,
@@ -146,7 +146,7 @@ namespace Apollyon
                 _c);
 
             spriteBatch.Draw(
-                Res.OneByOne,
+                Res.Textures["1x1"],
                 new Rectangle(
                     (int)_r.X,
                     (int)_r.Y,
@@ -156,7 +156,7 @@ namespace Apollyon
                 _c);
 
             spriteBatch.Draw(
-                Res.OneByOne,
+                Res.Textures["1x1"],
                 new Rectangle(
                     (int)_r.X + (int)_r.Width-1,
                     (int)_r.Y,

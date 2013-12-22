@@ -52,7 +52,7 @@ namespace Apollyon
             spriteBatch.Begin();
 
             float _currentY = 0;
-            float _offs = Res.LogFont.MeasureString("ship").Y;
+            float _offs = Res.GetFont("log font").MeasureString("ship").Y;
 
             foreach (Ship _s in
                 Game.World.SpaceObjects.FindAll(
@@ -62,7 +62,7 @@ namespace Apollyon
                 if (UIBindings.Get(Selection).Contains(_s))
                 {
                     spriteBatch.Draw(
-                        Res.OneByOne,
+                        Res.Textures["1x1"],
                         new Rectangle(
                             0,
                             +1 + (int)_currentY,
@@ -77,7 +77,7 @@ namespace Apollyon
                 }
 
                 spriteBatch.DrawString(
-                    Res.LogFont,
+                    Res.GetFont("log font"),
                     _s.Name,
                     new Vector2(
                         indent,
@@ -99,7 +99,8 @@ namespace Apollyon
                 ms.LeftButton == ButtonState.Pressed &&
                 oms.LeftButton == ButtonState.Released)
             {
-                float _itemHeight = Res.LogFont.MeasureString("ship").Y;
+                float _itemHeight =
+                    Res.GetFont("log font").MeasureString("ship").Y;
                 float _mouseY = ms.Y - y1;
                 float _item = _mouseY - (_mouseY % _itemHeight);
                 _item /= _itemHeight;

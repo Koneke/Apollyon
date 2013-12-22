@@ -7,13 +7,18 @@ namespace Apollyon
 {
     class Res
     {
-        public static Texture2D OneByOne;
-        public static Texture2D Background;
-        public static Texture2D Ship;
-        public static SpriteFont LogFont;
+        //public static SpriteFont LogFont;
 
         public static Dictionary<string, Texture2D> Textures =
-            new Dictionary<string,Texture2D>();
+            new Dictionary<string, Texture2D>();
+        public static Dictionary<string, SpriteFont> Fonts =
+            new Dictionary<string, SpriteFont>();
+
+        //make one for textures as well, easier to handle in the future this way
+        public static SpriteFont GetFont(string _name)
+        {
+            return Fonts[_name];
+        }
 
         /* word wrapping fr http://www.xnawiki.com/index.php/Basic_Word_Wrapping
          * because I can't be arsed with writing this again */

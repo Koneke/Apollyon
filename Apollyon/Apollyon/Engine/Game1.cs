@@ -57,11 +57,7 @@ namespace Apollyon
             Game.Camera.Y -= 400;
 
             //test stuff
-            Ship _s = new Ship(new Vector2(300, 300));
-            world.SpaceObjects.Add(_s);
-            UIBindings.Get("All").Add(_s);
-
-            _s = new Ship(new Vector2(100, 300));
+            Ship _s = new Ship(new Vector2(100, 300));
             world.SpaceObjects.Add(_s);
             UIBindings.Get("All").Add(_s);
 
@@ -103,22 +99,8 @@ namespace Apollyon
 
         protected override void LoadContent()
         {
-            //data-driven pls
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Res.OneByOne = Content.Load<Texture2D>("gfx/1x1");
-            Res.Background = Content.Load<Texture2D>("gfx/background");
-            Res.Ship = Content.Load<Texture2D>("gfx/ship");
-            Res.LogFont = Content.Load<SpriteFont>("Logfont");
-
-            Res.Textures.Add(
-                "generic",
-                Content.Load<Texture2D>("gfx/generic")
-            );
-
-            Res.Textures.Add(
-                "asteroid",
-                Content.Load<Texture2D>("gfx/asteroid")
-            );
+            ResourceLoader.Load(Content);
         }
 
         protected override void UnloadContent()
@@ -166,7 +148,7 @@ namespace Apollyon
 
             spriteBatch.Begin();
             spriteBatch.Draw(
-                Res.Background,
+                Res.Textures["background"],
                 new Rectangle(
                     0,
                     0,

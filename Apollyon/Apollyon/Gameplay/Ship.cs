@@ -60,7 +60,8 @@ namespace Apollyon
             Vector2 _position
         ) {
             Name = ShipNameGenerator.GenerateName();
-            Texture = Res.Ship;
+            //Texture = Res.Ship;
+            Texture = Res.Textures["ship"];
             Position = _position;
             Size = new Vector2(32, 32);
             TargetPosition = Position;
@@ -93,7 +94,7 @@ namespace Apollyon
                     new Color(0f,0f,0f,0f))
                 .SetScale(1.5f, 0.35f, 0f)
                 .SetRotation(0, Math.PI*2f, 0) //add delta variation
-                .SetTexture(Res.OneByOne)
+                .SetTexture(Res.Textures["1x1"])
                 .SetLifeTime(600, 350);
         }
         Particle2 EngineTrail;

@@ -110,6 +110,7 @@
     <Compile Include="Engine\AI\AISimpleMiner.cs" />
     <Compile Include="Engine\AI\AISimpleBrain.cs" />
     <Compile Include="Asteroid.cs" />
+    <Compile Include="Engine\ResourceLoader.cs" />
     <Compile Include="Gameplay\Items\Container.cs" />
     <Compile Include="Engine\LineParticle.cs" />
     <Compile Include="Gameplay\SpaceObject.cs" />

@@ -78,7 +78,8 @@ namespace Apollyon
                     foreach (var _bind in _binds.Elements())
                     {
                         string _key = _bind.Element("key").Value.ToUpper();
-                        string _bindType = _bind.Element("type").Value.ToLower();
+                        string _bindType =
+                            _bind.Element("type").Value.ToLower();
                         _bindType =
                             Char.ToUpper(_bindType[0]) +
                             _bindType.Substring(1, _bindType.Length - 1);

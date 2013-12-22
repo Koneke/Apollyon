@@ -32,10 +32,15 @@ namespace Apollyon
 
                 if (h - _currentY < 0) break;
 
-                string _string = Res.WrapText(Res.LogFont, message, w-2*indent);
-                float _offs = Res.LogFont.MeasureString(_string).Y;
+                string _string = Res.WrapText(
+                    Res.GetFont("log font"),
+                    //Res.LogFont,
+                    message, w-2*indent);
+                //float _offs = Res.LogFont.MeasureString(_string).Y;
+                float _offs = Res.GetFont("log font").MeasureString(_string).Y;
                 spriteBatch.DrawString(
-                    Res.LogFont,
+                    //Res.LogFont,
+                    Res.GetFont("log font"),
                     _string,
                     new Vector2(indent, h-_offs-_currentY),
                     Color.White

@@ -120,7 +120,7 @@ namespace Apollyon
                 spriteBatch.Begin();
 
                 float _currentY = 0;
-                float _offs = Res.LogFont.MeasureString("ship").Y;
+                float _offs = Res.GetFont("log font").MeasureString("ship").Y;
 
                 for(int i = 0; i < ComponentList.Count; i++)
                 {
@@ -128,7 +128,7 @@ namespace Apollyon
                     if (Selection == i)
                     {
                         spriteBatch.Draw(
-                            Res.OneByOne,
+                            Res.Textures["1x1"],
                             new Rectangle(
                                 0,
                                 +1 + (int)_currentY,
@@ -149,7 +149,7 @@ namespace Apollyon
                         _textColour = Color.Blue;
 
                     spriteBatch.DrawString(
-                        Res.LogFont,
+                        Res.GetFont("log font"),
                         _acop.ID + " : " +
                         _acop.Components.Count + "x " +
                         _acop.Name,
@@ -175,7 +175,8 @@ namespace Apollyon
                 oms.LeftButton == ButtonState.Released)
             {
                 //dblclick
-                float _itemHeight = Res.LogFont.MeasureString("ship").Y;
+                float _itemHeight =
+                    Res.GetFont("log font").MeasureString("ship").Y;
                 float _mouseY = ms.Y - y1;
                 float _item = _mouseY - (_mouseY % _itemHeight);
                 _item /= _itemHeight;

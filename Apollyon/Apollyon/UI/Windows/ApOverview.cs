@@ -57,14 +57,14 @@ namespace Apollyon
             );
 
             float _currentY = 0;
-            float _offs = Res.LogFont.MeasureString("ship").Y;
+            float _offs = Res.GetFont("log font").MeasureString("ship").Y;
 
             spriteBatch.Begin();
             foreach (SpaceObject _i in list)
             {
                 if (UIBindings.Get("Selected").Contains(_i))
                     spriteBatch.Draw(
-                        Res.OneByOne,
+                        Res.Textures["1x1"],
                         new Rectangle(
                             0,
                             (int)_currentY,
@@ -76,7 +76,7 @@ namespace Apollyon
                         )
                     );
                 spriteBatch.DrawString(
-                    Res.LogFont,
+                    Res.GetFont("log font"),
                     _i.Name,
                     new Vector2(indent, _currentY),
                     Color.White
@@ -98,7 +98,8 @@ namespace Apollyon
                 )
             {
 
-                float _itemHeight = Res.LogFont.MeasureString("item").Y;
+                float _itemHeight =
+                    Res.GetFont("log font").MeasureString("item").Y;
                 float _mouseY = ms.Y - y1;
                 int _item =
                     (int)((_mouseY - (_mouseY % _itemHeight)) / _itemHeight);

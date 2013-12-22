@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <texture>
+    <name>1x1</name>
+    <path>gfx\1x1</path>
+  </texture>
+
+  <texture>
+    <name>ship</name>
+    <path>gfx\ship</path>
+  </texture>
+
+  <texture>
+    <name>asteroid</name>
+    <path>gfx\asteroid</path>
+  </texture>
+
+  <texture>
+    <name>background</name>
+    <path>gfx\background</path>
+  </texture>
+
+  <texture>
+    <name>generic</name>
+    <path>gfx\generic</path>
+  </texture>
+
+  <font>
+    <name>log font</name>
+    <path>LogFont</path>
+  </font>
+</resources>

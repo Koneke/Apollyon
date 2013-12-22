@@ -60,7 +60,7 @@ namespace Apollyon
             spriteBatch.Begin();
 
             spriteBatch.DrawString(
-                Res.LogFont,
+                Res.GetFont("log font"),
                 "Avg. Shield",
                 new Vector2(_sideMargin + 4, _topMargin + 2),
                 Color.White);
@@ -70,11 +70,12 @@ namespace Apollyon
                 if (UIBindings.Get(Ships).Count != 0)
                 {
                     spriteBatch.Draw(
-                        Res.OneByOne,
+                        Res.Textures["1x1"],
                         new Rectangle(
                             _sideMargin + 1,
                             _topMargin + 1,
-                            (int)((w - ((_sideMargin + 1) * 2)) * _percentage / 100f),
+                            (int)((w - ((_sideMargin + 1) * 2))
+                                * _percentage / 100f),
                             (int)h - ((_topMargin + 1) * 2)
                         ),
                         Utility.MultiplyColours(

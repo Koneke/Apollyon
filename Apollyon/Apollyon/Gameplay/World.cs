@@ -258,13 +258,15 @@ namespace Apollyon
 
             Utility.DropShadowText(
                 spriteBatch,
-                Res.LogFont,
+                Res.GetFont("log font"),
                 _hoverText,
                 new Vector2(
                     _ms.X -
-                        Res.LogFont.MeasureString(_hoverText).X/2 + 10,
+                        Res.GetFont("log font")
+                        .MeasureString(_hoverText).X/2 + 10,
                     _ms.Y - 
-                        Res.LogFont.MeasureString(_hoverText).Y
+                        Res.GetFont("log font")
+                        .MeasureString(_hoverText).Y
                 ),
                 Color.Black,
                 Color.White

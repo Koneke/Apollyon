@@ -44,7 +44,7 @@ namespace Apollyon
         {
             spriteBatch.Begin();
             spriteBatch.Draw(
-                Res.OneByOne,
+                Res.Textures["1x1"],
                 new Rectangle(
                     (int)Game.Camera.WorldToScreen(Position).X,
                     (int)Game.Camera.WorldToScreen(Position).Y,
