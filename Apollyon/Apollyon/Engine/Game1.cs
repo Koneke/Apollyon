@@ -62,7 +62,11 @@ namespace Apollyon
             UIBindings.Get("All").Add(_s);
 
             _s.AddItem(ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1102)));
+                ItemDatabase.Items.Find(x => x.ID == 1101)));
+            _s.AddItem(ItemDatabase.Spawn(
+                ItemDatabase.Items.Find(x => x.ID == 1101)));
+            _s.AddItem(ItemDatabase.Spawn(
+                ItemDatabase.Items.Find(x => x.ID == 1101)));
             _s.AddItem(ItemDatabase.Spawn( //spawn into inventory
                 ItemDatabase.Items.Find(x => x.ID == 1199)));
             ItemDatabase.Spawn( //spawn into space
@@ -101,7 +105,7 @@ namespace Apollyon
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             ResourceLoader.Load(Content);
-            Res.Sounds.Add("laser", Content.Load<SoundEffect>("laser2"));
+            Res.Sounds.Add("laser", Content.Load<SoundEffect>("shoot2"));
             Res.Sounds.Add("explosion", Content.Load<SoundEffect>("explosion"));
             Res.Sounds.Add("mine", Content.Load<SoundEffect>("mine"));
             Res.Sounds.Add("engine", Content.Load<SoundEffect>("engine2"));

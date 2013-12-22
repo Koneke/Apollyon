@@ -182,6 +182,7 @@ namespace Apollyon
 
         public override void Die()
         {
+            engineSound.Stop();
             Res.GetSound("explosion").Play();
 
             while(Inventory.Count > 0)
@@ -226,6 +227,10 @@ namespace Apollyon
 
         public override void Update() //goes once per tick
         {
+            engineSound.Volume = Math.Min(
+                Math.Max(Speed, 0), 1
+            );
+
             if (Speed > 0.1f)
             {
                 if (!(engineSound.State == SoundState.Playing))
@@ -241,7 +246,11 @@ namespace Apollyon
                         .Spawn()
                     );
             }
-            else engineSound.Pause();
+            else
+            {
+                engineSound.Pause();
+                engineSound.Volume = 0;
+            }
 
             foreach (ShipComponent _c in Components)
                 _c.Tick();

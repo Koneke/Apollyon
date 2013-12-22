@@ -61,8 +61,16 @@ namespace Apollyon
                 Rectangle _screenRect = new Rectangle(
                     (int)_screenPosition.X,
                     (int)_screenPosition.Y,
-                    (int)(_p.texture.Width * _p.scale * Game.Camera.GetZoom()),
-                    (int)(_p.texture.Height * _p.scale * Game.Camera.GetZoom())
+                    Math.Max(
+                        (int)(_p.texture.Width * _p.scale *
+                            Game.Camera.GetZoom()),
+                        1
+                    ),
+                    Math.Max(
+                        (int)(_p.texture.Height * _p.scale *
+                            Game.Camera.GetZoom()),
+                        1
+                    )
                 );
 
                 spriteBatch.Draw(

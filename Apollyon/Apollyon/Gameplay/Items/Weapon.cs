@@ -101,7 +101,8 @@ namespace Apollyon
 
             SoundEffectInstance _sei =
                 Res.Sounds[this.ID == 1102 ? "mine" : "laser"].CreateInstance();
-            //_sei.Play();
+            _sei.Volume = 0.3f;
+            _sei.Play();
         }
     }
 }
