@@ -57,17 +57,18 @@ namespace Apollyon
             Game.Camera.Y -= 400;
 
             //test stuff
-            Ship _s = new Ship(new Vector2(100, 300));
+            Ship _s = new Ship(new Vector2(300, 300));
             world.SpaceObjects.Add(_s);
             UIBindings.Get("All").Add(_s);
 
-            for(int i = 0;i<3;i++)
+            _s = new Ship(new Vector2(100, 300));
+            world.SpaceObjects.Add(_s);
+            UIBindings.Get("All").Add(_s);
+
             _s.AddItem(ItemDatabase.Spawn(
                 ItemDatabase.Items.Find(x => x.ID == 1102)));
-
             _s.AddItem(ItemDatabase.Spawn( //spawn into inventory
-                ItemDatabase.Items.Find(x => x.ID == 1100)));
-
+                ItemDatabase.Items.Find(x => x.ID == 1199)));
             ItemDatabase.Spawn( //spawn into space
                 ItemDatabase.Items.Find(x => x.ID == 1100))
                 .SetPosition(new Vector2(100, 100));
@@ -75,7 +76,7 @@ namespace Apollyon
             AISimpleMiner _AI = new AISimpleMiner();
             Game.AIs.Add(_AI);
 
-            _s = new Ship(new Vector2(350, 100));
+            _s = new Ship(new Vector2(550, 100));
             world.SpaceObjects.Add(_s);
             UIBindings.Get("All").Add(_s);
             _s.AddItem(ItemDatabase.Spawn(

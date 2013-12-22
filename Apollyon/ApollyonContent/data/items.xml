@@ -67,6 +67,25 @@
   </item>
 
   <item>
+    <name>"Irelia"</name>
+    <id>1199</id>
+    <texture>generic</texture>
+
+    <tags>
+      <tag>weapon</tag>
+      <tag>item</tag>
+    </tags>
+
+    <stacking>false</stacking>
+
+    <weapon>
+      <damage>700</damage>
+      <frequency>140</frequency>
+      <beamthickness>6</beamthickness>
+    </weapon>
+  </item>
+
+  <item>
     <name>Coal</name>
     <id>1000</id>
     <texture>generic</texture>

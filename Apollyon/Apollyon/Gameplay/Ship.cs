@@ -48,6 +48,12 @@ namespace Apollyon
             health -= _damage;
         }
 
+        public Vector2 GetVelocity() {
+            return new Vector2(
+                (float)Math.Cos(Direction),
+                (float)Math.Sin(Direction)) * Speed;
+    }
+
         public List<Item> Inventory;
 
         public Ship(
@@ -79,7 +85,7 @@ namespace Apollyon
                 new Particle2()
                 .SetPosition(Vector2.Zero, 4)
                 //velocity is the oddball, going px/s instead of px/t
-                .SetVelocity(Vector2.Zero, 20)
+                .SetVelocity(Vector2.Zero, 50)
                 .SetFriction(0.05f, 0.03f, 0.01f)
                 .SetColour(
                     new Color(1f,0.4f,0f,1f),
@@ -177,26 +183,33 @@ namespace Apollyon
                         Game.Random.Next(-3, 4));
             }
 
-            new ParticleSpawn(
-                1000,
-                new Particle(
-                    new Vector2(
-                        Position.X,
-                        Position.Y),
-                    Res.OneByOne,
-                    new Color(1f, 0.4f, 0f, 1f),
-                    900,
-                    0,
-                    6,
-                    0.05f
-                )
-            )
-            .RandomizeLifeTime(200)
-            .RandomizeSpeed(5.5f)
-            .RandomizePosition(new Vector2(8, 8))
-            .RandomizeDirection((float)Math.PI*2f)
-            .RandomizeColor(new Color(0f, 1f, 0f, 0f))
-            .Spawn();
+            for (int i = 0; i < 1000; i++)
+                Particle2.AddParticle(
+                    EngineTrail
+                    .Clone()
+                        .SetPosition(Position)
+                        .SetFriction(0.002f,0.001f,0)
+                        .SetScale(2f, 0.75f, -0.001f)
+                        .SetVelocity(
+                            Utility.RandomDirectionVector() * 35 +
+                            GetVelocity() * 50)
+                        .SetLifeTime(3000, 1200)
+                    .Spawn()
+                );
+
+            for (int i = 0; i < 1000; i++)
+                Particle2.AddParticle(
+                    EngineTrail
+                    .Clone()
+                        .SetPosition(Position)
+                        .SetFriction(0.002f,0.001f,0)
+                        .SetScale(2.5f, 0.75f, -0.001f)
+                        .SetVelocity(
+                            Utility.RandomDirectionVector() * 25 +
+                            GetVelocity() * 35)
+                        .SetLifeTime(2000, 800)
+                    .Spawn()
+                );
 
             UIBindings.Get("All").Remove(this);
         }
@@ -204,45 +217,21 @@ namespace Apollyon
         public override void Update() //goes once per tick
         {
             if (Speed > 0.1f)
-            {
-                //would love to save this somewhere else and just spawn here
-                /*new ParticleSpawn(
-                    10,
-                    new Particle(
-                        new Vector2(
-                            Position.X,
-                            Position.Y),
-                        Res.OneByOne,
-                        new Color(1f, 0.2f, 0f, 1f),
-                        300,
-                        Direction + Math.PI,
-                        Speed * Speed,
-                        0.1f
-                    )
-                )
-                .RandomizeSpeed(1.5f)
-                .RandomizePosition(new Vector2(8, 8))
-                .RandomizeDirection((float)Math.PI / 8f)
-                .RandomizeColor(new Color(0f, 1f, 0f, 0f))
-                .Spawn();*/
                 for (int i = 0; i < 10; i++)
-                {
                     Particle2.AddParticle(
                         EngineTrail
                         .Clone()
                             .SetPosition(Position)
                             .SetVelocity(
                                 Utility.RandomDirectionVector() * 50 +
-                                Velocity * 10)
+                                Velocity * 30)
                         .Spawn()
                     );
-                }
-            }
+
 
             foreach (ShipComponent _c in Components)
-            {
                 _c.Tick();
-            }
+
 
             float _d = Vector2.Distance(Position, TargetPosition);
 
