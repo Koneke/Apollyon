@@ -22,6 +22,8 @@ namespace Apollyon
             Utility.Tag(this, "item");
             Utility.Tag(this, "container");
 
+            ID = 100;
+
             //test stuff
             AddItem(
                 ItemDatabase.Spawn(

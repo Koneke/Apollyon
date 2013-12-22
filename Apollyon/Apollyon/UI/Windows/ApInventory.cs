@@ -80,22 +80,21 @@ namespace Apollyon
             {
                 foreach (Item _i in _s.Inventory)
                 {
-                    _iNames = _iNames.Intersect(
-                        _s.Inventory.Select(x => x.Name));
-                    ApInventoryPost _post = Items.Find(x => x.Name == _i.Name);
+                    /*_iNames = _iNames.Intersect(
+                        _s.Inventory.Select(x => x.Name));*/
+                    //ApInventoryPost _post = Items.Find(x => x.Name == _i.Name);
+                    ApInventoryPost _post =
+                        Items.Find(x => x.Items[0].ID == _i.ID);
+
                     if (_post == null)
-                    {
                         Items.Add(
                             new ApInventoryPost(
                                 _i.Name,
                                 new List<Item> { _i }
                             )
                         );
-                    }
                     else
-                    {
                         _post.Items.Add(_i);
-                    }
                 }
             }
 
@@ -109,6 +108,8 @@ namespace Apollyon
                     Selection.Remove(_i);
                 }
             }
+
+            Items = Items.OrderBy(x => x.Name).ToList();
         }
 
         public override void GetAction(string _action)
@@ -194,7 +195,9 @@ namespace Apollyon
                     {
                         Item _i = Items[(int)_item].Items[0];
                         Ship _s = (UIBindings.Get("Selected")[0] as Ship);
-                        _s.DropItem(_s.Inventory[(int)_item]);
+                        //dude, wat - future you
+                        //_s.DropItem(_s.Inventory[(int)_item]);
+                        _s.DropItem(_s.Inventory.Find(x => x.ID == _i.ID));
                     }
                 }
             }

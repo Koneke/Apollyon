@@ -65,7 +65,7 @@ namespace Apollyon
             if (_target != null)
             {
                 _target.Damage(new AttackInfo(
-                    this, Damage, Parent));
+                    this, Damage, Carrier));
                 //_target.Damage(Damage);
                 /*Game.Log(Parent.Name + " dealt " + Damage +
                     " points of damage to " + _target.Name + " using " +
@@ -75,24 +75,24 @@ namespace Apollyon
             Vector2 _hitPosition = _target.Position;
             
             double _ang = Math.Atan2(
-                _target.Position.Y - Parent.Position.Y,
-                _target.Position.X - Parent.Position.X
+                _target.Position.Y - Carrier.Position.Y,
+                _target.Position.X - Carrier.Position.X
             );
 
             float _d = Vector2.Distance(
-                Parent.Position,
+                Carrier.Position,
                 _target.Position
             ); //TODO: Change me when missing to see the shot whizz past
 
             double _rand = 0.07f;
             _ang -= _rand/2f;
             _ang += _rand * Game.Random.NextDouble();
-            _hitPosition.X = Parent.Position.X+(float)Math.Cos(_ang) * _d;
-            _hitPosition.Y = Parent.Position.Y+(float)Math.Sin(_ang) * _d;
+            _hitPosition.X = Carrier.Position.X+(float)Math.Cos(_ang) * _d;
+            _hitPosition.Y = Carrier.Position.Y+(float)Math.Sin(_ang) * _d;
 
             Particle.Particles.Add(
                 new LineParticle(
-                    Parent.Position,
+                    Carrier.Position,
                     _hitPosition,
                     BeamThickness,
                     BeamTint,

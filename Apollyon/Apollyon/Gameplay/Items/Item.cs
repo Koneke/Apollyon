@@ -66,7 +66,7 @@ namespace Apollyon
                 Ship _carrier = Carrier as Ship;
                 _carrier.Inventory.Remove(this);
                 _carrier.Components.Add(Component);
-                Component.Parent = _carrier;
+                Component.Carrier = _carrier;
             }
         }
     }

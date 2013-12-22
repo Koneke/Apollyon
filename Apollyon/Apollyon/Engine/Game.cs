@@ -33,5 +33,7 @@ namespace Apollyon
             ((ApLogWindow)WindowManager.GetWindowByName("Combat Log")).
                 Log.Add(_message);
         }
+
+        public static List<AISimpleBrain> AIs = new List<AISimpleBrain>();
     }
 }

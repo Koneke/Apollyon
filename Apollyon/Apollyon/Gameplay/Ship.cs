@@ -79,7 +79,7 @@ namespace Apollyon
         public void AddComponent(ShipComponent _sc)
         {
             Components.Add(_sc);
-            _sc.Parent = this;
+            _sc.Carrier = this;
         }
 
         public void AddItem(Item _i)
@@ -100,51 +100,54 @@ namespace Apollyon
             Inventory.Remove(_i);
         }
 
+        public void Stop()
+        {
+            this.TargetPosition = Position+
+                new Vector2(
+                    (float)Math.Cos(Direction)*Speed*15,
+                    (float)Math.Sin(Direction)*Speed*15);
+        }
+
+        //return amount scooped
+        public int Scoop()
+        {
+            int _pre = Inventory.Count;
+            foreach (SpaceObject _si in
+                Game.World.SpaceObjects.FindAll(
+                x => x.Tags.Contains("item")))
+            {
+                Item _i = (Item)_si;
+                if (_i.Carrier == null)
+                {
+                    if (Vector2.Distance(
+                            Position,
+                            _si.Position
+                        ) < 100)
+                    {
+                        AddItem(_i);
+                        //break;
+                    }
+                }
+            }
+            return Inventory.Count - _pre;
+        }
+
         public void Input(
             KeyboardState ks, KeyboardState oks,
             MouseState ms, MouseState oms
             )
         {
             if (ks.IsKeyDown(Keys.X) && (!oks.IsKeyDown(Keys.X)))
-            {
                 if (UIBindings.Get("Selected").Contains(this))
-                {
                     Shield.Current = -1;
-                }
-            }
+
             if (ks.IsKeyDown(Keys.S) && (!oks.IsKeyDown(Keys.S)))
-            {
                 if (UIBindings.Get("Selected").Contains(this))
-                {
-                    this.TargetPosition = Position+
-                        new Vector2(
-                            (float)Math.Cos(Direction)*Speed*15,
-                            (float)Math.Sin(Direction)*Speed*15);
-                }
-            }
+                    Stop();
+
             if (ks.IsKeyDown(Keys.Z) && (!oks.IsKeyDown(Keys.Z)))
-            {
                 if (UIBindings.Get("Selected").Contains(this))
-                {
-                    foreach (SpaceObject _si in
-                        Game.World.SpaceObjects.FindAll(
-                        x => x.Tags.Contains("item")))
-                    {
-                        Item _i = (Item)_si;
-                        if (_i.Carrier == null)
-                        {
-                            if (Vector2.Distance(
-                                    Position,
-                                    _si.Position
-                                ) < 100)
-                            {
-                                AddItem(_i);
-                                //break;
-                            }
-                        }
-                    }
-                }
-            }
+                    Scoop();
         }
 
         public override void Die()

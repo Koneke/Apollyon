@@ -131,6 +131,7 @@ namespace Apollyon
                     _w.BeamTint = _template.Weapon.BeamTint;
                 _w.Item = _i;
                 _i.Component = _w;
+                _i.Component.Item = _i; //reference upwards for the component
                 //_i = _ci;
                 //return _ci;
             }

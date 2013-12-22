@@ -147,17 +147,18 @@ namespace Apollyon
             Timer += gameTime.ElapsedGameTime.Milliseconds;
             while (Timer > Game.TickTime)
             {
+                foreach(AISimpleBrain _AI in Game.AIs)
+                    _AI.Tick();
+
                 foreach(SpaceObject _so in SpaceObjects.FindAll(x=>true))
-                {
                     _so.Update();
-                }
+
                 foreach (SpaceObject _so in SpaceObjects.FindAll(
-                    x => x.Health <= 0)) {
+                    x => x.Health <= 0))
                         _so.Die();
-                }
-                SpaceObjects = SpaceObjects.FindAll
-                    (x =>
-                        x.Health > 0);
+
+                SpaceObjects = SpaceObjects.FindAll(x => x.Health > 0);
+
                 Timer -= Game.TickTime;
             }
         }

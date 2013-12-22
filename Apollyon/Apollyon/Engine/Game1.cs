@@ -72,15 +72,30 @@ namespace Apollyon
                 ItemDatabase.Items.Find(x => x.ID == 1100))
                 .SetPosition(new Vector2(100, 100));
 
-            _s = new Ship(new Vector2(300, 100));
+            AISimpleMiner _AI = new AISimpleMiner();
+            Game.AIs.Add(_AI);
+
+            _s = new Ship(new Vector2(350, 100));
             world.SpaceObjects.Add(_s);
             UIBindings.Get("All").Add(_s);
-
             _s.AddItem(ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1100)));
+                ItemDatabase.Items.Find(x => x.ID == 1102)));
+            _AI.Fleet.Add(_s);
+
+            _s = new Ship(new Vector2(100, 100));
+            world.SpaceObjects.Add(_s);
+            UIBindings.Get("All").Add(_s);
+            _s.AddItem(ItemDatabase.Spawn(
+                ItemDatabase.Items.Find(x => x.ID == 1102)));
+            _s.AddItem(ItemDatabase.Spawn(
+                ItemDatabase.Items.Find(x => x.ID == 1102)));
+            _AI.Fleet.Add(_s);
 
             Asteroid _a = new Asteroid();
             _a.Position = new Vector2(400, 400);
+
+            _a = new Asteroid();
+            _a.Position = new Vector2(0, 80);
 
             Container _c = new Container();
         }

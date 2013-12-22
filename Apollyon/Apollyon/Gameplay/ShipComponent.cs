@@ -7,7 +7,7 @@ namespace Apollyon
 {
     class ShipComponent
     {
-        public Ship Parent;
+        public Ship Carrier;
         public string Name;
 
         public int ID;
@@ -15,6 +15,8 @@ namespace Apollyon
         public bool Active = false;
         public int Frequency; //time ticks per component tick
         public int Timer;
+
+        public Item Item;
 
         //weapons and similar
         public bool NeedsTarget = true; //add to ctor later
