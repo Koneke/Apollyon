@@ -138,7 +138,6 @@ namespace Apollyon
         public Vector2 Position;
         public Texture2D Texture;
         public Color Colour;
-        public Vector4? DeltaColour;
         public int LifeTime;
         public double Direction;
         public float Speed;
@@ -154,7 +153,6 @@ namespace Apollyon
                 Texture,
                 Colour,
                 LifeTime,
-                DeltaColour,
                 Direction,
                 Speed,
                 Friction,
@@ -171,7 +169,6 @@ namespace Apollyon
             Texture2D _texture,
             Color _colour,
             int _lifeTime,
-            Vector4? _deltaColour = null,
             double _direction = 0,
             float _speed = 0,
             float _friction = 0,
@@ -182,7 +179,6 @@ namespace Apollyon
             Position = _position;
             Texture = _texture;
             Colour = _colour;
-            DeltaColour = _deltaColour;
             LifeTime = _lifeTime;
             Direction = _direction;
             Speed = _speed;

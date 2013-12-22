@@ -74,7 +74,23 @@ namespace Apollyon
 
             Visible = true;
             Depth = 1;
+
+            EngineTrail =
+                new Particle2()
+                .SetPosition(Vector2.Zero, 4)
+                //velocity is the oddball, going px/s instead of px/t
+                .SetVelocity(Vector2.Zero, 20)
+                .SetFriction(0.05f, 0.03f, 0.01f)
+                .SetColour(
+                    new Color(1f,0.4f,0f,1f),
+                    new Color(0f,0.4f,0f,1f),
+                    new Color(0f,0f,0f,0f))
+                .SetScale(1.5f, 0.35f, 0f)
+                .SetRotation(0, Math.PI*2f, 0) //add delta variation
+                .SetTexture(Res.OneByOne)
+                .SetLifeTime(600, 350);
         }
+        Particle2 EngineTrail;
 
         public void AddComponent(ShipComponent _sc)
         {
@@ -170,9 +186,6 @@ namespace Apollyon
                     Res.OneByOne,
                     new Color(1f, 0.4f, 0f, 1f),
                     900,
-                    new Vector4(0f, 0f, 0f, -0.5f), //does not work
-                //why does xna seem to drop the A of the colour above
-                //completely all of a sudden..?
                     0,
                     6,
                     0.05f
@@ -193,7 +206,7 @@ namespace Apollyon
             if (Speed > 0.1f)
             {
                 //would love to save this somewhere else and just spawn here
-                new ParticleSpawn(
+                /*new ParticleSpawn(
                     10,
                     new Particle(
                         new Vector2(
@@ -202,9 +215,6 @@ namespace Apollyon
                         Res.OneByOne,
                         new Color(1f, 0.2f, 0f, 1f),
                         300,
-                        new Vector4(0f, 0f, 0f, -0.5f), //does not work
-                    //why does xna seem to drop the A of the colour above
-                    //completely all of a sudden..?
                         Direction + Math.PI,
                         Speed * Speed,
                         0.1f
@@ -214,7 +224,19 @@ namespace Apollyon
                 .RandomizePosition(new Vector2(8, 8))
                 .RandomizeDirection((float)Math.PI / 8f)
                 .RandomizeColor(new Color(0f, 1f, 0f, 0f))
-                .Spawn();
+                .Spawn();*/
+                for (int i = 0; i < 10; i++)
+                {
+                    Particle2.AddParticle(
+                        EngineTrail
+                        .Clone()
+                            .SetPosition(Position)
+                            .SetVelocity(
+                                Utility.RandomDirectionVector() * 50 +
+                                Velocity * 10)
+                        .Spawn()
+                    );
+                }
             }
 
             foreach (ShipComponent _c in Components)

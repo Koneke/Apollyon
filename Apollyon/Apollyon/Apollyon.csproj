@@ -117,6 +117,7 @@
     <Compile Include="Gameplay\Items\Item.cs" />
     <Compile Include="Engine\Particle.cs" />
     <Compile Include="Gameplay\Items\ItemDatabase.cs" />
+    <Compile Include="Particle2.cs" />
     <Compile Include="UI\UIBindings.cs" />
     <Compile Include="UI\UILoader.cs" />
     <Compile Include="UI\Windows\ApOverview.cs" />

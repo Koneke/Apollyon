@@ -150,6 +150,9 @@ namespace Apollyon
                 foreach(AISimpleBrain _AI in Game.AIs)
                     _AI.Tick();
 
+                //put here because I don't have tick logic in Game1 and I'm lazy
+                Particle2.Tick();
+
                 foreach(SpaceObject _so in SpaceObjects.FindAll(x=>true))
                     _so.Update();
 

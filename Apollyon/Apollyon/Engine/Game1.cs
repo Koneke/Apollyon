@@ -145,6 +145,9 @@ namespace Apollyon
                 Particle.Particles.FindAll(
                     x => (DateTime.Now - x.Created).TotalMilliseconds
                         < x.LifeTime);
+
+            Particle2.Update();
+
             foreach (Particle _p in Particle.Particles)
                 _p.Update();
 
@@ -174,6 +177,8 @@ namespace Apollyon
             foreach (Particle _p in
                 Particle.Particles.FindAll(x => x.Depth < 0))
                 _p.Draw(spriteBatch);
+
+            Particle2.Draw(spriteBatch);
 
             world.Draw(spriteBatch);
 

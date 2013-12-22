@@ -39,6 +39,14 @@ namespace Apollyon
             _i.Tags = _i.Tags.Distinct().ToList();
         }
 
+        public static Vector2 RandomDirectionVector()
+        {
+            double _a = Game.Random.NextDouble()*Math.PI*2;
+            return new Vector2(
+                (float)Math.Cos(_a),
+                (float)Math.Sin(_a));
+        }
+
         //put the colour stuff somewhere else, this class is a bit messy AON 
         public static Color AddColours(Color _a, Color _b)
         {

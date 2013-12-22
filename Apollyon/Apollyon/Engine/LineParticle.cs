@@ -19,14 +19,13 @@ namespace Apollyon
             Color _colour,
             int _lifeTime,
             Texture2D _texture = null,
-            Vector4? _deltaColour = null,
             double _direction = 0,
             float _speed = 0,
             float _friction = 0,
             double _rotation = 0,
             float _angularVelocity = 0
         ) : base (
-            _position, _texture, _colour, _lifeTime, _deltaColour, _direction,
+            _position, _texture, _colour, _lifeTime, _direction,
             _speed, _friction, _rotation, _angularVelocity)
         {
             Thickness = _thickness;
