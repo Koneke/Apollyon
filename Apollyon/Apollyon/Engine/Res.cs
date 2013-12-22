@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
@@ -13,11 +14,18 @@ namespace Apollyon
             new Dictionary<string, Texture2D>();
         public static Dictionary<string, SpriteFont> Fonts =
             new Dictionary<string, SpriteFont>();
+        public static Dictionary<string, SoundEffect> Sounds =
+            new Dictionary<string, SoundEffect>();
 
         //make one for textures as well, easier to handle in the future this way
         public static SpriteFont GetFont(string _name)
         {
             return Fonts[_name];
+        }
+
+        public static SoundEffect GetSound(string _name)
+        {
+            return Sounds[_name];
         }
 
         /* word wrapping fr http://www.xnawiki.com/index.php/Basic_Word_Wrapping

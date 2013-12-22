@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -48,11 +49,13 @@ namespace Apollyon
             health -= _damage;
         }
 
+        SoundEffectInstance engineSound;
+
         public Vector2 GetVelocity() {
             return new Vector2(
                 (float)Math.Cos(Direction),
                 (float)Math.Sin(Direction)) * Speed;
-    }
+        }
 
         public List<Item> Inventory;
 
@@ -96,6 +99,10 @@ namespace Apollyon
                 .SetRotation(0, Math.PI*2f, 0) //add delta variation
                 .SetTexture(Res.Textures["1x1"])
                 .SetLifeTime(600, 350);
+
+            engineSound =
+                Res.GetSound("engine").CreateInstance();
+            engineSound.IsLooped = true;
         }
         Particle2 EngineTrail;
 
@@ -175,6 +182,8 @@ namespace Apollyon
 
         public override void Die()
         {
+            Res.GetSound("explosion").Play();
+
             while(Inventory.Count > 0)
             {
                 Item _i = Inventory[0];
@@ -218,6 +227,9 @@ namespace Apollyon
         public override void Update() //goes once per tick
         {
             if (Speed > 0.1f)
+            {
+                if (!(engineSound.State == SoundState.Playing))
+                    engineSound.Play();
                 for (int i = 0; i < 10; i++)
                     Particle2.AddParticle(
                         EngineTrail
@@ -228,7 +240,8 @@ namespace Apollyon
                                 Velocity * 30)
                         .Spawn()
                     );
-
+            }
+            else engineSound.Pause();
 
             foreach (ShipComponent _c in Components)
                 _c.Tick();

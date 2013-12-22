@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Apollyon
 {
@@ -66,10 +67,6 @@ namespace Apollyon
             {
                 _target.Damage(new AttackInfo(
                     this, Damage, Carrier));
-                //_target.Damage(Damage);
-                /*Game.Log(Parent.Name + " dealt " + Damage +
-                    " points of damage to " + _target.Name + " using " +
-                    this.Name + ".");*/
             }
 
             Vector2 _hitPosition = _target.Position;
@@ -100,6 +97,11 @@ namespace Apollyon
                 )
             );
 
+            //audio test
+
+            SoundEffectInstance _sei =
+                Res.Sounds[this.ID == 1102 ? "mine" : "laser"].CreateInstance();
+            //_sei.Play();
         }
     }
 }

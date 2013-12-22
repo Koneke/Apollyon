@@ -55,7 +55,7 @@
     <weapon>
       <!--info for when equipped-->
       <damage>0</damage>
-      <frequency>20</frequency>
+      <frequency>60</frequency>
       <beamthickness>1</beamthickness>
       <beamtint>
         <r>0</r>

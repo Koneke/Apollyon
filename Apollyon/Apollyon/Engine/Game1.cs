@@ -101,6 +101,10 @@ namespace Apollyon
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             ResourceLoader.Load(Content);
+            Res.Sounds.Add("laser", Content.Load<SoundEffect>("laser2"));
+            Res.Sounds.Add("explosion", Content.Load<SoundEffect>("explosion"));
+            Res.Sounds.Add("mine", Content.Load<SoundEffect>("mine"));
+            Res.Sounds.Add("engine", Content.Load<SoundEffect>("engine2"));
         }
 
         protected override void UnloadContent()
