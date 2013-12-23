@@ -9,6 +9,9 @@ namespace Apollyon
         public Rectangle Rectangle;
         int lastScrollWheelValue;
 
+        Vector2? mouseGrabPoint;
+        Vector2? cameraStartGrab;
+
         public int X
         {
             get { return Rectangle.X; }
@@ -46,6 +49,27 @@ namespace Apollyon
         {
             if (!Game.HasFocus) return;
             float _zoom = (Game.ScreenSize.X / (float)Rectangle.Width);
+
+            if (
+                ms.MiddleButton == ButtonState.Pressed &&
+                oms.MiddleButton == ButtonState.Released)
+            {
+                cameraStartGrab = new Vector2(ms.X, ms.Y);
+            }
+
+            if (
+                ms.MiddleButton == ButtonState.Released &&
+                oms.MiddleButton == ButtonState.Pressed)
+            {
+                cameraStartGrab = null;
+            }
+
+            if (cameraStartGrab != null)
+            {
+                X += (int)cameraStartGrab.Value.X - ms.X;
+                Y += (int)cameraStartGrab.Value.Y - ms.Y;
+                cameraStartGrab = new Vector2(ms.X, ms.Y);
+            }
 
             int _scrollSpeed = (int)(9f/_zoom);
             if (ms.X > Game.ScreenSize.X)
