@@ -14,6 +14,8 @@ namespace Apollyon
         public override double Rotation {
             get { return Direction; } }
 
+        public Faction Faction;
+
         public double Direction;
         public float Speed;
         public float MaxSpeed;

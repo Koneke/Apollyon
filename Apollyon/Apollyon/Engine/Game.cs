@@ -20,6 +20,8 @@ namespace Apollyon
         public static int DoubleClickTime = 200; //dct in ms
         public static int MouseWheelDelta;
 
+        public static Faction PlayerFaction;
+
         public static bool HasFocus = true;
 
         public enum TargetingType {

@@ -113,7 +113,7 @@
   <ItemGroup>
     <Compile Include="Engine\AI\AISimpleMiner.cs" />
     <Compile Include="Engine\AI\AISimpleBrain.cs" />
-    <Compile Include="Asteroid.cs" />
+    <Compile Include="Gameplay\Asteroid.cs" />
     <Compile Include="Engine\Audio.cs" />
     <Compile Include="Engine\ResourceLoader.cs" />
     <Compile Include="Gameplay\Factions.cs" />
@@ -153,6 +153,7 @@
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
+    <Content Include="Non-Code\Style Guide.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApollyonContent\ApollyonContent.contentproj">

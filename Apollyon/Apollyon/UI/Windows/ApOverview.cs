@@ -88,12 +88,43 @@ namespace Apollyon
                             new Color(1f, 1f, 1f, 0.3f)
                         )
                     );
+
                 spriteBatch.DrawString(
                     Res.GetFont("log font"),
                     _so.Name,
                     new Vector2(indent, _currentY),
                     Color.White
                 );
+
+                if (list[_i].HasTag("ship"))
+                {
+                    Ship _s = list[_i] as Ship;
+                    Color _hostileColour = Color.Red;
+                    Color _neutralColour = Color.Gray;
+                    Color _friendlyColour = Color.LimeGreen;
+
+                    Color _shipColour = _neutralColour;
+
+                    if (Game.PlayerFaction.GetHostiles().Contains(
+                        _s.Faction))
+                        _shipColour = _hostileColour;
+
+                    else if (Game.PlayerFaction.GetFriendlies().Contains(
+                        _s.Faction))
+                        _shipColour = _friendlyColour;
+
+                    spriteBatch.Draw(
+                        Res.Textures["1x1"],
+                        new Rectangle(
+                            (int)w-6,
+                            (int)_currentY,
+                            4,
+                            (int)_offs
+                        ),
+                        _shipColour
+                    );
+                }
+
                 _currentY += _offs;
             }
 

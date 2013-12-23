@@ -107,6 +107,11 @@ namespace Apollyon
                             UIBindings.Get("Selected").Add(_s);
                         }
                     }
+
+                    UIBindings.Bind("selected",
+                        UIBindings.Get("selected").FindAll(
+                            x => ((Ship)x).Faction == Game.PlayerFaction)
+                    );
                 }
                 boxSelection.Width = 0;
                 selecting = false;

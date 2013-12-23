@@ -64,11 +64,12 @@ namespace Apollyon
             Game.Camera.Y -= 400;
 
             //test stuff
-
             Faction _f = new Faction("The Rude Dudes");
             Faction _ff = new Faction("The Lumberjack Organization");
 
-            Faction.GetRelations(_f, _ff);
+            Game.PlayerFaction = _f;
+
+            Faction.SetRelations(_f, _ff, -1f);
             
             Ship _s = new Ship(new Vector2(100, 300));
             world.SpaceObjects.Add(_s);
@@ -86,6 +87,8 @@ namespace Apollyon
                 ItemDatabase.Items.Find(x => x.ID == 1100))
                 .SetPosition(new Vector2(100, 100));
 
+            _s.Faction = _f;
+
             AISimpleMiner _AI = new AISimpleMiner();
             Game.AIs.Add(_AI);
 
@@ -95,6 +98,7 @@ namespace Apollyon
             _s.AddItem(ItemDatabase.Spawn(
                 ItemDatabase.Items.Find(x => x.ID == 1102)));
             _AI.Fleet.Add(_s);
+            _s.Faction = _ff;
 
             _s = new Ship(new Vector2(100, 100));
             world.SpaceObjects.Add(_s);
@@ -104,6 +108,7 @@ namespace Apollyon
             _s.AddItem(ItemDatabase.Spawn(
                 ItemDatabase.Items.Find(x => x.ID == 1102)));
             _AI.Fleet.Add(_s);
+            _s.Faction = _ff;
 
             Asteroid _a = new Asteroid();
             _a.Position = new Vector2(400, 400);

@@ -7,7 +7,6 @@ namespace Apollyon
 {
     class Matrix<T>
     {
-        //List<List<T>> matrix = new List<List<T>>();
         Dictionary<Tuple<int, int>, T> matrix =
             new Dictionary<Tuple<int, int>, T>();
 
@@ -20,7 +19,9 @@ namespace Apollyon
 
         public void Set(int _x, int _y, T _value)
         {
+            //doubling like this seems a bit dumb, do a bit of thinking, mhm?
             matrix[new Tuple<int,int>(_x,_y)] = _value;
+            matrix[new Tuple<int,int>(_y,_x)] = _value;
         }
 
         public bool Exists(int _x, int _y)
@@ -58,21 +59,37 @@ namespace Apollyon
         {
             Name = _name;
             ID = IDCounter;
+            SetRelations(this, this, 1f); //friendly with ourselves
             IDCounter += 1;
             factions.Add(this);
         }
 
-        public List<Faction> GetHostiles()
+        public List<Faction> GetAbove(float _value)
         {
             List<Faction> _fs = new List<Faction>();
             foreach (Faction _f in factions)
-            {
-                if (GetRelations(this, _f) <= -1f)
-                {
+                if (GetRelations(this, _f) >= _value)
                     _fs.Add(_f);
-                }
-            }
             return _fs;
+        }
+
+        public List<Faction> GetBelow(float _value)
+        {
+            List<Faction> _fs = new List<Faction>();
+            foreach (Faction _f in factions)
+                if (GetRelations(this, _f) <= _value)
+                    _fs.Add(_f);
+            return _fs;
+        }
+
+        public List<Faction> GetHostiles()
+        {
+            return GetBelow(-1f);
+        }
+
+        public List<Faction> GetFriendlies()
+        {
+            return GetAbove(1f);
         }
     }
 }

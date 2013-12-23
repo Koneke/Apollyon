@@ -1,0 +1,13 @@
+﻿Variable beginning with _ = temporary/local variable
+Variable/method beginning with capital letter = public variable/method
+Variable/method beginning with small letter = private variable/method
+
+Sample function declaration
+
+public static void foo( //paren on signature row
+	int bar,			//args on new rows
+	float qux,
+	double baz = 1.0
+) {						//paren and start bracket after arguments with 0 indent
+	...
+}
