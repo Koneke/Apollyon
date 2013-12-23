@@ -56,6 +56,7 @@ namespace Apollyon
             world = new World();
             Game.World = world;
             Game.Camera = world.Camera;
+            Audio.bgm = Audio.Play("mus/mAmbience.ogg", 0.05f);
 
             //REMEMBER: convenience while deving
             //(so i can spawn at 0,0 and still see stuff)
@@ -63,6 +64,12 @@ namespace Apollyon
             Game.Camera.Y -= 400;
 
             //test stuff
+
+            Faction _f = new Faction("The Rude Dudes");
+            Faction _ff = new Faction("The Lumberjack Organization");
+
+            Faction.GetRelations(_f, _ff);
+            
             Ship _s = new Ship(new Vector2(100, 300));
             world.SpaceObjects.Add(_s);
             UIBindings.Get("All").Add(_s);

@@ -17,6 +17,8 @@ namespace Apollyon
 
         static List<string> playedLog = new List<string>();
 
+        public static ISound bgm;
+
         public static void UpdateSettings()
         {
             soundEngine.Default3DSoundMinDistance = 80;
@@ -99,6 +101,25 @@ namespace Apollyon
             //debugging reasons
             if (!playedLog.Contains(_file.ToLower()))
                 playedLog.Add(_file.ToLower());
+
+            return a;
+        }
+
+        public static ISound Play(
+            string _file,
+            float _volume = 1,
+            bool _paused = false,
+            bool _looped = false
+        ) {
+            if (!System.IO.File.Exists(ContentRoot + _file))
+                throw new Exception("FILE DOESN'T EXIST");
+
+            var a = soundEngine.Play2D(
+                ContentRoot+_file, _looped, true);
+            a.Volume = _volume;
+
+            if (!_paused)
+                a.Paused = false;
 
             return a;
         }

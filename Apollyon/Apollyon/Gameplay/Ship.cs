@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.Xna.Framework;
-//using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using IrrKlang;
@@ -64,7 +63,6 @@ namespace Apollyon
             Vector2 _position
         ) {
             Name = ShipNameGenerator.GenerateName();
-            //Texture = Res.Ship;
             Texture = Res.Textures["ship"];
             Position = _position;
             Size = new Vector2(32, 32);
@@ -100,10 +98,6 @@ namespace Apollyon
                 .SetRotation(0, Math.PI*2f, 0) //add delta variation
                 .SetTexture(Res.Textures["1x1"])
                 .SetLifeTime(600, 350);
-
-            /*engineSound =
-                Res.GetSound("engine").CreateInstance();
-            engineSound.IsLooped = true;*/
         }
         Particle2 EngineTrail;
 
