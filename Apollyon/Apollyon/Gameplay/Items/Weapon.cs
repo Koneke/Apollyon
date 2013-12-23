@@ -30,7 +30,8 @@ namespace Apollyon
         public int BeamThickness; //we don't really want this here
         //make more data driven etc., never repeated enough
         public Color BeamTint; //important ok
-        public Item Item;
+        public Item Item; //not sure if this should be hiding, idk, it works
+        public int Range;
 
         public Weapon(string _name, int _id) : base(_name, _id)
         {
@@ -38,10 +39,20 @@ namespace Apollyon
             Damage = 3;
             BeamThickness = 1;
             BeamTint = new Color(1f, 0.7f, 0f, 1f);
+            Range = 0;
         }
 
         public override void Fire() {
             SpaceObject _target = null;
+
+            Targets = Targets.FindAll(
+                x => Vector2.Distance(x.Position, Carrier.Position) < Range);
+
+            if (Targets.Count == 0)
+            {
+                Active = false;
+                return;
+            }
 
             switch (TargetingType)
             {
@@ -57,6 +68,7 @@ namespace Apollyon
                 default:
                     break;
             }
+
             if (Targets.Count == 0)
             {
                 Active = false;

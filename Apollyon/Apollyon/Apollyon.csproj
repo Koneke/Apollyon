@@ -111,7 +111,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AISimpleFighter.cs" />
+    <Compile Include="Gameplay\AI\AISimpleFighter.cs" />
     <Compile Include="Gameplay\AI\AISimpleMiner.cs" />
     <Compile Include="Gameplay\AI\AISimpleBrain.cs" />
     <Compile Include="Gameplay\Asteroid.cs" />

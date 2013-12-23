@@ -65,11 +65,13 @@ namespace Apollyon
 
             //test stuff
             Faction _f = new Faction("The Rude Dudes");
-            Faction _ff = new Faction("The Lumberjack Organization");
+            Faction _aifactionA = new Faction("The Lumberjack Organization");
+            Faction _aifactionB = new Faction("The Lumberjack Organization");
 
             Game.PlayerFaction = _f;
 
-            Faction.SetRelations(_f, _ff, 0f);
+            Faction.SetRelations(_f, _aifactionA, 0f);
+            Faction.SetRelations(_aifactionB, _aifactionA, -1f);
             
             Ship _s = new Ship(new Vector2(100, 300));
             world.SpaceObjects.Add(_s);
@@ -92,16 +94,37 @@ namespace Apollyon
             AISimpleMiner _AI = new AISimpleMiner();
             Game.AIs.Add(_AI);
             AISimpleFighter _AI2 = new AISimpleFighter();
-            _AI2.Faction = _ff;
+            _AI2.Faction = _aifactionA;
             Game.AIs.Add(_AI2);
 
-            _s = new Ship(new Vector2(550, 100));
-            world.SpaceObjects.Add(_s);
-            UIBindings.Get("All").Add(_s);
-            _s.AddItem(ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1101)));
-            _AI2.Fleet.Add(_s);
-            _s.Faction = _ff;
+            AISimpleFighter _AI3 = new AISimpleFighter();
+            _AI3.Faction = _aifactionB;
+            Game.AIs.Add(_AI3);
+
+            for (int i = 0; i < 3; i++)
+            {
+                _s = new Ship(new Vector2(
+                    (float)Game.Random.NextDouble()*7000,
+                    (float)Game.Random.NextDouble()*7000
+                    ));
+                world.SpaceObjects.Add(_s);
+                UIBindings.Get("All").Add(_s);
+                _s.AddItem(ItemDatabase.Spawn(
+                    ItemDatabase.Items.Find(x => x.ID == 1101)));
+                _AI2.Fleet.Add(_s);
+                _s.Faction = _aifactionA;
+
+                _s = new Ship(new Vector2(
+                    (float)Game.Random.NextDouble()*7000,
+                    (float)Game.Random.NextDouble()*7000
+                    ));
+                world.SpaceObjects.Add(_s);
+                UIBindings.Get("All").Add(_s);
+                _s.AddItem(ItemDatabase.Spawn(
+                    ItemDatabase.Items.Find(x => x.ID == 1101)));
+                _AI3.Fleet.Add(_s);
+                _s.Faction = _aifactionB;
+            }
 
             _s = new Ship(new Vector2(100, 100));
             world.SpaceObjects.Add(_s);
@@ -111,7 +134,7 @@ namespace Apollyon
             _s.AddItem(ItemDatabase.Spawn(
                 ItemDatabase.Items.Find(x => x.ID == 1102)));
             _AI.Fleet.Add(_s);
-            _s.Faction = _ff;
+            _s.Faction = _aifactionA;
 
             Asteroid _a = new Asteroid();
             _a.Position = new Vector2(400, 400);

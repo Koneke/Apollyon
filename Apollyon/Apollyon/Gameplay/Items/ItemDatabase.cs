@@ -14,6 +14,7 @@ namespace Apollyon
         public int Damage;
         public int Frequency;
         public int BeamThickness;
+        public int Range;
         public Color BeamTint;
     }
 
@@ -77,6 +78,10 @@ namespace Apollyon
                         _weapon.Element("beamthickness").Value,
                         out _template.Weapon.BeamThickness);
 
+                    Int32.TryParse(
+                        _weapon.Element("range").Value,
+                        out _template.Weapon.Range);
+
                     XElement _tint = _weapon.Element("beamtint");
                     if (_tint != null)
                     {
@@ -127,6 +132,7 @@ namespace Apollyon
                 _w.Damage = _template.Weapon.Damage;
                 _w.Frequency = _template.Weapon.Frequency;
                 _w.BeamThickness = _template.Weapon.BeamThickness;
+                _w.Range = _template.Weapon.Range;
                 if(Utility.SumColour(_template.Weapon.BeamTint) != 0)
                     _w.BeamTint = _template.Weapon.BeamTint;
                 _w.Item = _i;
