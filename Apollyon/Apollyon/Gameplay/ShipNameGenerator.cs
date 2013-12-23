@@ -9,13 +9,14 @@ namespace Apollyon
     {
         public static List<string> Adjectives = new List<string>()
         {
-            "Jolly", "Nice", "Flaky", "Spooky", "Ghastly", "Gankin'",
-            "Scandalous", "Terrifying", "Awful"
+            "Jolly", "Nice", "Flaky", "Spooky", "Ghastly", "Gankin'"
+            ,"Scandalous", "Terrifying", "Awful"
         };
 
         public static List<string> Birds = new List<string>()
         {
-            "Sparrow", "Swan", "Eagle", "Crow", "Pidgeon"
+            "Sparrow", "Swan", "Eagle", "Crow", "Pidgeon", "Lumber Jack",
+            "Snakeman", "Crocodile", "Creep", "Dentist"
         };
 
         public static string GenerateName()

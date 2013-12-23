@@ -170,7 +170,10 @@ namespace Apollyon
         {
             if (ks.IsKeyDown(Keys.X) && (!oks.IsKeyDown(Keys.X)))
                 if (UIBindings.Get("Selected").Contains(this))
+                {
+                    health = -1;
                     Shield.Current = -1;
+                }
 
             if (ks.IsKeyDown(Keys.S) && (!oks.IsKeyDown(Keys.S)))
                 if (UIBindings.Get("Selected").Contains(this))
@@ -184,7 +187,7 @@ namespace Apollyon
         public override void Die()
         {
             Audio.PlaySoundAtPosition(
-                "explosion.wav",
+                "afx/explosion.wav",
                 new Vector3(Position.X, Position.Y, 0)
             );
 

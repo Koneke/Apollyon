@@ -108,18 +108,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Laser_Shoot5.wav">
+    <None Include="Laser_Shoot5.wav">
       <Name>Laser_Shoot5</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="laser2.wav">
       <Name>laser2</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -127,7 +126,6 @@
       <Name>explosion</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -138,11 +136,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="engine.wav">
+    <None Include="engine.wav">
       <Name>engine</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="engine2.wav">

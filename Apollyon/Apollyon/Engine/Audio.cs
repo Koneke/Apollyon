@@ -15,6 +15,8 @@ namespace Apollyon
         public static float LinearFalloffStart = 2000;
         public static float LinearFalloffEnd = 4700;
 
+        static List<string> playedLog = new List<string>();
+
         public static void UpdateSettings()
         {
             soundEngine.Default3DSoundMinDistance = 80;
@@ -70,6 +72,9 @@ namespace Apollyon
             bool _paused = false,
             bool _looped = false
         ) {
+            if (!System.IO.File.Exists(ContentRoot + _file))
+                throw new Exception("FILE DOESN'T EXIST");
+
             var a = soundEngine.Play3D(
                 ContentRoot + _file,
                 _position.X,
@@ -90,6 +95,10 @@ namespace Apollyon
 
             if(!_paused)
                 a.Paused = false;
+
+            //debugging reasons
+            if (!playedLog.Contains(_file.ToLower()))
+                playedLog.Add(_file.ToLower());
 
             return a;
         }
