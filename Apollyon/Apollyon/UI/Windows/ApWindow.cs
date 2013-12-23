@@ -19,6 +19,8 @@ namespace Apollyon
         public static GraphicsDevice graphics;
 
         public String Name;
+        public string Help;
+        public static bool DrawHelp;
         public Color Tint;
 
         public XElement xml;
@@ -40,9 +42,13 @@ namespace Apollyon
         //possible todo: push window to front even if not draggable? iunno
         //possible todo: snapping windows?
         public static void Input(
+            KeyboardState ks,
+            KeyboardState oks,
             MouseState ms,
             MouseState oms
         ) {
+            DrawHelp = ks.IsKeyDown(Keys.H);
+
             if (
                 ms.RightButton == ButtonState.Pressed &&
                 oms.RightButton == ButtonState.Released
@@ -237,6 +243,25 @@ namespace Apollyon
             RenderTargetBinding[] _previousRT = graphics.GetRenderTargets();
             graphics.SetRenderTarget(Target);
             ActualRender(spriteBatch);
+            if (DrawHelp)
+            {
+                spriteBatch.Begin();
+                spriteBatch.Draw(
+                    Res.Textures["1x1"],
+                    new Rectangle(0,0,(int)w,(int)h),
+                    Utility.MultiplyColours(
+                        StandardBorder,
+                        new Color(0f, 0f, 0f, 0.7f)
+                    )
+                );
+                spriteBatch.DrawString(
+                    Res.GetFont("log font"),
+                    Help??"",
+                    new Vector2(4, 4),
+                    Color.White
+                );
+                spriteBatch.End();
+            }
             graphics.SetRenderTargets(_previousRT);
         }
 

@@ -52,7 +52,7 @@ namespace Apollyon
             UIBindings.Bind("All", new List<SpaceObject>());
 
             LoadUI();
-            ItemDatabase.LoadData();
+            ItemDatabase.LoadData(); //move to load
             world = new World();
             Game.World = world;
             Game.Camera = world.Camera;
@@ -132,7 +132,7 @@ namespace Apollyon
 
             BindingsManager.HandleInput(ks.GetPressedKeys());
 
-            ApWindow.Input(ms, oms);
+            ApWindow.Input(ks, oks, ms, oms);
             world.Input(ks, oks, ms, oms);
             world.Update(gameTime);
             foreach (ApWindow _w in ApWindow.Windows)

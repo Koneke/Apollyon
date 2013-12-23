@@ -53,6 +53,17 @@ namespace Apollyon
                 }
 
                 _new.Name = _name;
+                if (_e.Element("help") != null)
+                {
+                    //_new.Help = _e.Element("help").Value;
+                    _new.Help =
+                        Utility.WrapText(
+                        Res.GetFont("log font"),
+                        _e.Element("help").Value,
+                        _w
+                    );
+
+                }
 
                 if (_e.Elements("tint").Any())
                 {

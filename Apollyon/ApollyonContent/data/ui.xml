@@ -4,6 +4,7 @@
   <window>
     <name>Generic Overview</name>
     <type>Overview</type>
+    <help>Generric Overview: Left click to select things, right click to target them.</help>
     <position>
       <x>640</x>
       <y>10</y>
@@ -23,6 +24,7 @@
   <window>
     <name>Fleet Overview</name>
     <type>ShipOverview</type>
+    <help>Fleet Overview: List of friendly ships in the vicinity.</help>
     <position>
       <x>220</x>
       <y>10</y>
@@ -43,6 +45,7 @@
   <window>
     <name>Hostile Overview</name>
     <type>ShipOverview</type>
+    <help>Hostiles Overview: List of non-friendly ships in the vicinity.</help>
     <position>
       <x>430</x>
       <y>10</y>
@@ -69,6 +72,7 @@
   <window>
     <name>Combat Log</name>
     <type>CombatLog</type>
+    <help>Combat Log: List of recent events.</help>
     <position>
       <x>10</x>
       <y>10</y>
@@ -87,6 +91,7 @@
   <window>
     <name>Component Overview</name>
     <type>ComponentOverview</type>
+    <help>Component Overview: List of equipped components. Double click to activate (weapons need you to have things targeted). Yellow text means activated, blue means some in the stack are activated, but not all.</help>
     <position>
       <x>220</x>
       <y>220</y>
@@ -99,6 +104,7 @@
   <window>
     <name>Hostile Component Overview</name>
     <type>ComponentOverview</type>
+    <help>Component Overview (target): List of equipped components on the targeted objects.</help>
     <position>
       <x>10</x>
       <y>310</y>
@@ -117,6 +123,7 @@
   <window>
     <name>Selection Status</name>
     <type>StatusWindow</type>
+    <help>Selection Status: Displays the average health of all selected items.</help>
     <position>
       <x>10</x>
       <y>220</y>
@@ -129,6 +136,7 @@
   <window>
     <name>Target Status</name>
     <type>StatusWindow</type>
+    <help>Target Status: Displays the average health of all targeted items.</help>
     <position>
       <x>430</x>
       <y>220</y>
@@ -147,6 +155,7 @@
   <window>
     <name>Inventory</name>
     <type>Inventory</type>
+    <help>Inventory: List of things in the inventories of the selected ships. Double click to use/equip, right click to drop (Z loots, in case you drop something nice).</help>
     <position>
       <x>220</x>
       <y>430</y>

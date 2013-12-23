@@ -47,6 +47,36 @@ namespace Apollyon
                 (float)Math.Sin(_a));
         }
 
+        /* word wrapping fr http://www.xnawiki.com/index.php/Basic_Word_Wrapping
+         * because I can't be arsed with writing this again */
+        public static string WrapText(
+            SpriteFont spriteFont,
+            string text,
+            float maxLineWidth,
+            bool indent = false
+        ) {
+            string[] words = text.Split(' ');
+            StringBuilder sb = new StringBuilder();
+            float lineWidth = 0f;
+            float spaceWidth = spriteFont.MeasureString(" ").X;
+            foreach (string word in words)
+            {
+                Vector2 size = spriteFont.MeasureString(word);
+                if (lineWidth + size.X < maxLineWidth)
+                {
+                    sb.Append(word + " ");
+                    lineWidth += size.X + spaceWidth;
+                }
+                else
+                {
+                    if(indent) sb.Append("\n" + " " + word + " ");
+                    else sb.Append("\n" + word + " ");
+                    lineWidth = size.X + spaceWidth;
+                }
+            }
+            return sb.ToString();
+        }
+
         //put the colour stuff somewhere else, this class is a bit messy AON 
         public static Color AddColours(Color _a, Color _b)
         {
