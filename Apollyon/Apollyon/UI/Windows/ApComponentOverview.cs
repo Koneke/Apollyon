@@ -144,7 +144,7 @@ namespace Apollyon
 
                     Color _textColour = Color.White;
                     if (_acop.Components.All(x => x.Active))
-                        _textColour = Color.Yellow;
+                        _textColour = Color.Red;
                     else if (_acop.Components.Any(x => x.Active))
                         _textColour = Color.Blue;
 
