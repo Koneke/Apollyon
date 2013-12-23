@@ -39,7 +39,6 @@ namespace Apollyon
 
         public override void Update()
         {
-            //list = Game.World.SpaceObjects
             list = Utility.QuerySpace(
                 Sources, Any
             );

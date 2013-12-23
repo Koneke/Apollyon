@@ -51,6 +51,12 @@ namespace Apollyon
                 _damage = Math.Max(_damage, 0);
             }
             health -= _damage;
+            if (_attack.Source != null)
+            {
+                Ship _attacker = _attack.Source as Ship;
+                if (Faction.GetRelations(Faction, _attacker.Faction) > -1f)
+                    Faction.SetRelations(Faction, _attacker.Faction, -1f);
+            }
         }
 
         public Vector2 GetVelocity() {

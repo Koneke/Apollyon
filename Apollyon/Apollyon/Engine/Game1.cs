@@ -69,7 +69,7 @@ namespace Apollyon
 
             Game.PlayerFaction = _f;
 
-            Faction.SetRelations(_f, _ff, -1f);
+            Faction.SetRelations(_f, _ff, 0f);
             
             Ship _s = new Ship(new Vector2(100, 300));
             world.SpaceObjects.Add(_s);
@@ -146,6 +146,13 @@ namespace Apollyon
             Game.HasFocus = IsActive;
 
             BindingsManager.HandleInput(ks.GetPressedKeys());
+
+            //clean lists to filter out dead ships
+            foreach (string _s in
+                UIBindings.ShipLists.Keys.ToList().FindAll(x=>true)
+            )
+                UIBindings.Bind(_s, UIBindings.Get(_s).FindAll(
+                    x => x.Health > 0));
 
             Game.MouseWheelDelta =
                 -(ms.ScrollWheelValue - oms.ScrollWheelValue)/120;

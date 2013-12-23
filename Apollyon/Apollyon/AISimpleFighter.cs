@@ -18,6 +18,8 @@ namespace Apollyon
         public override void Tick()
         {
             if (Faction == null) return;
+            targets = targets.FindAll(x => x.Health > 0);
+
             if (targets.Count == 0)
             {
                 List<SpaceObject> query = Utility.QuerySpace(
@@ -27,6 +29,21 @@ namespace Apollyon
                 targets = targets.FindAll(
                     x => Faction.GetHostiles().Contains(x.Faction)
                 );
+            }
+
+            if (targets.Count == 0)
+            {
+                foreach (Ship _s in Fleet)
+                {
+                    foreach (ShipComponent _c in _s.Components)
+                    {
+                        if(_c.Item.HasTag("weapon")) {
+                            _c.Targets = null;
+                            _c.Active = false;
+                        }
+                    }
+                }
+                return;
             }
 
             foreach (Ship _s in Fleet)
