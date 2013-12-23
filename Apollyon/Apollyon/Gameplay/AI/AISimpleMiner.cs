@@ -11,7 +11,7 @@ namespace Apollyon
         //int amtMined;
         //targets I'm keeping track to delegate my minions towards
         List<SpaceObject> targets;
-        Dictionary<Ship,SpaceObject> fleetTargets;
+        Dictionary<Ship, SpaceObject> fleetTargets;
 
         public AISimpleMiner()
         {
@@ -33,7 +33,6 @@ namespace Apollyon
             foreach (Ship _s in Fleet)
             {
                 if (
-                    //amtMined >= 100 ||
                     _s.Inventory.Count >= 50
                     )
                 {

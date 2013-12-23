@@ -20,6 +20,7 @@ namespace Apollyon
 
         Rectangle boxSelection;
         bool selecting = false;
+        bool selectingHostile = false;
 
         public World()
         {
@@ -39,6 +40,8 @@ namespace Apollyon
             {
                 _s.Input(ks, oks, ms, oms);
             }
+
+            selectingHostile = ks.IsKeyDown(Keys.LeftControl);
 
             if (
                 ms.LeftButton == ButtonState.Pressed
@@ -69,7 +72,11 @@ namespace Apollyon
                 selecting
             ) {
                 //Game.Selected.Clear();
-                UIBindings.Get("Selected").Clear();
+                if (!selectingHostile)
+                    UIBindings.Get("Selected").Clear();
+                else
+                    UIBindings.Get("Targeted").Clear();
+
                 foreach (Ship _s in SpaceObjects.FindAll(
                     x => x.Tags.Contains("ship")))
                 {
@@ -104,14 +111,18 @@ namespace Apollyon
                             )
                         )
                         {
-                            UIBindings.Get("Selected").Add(_s);
+                            if (!selectingHostile)
+                                UIBindings.Get("Selected").Add(_s);
+                            else
+                                UIBindings.Get("Targeted").Add(_s);
                         }
                     }
 
-                    UIBindings.Bind("selected",
-                        UIBindings.Get("selected").FindAll(
-                            x => ((Ship)x).Faction == Game.PlayerFaction)
-                    );
+                    if (!ks.IsKeyDown(Keys.LeftShift))
+                        UIBindings.Bind("selected",
+                            UIBindings.Get("selected").FindAll(
+                                x => ((Ship)x).Faction == Game.PlayerFaction)
+                        );
                 }
                 boxSelection.Width = 0;
                 selecting = false;
@@ -140,7 +151,6 @@ namespace Apollyon
                     _avgPosition =
                         _avgPosition / UIBindings.Get("Selected").Count;
 
-                    //foreach (Ship _s in UIBindings.Get("Selected"))
                     foreach (Ship _s in
                         UIBindings.Get("Selected").FindAll(
                         x => x.HasTag("ship")))
@@ -321,7 +331,9 @@ namespace Apollyon
                 Utility.DrawOutlinedRectangle(
                     spriteBatch,
                     _screenRectangle,
-                    new Color(0f, 1f, 0f, 1f)
+                    selectingHostile ?
+                        new Color(1f, 0f, 0f, 1f) :
+                        new Color(0f, 1f, 0f, 1f)
                 );
             }
         }

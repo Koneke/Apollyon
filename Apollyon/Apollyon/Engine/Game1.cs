@@ -56,7 +56,7 @@ namespace Apollyon
             world = new World();
             Game.World = world;
             Game.Camera = world.Camera;
-            Audio.bgm = Audio.Play("mus/mAmbience.ogg", 0.05f);
+            Audio.bgm = Audio.Play("mus/mAmbience.ogg", 0.05f, false, true);
 
             //REMEMBER: convenience while deving
             //(so i can spawn at 0,0 and still see stuff)
@@ -91,13 +91,16 @@ namespace Apollyon
 
             AISimpleMiner _AI = new AISimpleMiner();
             Game.AIs.Add(_AI);
+            AISimpleFighter _AI2 = new AISimpleFighter();
+            _AI2.Faction = _ff;
+            Game.AIs.Add(_AI2);
 
             _s = new Ship(new Vector2(550, 100));
             world.SpaceObjects.Add(_s);
             UIBindings.Get("All").Add(_s);
             _s.AddItem(ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1102)));
-            _AI.Fleet.Add(_s);
+                ItemDatabase.Items.Find(x => x.ID == 1101)));
+            _AI2.Fleet.Add(_s);
             _s.Faction = _ff;
 
             _s = new Ship(new Vector2(100, 100));

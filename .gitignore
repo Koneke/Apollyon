@@ -1,4 +1,12 @@
 #################
+## Distribution stuff
+#################
+
+package.bat
+packed/
+ApollyonDebug.rar
+
+#################
 ## Eclipse
 #################
 
