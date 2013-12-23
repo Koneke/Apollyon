@@ -21,9 +21,10 @@ namespace Apollyon
         {
             if (_attack.Weapon.Item.HasTag("miner"))
             {
-                ItemDatabase.Spawn(
+                Item _i = ItemDatabase.Spawn(
                     ItemDatabase.Items.Find(
-                    x => x.ID == 1000))
+                    x => x.ID == 1000));
+                _i
                     .SetPosition(Position)
                     .SetVelocity(
                         new Vector2(
@@ -31,6 +32,11 @@ namespace Apollyon
                             -0.5f+(float)Game.Random.NextDouble()
                         ) * 0.2f
                 );
+                if(_attack.Source.HasTag("ship")) {
+                    Ship _s = (_attack.Source as Ship);
+                    _s.AddItem(_i);
+                    _i.SetVelocity(Vector2.Zero);
+                }
             }
         }
     }

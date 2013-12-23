@@ -14,6 +14,10 @@ namespace Apollyon
     class ApOverview : ApWindow
     {
         int indent = 4; //intendent from the border in the list
+        int scrollOffset = 0;
+        int lastWheelValue = 0;
+        int size;
+        int itemHeight;
 
         public bool Any; //search for ANY tag or ALL tags
         public List<string> Sources; //list of all tags looked for in space
@@ -27,13 +31,19 @@ namespace Apollyon
             Any = true;
             Sources = new List<string>();
             Filters = new List<string>();
+
+            itemHeight = (int)Res.GetFont("log font").MeasureString("ship").Y;
+            //cast to kill ambiguity
+            size = (int)Math.Floor((double)_h / itemHeight);
         }
 
         public override void Update()
         {
             //list = Game.World.SpaceObjects
             list = Utility.QuerySpace(
-                Sources, Any);
+                Sources, Any
+            );
+
             list = list.FindAll(
                 x => Filters.All(y => !x.HasTag(y))
             );
@@ -42,6 +52,7 @@ namespace Apollyon
         public override void SpecificUILoading() {
             Sources = xml.Element("tags").Elements().Select(
                 x => x.Value).ToList();
+
             Filters = xml.Element("filters").Elements().Select(
                 x => x.Value).ToList();
         }
@@ -60,9 +71,11 @@ namespace Apollyon
             float _offs = Res.GetFont("log font").MeasureString("ship").Y;
 
             spriteBatch.Begin();
-            foreach (SpaceObject _i in list)
+            //add check so we only draw visible in the future
+            for(int _i = scrollOffset; _i < list.Count; _i++)
             {
-                if (UIBindings.Get("Selected").Contains(_i))
+                SpaceObject _so = list[_i];
+                if (UIBindings.Get("Selected").Contains(_so))
                     spriteBatch.Draw(
                         Res.Textures["1x1"],
                         new Rectangle(
@@ -77,12 +90,30 @@ namespace Apollyon
                     );
                 spriteBatch.DrawString(
                     Res.GetFont("log font"),
-                    _i.Name,
+                    _so.Name,
                     new Vector2(indent, _currentY),
                     Color.White
                 );
                 _currentY += _offs;
             }
+
+            float _scrollerSize =
+                    (int)(h * Math.Min((float)size / list.Count, 1));
+            float _scrollerMax = h - _scrollerSize;
+            float _scrollerPos =
+                _scrollerMax * ((float)scrollOffset / (list.Count-size));
+
+            spriteBatch.Draw(
+                Res.Textures["1x1"],
+                new Rectangle(
+                    (int)w-2,
+                    (int)_scrollerPos,
+                    2,
+                    (int)(h*Math.Min((float)size/list.Count,1))
+                ),
+                Color.White
+            );
+
             
             spriteBatch.End();
 
@@ -90,6 +121,18 @@ namespace Apollyon
         }
         public override void OwnInput(MouseState ms, MouseState oms)
         {
+            if (ms.ScrollWheelValue != lastWheelValue)
+            {
+                scrollOffset += Game.MouseWheelDelta;
+                lastWheelValue = ms.ScrollWheelValue;
+            }
+
+            scrollOffset = Math.Max(scrollOffset, 0);
+            scrollOffset = Math.Min(
+                scrollOffset,
+                Math.Max(list.Count-size, 0)
+            );
+
             if (
                 (ms.LeftButton == ButtonState.Pressed &&
                 oms.LeftButton == ButtonState.Released) ||
@@ -97,12 +140,12 @@ namespace Apollyon
                 oms.RightButton == ButtonState.Released)
                 )
             {
-
                 float _itemHeight =
                     Res.GetFont("log font").MeasureString("item").Y;
                 float _mouseY = ms.Y - y1;
                 int _item =
                     (int)((_mouseY - (_mouseY % _itemHeight)) / _itemHeight);
+                _item += scrollOffset;
                 int _index = (int)_item;
 
                 string _list =

@@ -81,7 +81,7 @@ namespace Apollyon
             if (ms.Y < 0)
                 Rectangle.Y -= _scrollSpeed;
 
-            int _wDelta = (lastScrollWheelValue - ms.ScrollWheelValue);
+            //int _wDelta = (lastScrollWheelValue - ms.ScrollWheelValue);
 
             float _premsx = Rectangle.X + ms.X * _zoom;
             float _premsy = Rectangle.Y + ms.Y * _zoom;
@@ -92,7 +92,7 @@ namespace Apollyon
             float _zoomSpeed = 1.1f;
 
             Rectangle.Width =
-                (int)(Rectangle.Width * 1 + (_wDelta * _zoomSpeed));
+                (int)(Rectangle.Width * 1 + (Game.MouseWheelDelta*120 * _zoomSpeed));
             Rectangle.Height =
                 (int)(Rectangle.Width * (9f / 16f));
             _zoom = (Game.ScreenSize.X / (float)Rectangle.Width);

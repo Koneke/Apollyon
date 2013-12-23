@@ -31,7 +31,8 @@ namespace Apollyon
             KeyboardState ks, KeyboardState oks,
             MouseState ms, MouseState oms)
         {
-            Camera.Input(ms, oms);
+            if(!ApWindow.PointInWindow(new Point(ms.X,ms.Y)))
+                Camera.Input(ms, oms);
 
             foreach (Ship _s in SpaceObjects.FindAll(
                 x => x.Tags.Contains("ship")))

@@ -18,6 +18,7 @@ namespace Apollyon
         public static Random Random = new Random();
 
         public static int DoubleClickTime = 200; //dct in ms
+        public static int MouseWheelDelta;
 
         public static bool HasFocus = true;
 

@@ -37,7 +37,7 @@ namespace Apollyon
                     message,
                     w-2*indent,
                     true //indent past first line
-                    );
+                );
 
                 float _offs = Res.GetFont("log font").MeasureString(_string).Y;
 

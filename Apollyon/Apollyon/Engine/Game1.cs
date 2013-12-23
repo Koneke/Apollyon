@@ -68,11 +68,11 @@ namespace Apollyon
             UIBindings.Get("All").Add(_s);
 
             _s.AddItem(ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1101)));
+                ItemDatabase.Items.Find(x => x.ID == 1102)));
             _s.AddItem(ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1101)));
+                ItemDatabase.Items.Find(x => x.ID == 1102)));
             _s.AddItem(ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1101)));
+                ItemDatabase.Items.Find(x => x.ID == 1102)));
             _s.AddItem(ItemDatabase.Spawn( //spawn into inventory
                 ItemDatabase.Items.Find(x => x.ID == 1199)));
             ItemDatabase.Spawn( //spawn into space
@@ -132,6 +132,8 @@ namespace Apollyon
 
             BindingsManager.HandleInput(ks.GetPressedKeys());
 
+            Game.MouseWheelDelta =
+                -(ms.ScrollWheelValue - oms.ScrollWheelValue)/120;
             ApWindow.Input(ks, oks, ms, oms);
             world.Input(ks, oks, ms, oms);
             world.Update(gameTime);
