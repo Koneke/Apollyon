@@ -99,10 +99,17 @@ namespace Apollyon
 
             //audio test
 
-            SoundEffectInstance _sei =
+            /*SoundEffectInstance _sei =
                 Res.Sounds[this.ID == 1102 ? "mine" : "laser"].CreateInstance();
             _sei.Volume = 0.3f;
-            _sei.Play();
+            _sei.Play();*/
+
+            Audio.PlaySoundAtPosition(
+                "explosion.wav",
+                new Vector3(
+                    Carrier.Position.X,
+                    Carrier.Position.Y, 0)
+            );
         }
     }
 }

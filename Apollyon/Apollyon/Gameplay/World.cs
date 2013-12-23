@@ -187,8 +187,8 @@ namespace Apollyon
                 Rectangle _screenRect = new Rectangle(
                     (int)(_sp.X),
                     (int)(_sp.Y),
-                    (int)(_so.Size.X * Camera.GetZoom()),
-                    (int)(_so.Size.Y * Camera.GetZoom())
+                    Math.Max((int)(_so.Size.X * Camera.GetZoom()),1),
+                    Math.Max((int)(_so.Size.Y * Camera.GetZoom()),1)
                 );
 
                 var _z = Camera.GetZoom();//debug
@@ -200,8 +200,6 @@ namespace Apollyon
                     Color.White,
                     (float)_so.Rotation,
                     new Vector2(
-                        //_so.Size.X / 2,
-                        //_so.Size.Y / 2
                         _so.Texture.Width/2f,
                         _so.Texture.Height/2f
                         ),
@@ -213,13 +211,11 @@ namespace Apollyon
 
                 #region selectionboxes
                 _screenRect.Offset(
-                    //new Point(-_screenRect.Width / 2, -_screenRect.Width / 2)
                     new Point(
                         (int)(-_so.Size.X * _z / 2f),
                         (int)(-_so.Size.Y * _z / 2f))
                 );
 
-                //if (_so.Tags.Contains("ship"))
                 if(true)
                 {
                     bool _selected = UIBindings.Get("Selected").

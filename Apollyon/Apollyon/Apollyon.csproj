@@ -60,6 +60,10 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="irrKlang.NET4, Version=1.0.4534.25937, Culture=neutral, PublicKeyToken=a854741bd80517c7, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Desktop\Apollyon\irrKlang-1.4.0b\irrKlang-1.4.0\bin\dotnet-4\irrKlang.NET4.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -110,6 +114,7 @@
     <Compile Include="Engine\AI\AISimpleMiner.cs" />
     <Compile Include="Engine\AI\AISimpleBrain.cs" />
     <Compile Include="Asteroid.cs" />
+    <Compile Include="Engine\Audio.cs" />
     <Compile Include="Engine\ResourceLoader.cs" />
     <Compile Include="Gameplay\Items\Container.cs" />
     <Compile Include="Engine\LineParticle.cs" />

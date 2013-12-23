@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
+//using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using IrrKlang;
 
 namespace Apollyon
 {
@@ -22,6 +23,8 @@ namespace Apollyon
         public float TurnSpeed = 0.01f; //rad/s
 
         public List<ShipComponent> Components;
+
+        ISound engineSound = null;
 
         int health, maxHealth;
         public override int Health
@@ -48,8 +51,6 @@ namespace Apollyon
             }
             health -= _damage;
         }
-
-        SoundEffectInstance engineSound;
 
         public Vector2 GetVelocity() {
             return new Vector2(
@@ -100,9 +101,9 @@ namespace Apollyon
                 .SetTexture(Res.Textures["1x1"])
                 .SetLifeTime(600, 350);
 
-            engineSound =
+            /*engineSound =
                 Res.GetSound("engine").CreateInstance();
-            engineSound.IsLooped = true;
+            engineSound.IsLooped = true;*/
         }
         Particle2 EngineTrail;
 
@@ -182,8 +183,10 @@ namespace Apollyon
 
         public override void Die()
         {
-            engineSound.Stop();
-            Res.GetSound("explosion").Play();
+            Audio.PlaySoundAtPosition(
+                "explosion.wav",
+                new Vector3(Position.X, Position.Y, 0)
+            );
 
             while(Inventory.Count > 0)
             {
@@ -227,14 +230,20 @@ namespace Apollyon
 
         public override void Update() //goes once per tick
         {
+            if(engineSound == null)
+                engineSound = Audio.PlaySoundAtPosition(
+                    "afx/engine2.wav", Position, true, true);
+
+            Audio.SetSoundPosition(engineSound, Position);
+
             engineSound.Volume = Math.Min(
                 Math.Max(Speed, 0), 1
             );
 
             if (Speed > 0.1f)
             {
-                if (!(engineSound.State == SoundState.Playing))
-                    engineSound.Play();
+                if (engineSound.Paused)
+                    engineSound.Paused = false;
                 for (int i = 0; i < 10; i++)
                     Particle2.AddParticle(
                         EngineTrail
@@ -248,8 +257,7 @@ namespace Apollyon
             }
             else
             {
-                engineSound.Pause();
-                engineSound.Volume = 0;
+                engineSound.Paused = true;
             }
 
             foreach (ShipComponent _c in Components)

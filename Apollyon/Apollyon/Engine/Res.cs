@@ -14,8 +14,9 @@ namespace Apollyon
             new Dictionary<string, Texture2D>();
         public static Dictionary<string, SpriteFont> Fonts =
             new Dictionary<string, SpriteFont>();
-        public static Dictionary<string, SoundEffect> Sounds =
-            new Dictionary<string, SoundEffect>();
+
+        /*public static Dictionary<string, SoundEffect> Sounds =
+            new Dictionary<string, SoundEffect>();*/
 
         //make one for textures as well, easier to handle in the future this way
         public static SpriteFont GetFont(string _name)
@@ -23,10 +24,10 @@ namespace Apollyon
             return Fonts[_name];
         }
 
-        public static SoundEffect GetSound(string _name)
+       /* public static SoundEffect GetSound(string _name)
         {
             return Sounds[_name];
-        }
+        }*/
 
         /* word wrapping fr http://www.xnawiki.com/index.php/Basic_Word_Wrapping
          * because I can't be arsed with writing this again */

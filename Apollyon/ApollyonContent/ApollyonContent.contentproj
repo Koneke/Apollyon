@@ -115,18 +115,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="laser2.wav">
+    <None Include="laser2.wav">
       <Name>laser2</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="explosion.wav">
+    <None Include="explosion.wav">
       <Name>explosion</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="mine.wav">
@@ -143,11 +145,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="engine2.wav">
+    <None Include="engine2.wav">
       <Name>engine2</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="shoot2.wav">

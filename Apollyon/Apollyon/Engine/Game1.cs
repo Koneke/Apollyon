@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using IrrKlang;
 
 namespace Apollyon
 {
@@ -23,11 +24,16 @@ namespace Apollyon
 
         World world;
 
+        ISoundEngine soundEngine;
+        string cwd;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             this.IsMouseVisible = true;
             Content.RootDirectory = "Content";
+            soundEngine = new ISoundEngine();
+            cwd = System.IO.Directory.GetCurrentDirectory();
         }
 
         protected override void Initialize()
@@ -105,10 +111,8 @@ namespace Apollyon
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             ResourceLoader.Load(Content);
-            Res.Sounds.Add("laser", Content.Load<SoundEffect>("shoot2"));
-            Res.Sounds.Add("explosion", Content.Load<SoundEffect>("explosion"));
-            Res.Sounds.Add("mine", Content.Load<SoundEffect>("mine"));
-            Res.Sounds.Add("engine", Content.Load<SoundEffect>("engine2"));
+            Audio.UpdateSettings();
+            Audio.ContentRoot = cwd + "/Content/";
         }
 
         protected override void UnloadContent()
@@ -121,6 +125,8 @@ namespace Apollyon
 
             ms = Mouse.GetState();
             ks = Keyboard.GetState();
+
+            Audio.UpdateListenerPosition();
 
             Game.HasFocus = IsActive;
 
