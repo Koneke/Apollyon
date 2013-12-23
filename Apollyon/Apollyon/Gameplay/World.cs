@@ -116,11 +116,16 @@ namespace Apollyon
                 oms.RightButton == ButtonState.Released &&
                 !ApWindow.PointInWindow(new Point(ms.X, ms.Y))
             ) {
-                if (UIBindings.Get("Selected").Count > 0)
+                if (
+                    UIBindings.Get("Selected").FindAll(
+                        x => x.HasTag("ship")).Count > 0
+                    )
                 {
                     Vector2 _avgPosition = new Vector2(0, 0);
 
-                    foreach (Ship _s in UIBindings.Get("Selected"))
+                    foreach (Ship _s in
+                        UIBindings.Get("Selected").FindAll(
+                        x => x.HasTag("ship")))
                     {
                         _avgPosition.X += _s.Position.X;
                         _avgPosition.Y += _s.Position.Y;
@@ -129,7 +134,10 @@ namespace Apollyon
                     _avgPosition =
                         _avgPosition / UIBindings.Get("Selected").Count;
 
-                    foreach (Ship _s in UIBindings.Get("Selected"))
+                    //foreach (Ship _s in UIBindings.Get("Selected"))
+                    foreach (Ship _s in
+                        UIBindings.Get("Selected").FindAll(
+                        x => x.HasTag("ship")))
                     {
                         Vector2 _avgPositionOffset =
                             _s.Position - _avgPosition;
