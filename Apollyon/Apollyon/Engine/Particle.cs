@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
 {
-    class ParticleSpawn
+    /*class ParticleSpawn
     {
         public Particle Particle;
         public int Count;
@@ -127,7 +127,7 @@ namespace Apollyon
         {
             Particle.Particles.AddRange(particles);
         }
-    }
+    }*/
 
     class Particle
     {
@@ -187,9 +187,9 @@ namespace Apollyon
             AngularVelocity = _angularVelocity;
         }
 
-        public static void UpdateParticles()
+        /*public static void UpdateParticles()
         {
-        }
+        }*/
 
         public virtual void Update()
         {

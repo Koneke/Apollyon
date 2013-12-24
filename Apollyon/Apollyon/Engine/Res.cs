@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
 {
-    class Res
+    static class Res
     {
         public static Dictionary<string, Texture2D> Textures =
             new Dictionary<string, Texture2D>();

@@ -24,12 +24,12 @@ namespace Apollyon
         public int ID;
         public Texture2D Texture;
         public List<string> Tags;
-        public bool Stacking;
+        //public bool Stacking;
 
         public WeaponTemplate Weapon;
     }
 
-    class ItemDatabase
+    static class ItemDatabase
     {
         public static List<ItemTemplate> Items = new List<ItemTemplate>();
 
@@ -57,9 +57,9 @@ namespace Apollyon
                     _template.Tags.Add(_tag.Value);
                 }
 
-                _template.Stacking = _e.Element("stacking").
+                /*_template.Stacking = _e.Element("stacking").
                     Value.Equals("false") ?
-                    false : true;
+                    false : true;*/
 
                 XElement _weapon = _e.Element("weapon");
                 if (_weapon != null)
@@ -121,7 +121,7 @@ namespace Apollyon
             _i.ID = _template.ID;
             _i.Texture = _template.Texture;
             _i.Tags = new List<string>(_template.Tags);
-            _i.Stacking = _template.Stacking;
+            //_i.Stacking = _template.Stacking;
 
             if (_template.Weapon != null)
             {

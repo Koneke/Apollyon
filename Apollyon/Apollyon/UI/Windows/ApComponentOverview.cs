@@ -16,18 +16,12 @@ namespace Apollyon
         public ApComponentOverviewPost(
             string _name,
             int _id,
-            int _count,
             List<ShipComponent> _components
             )
         {
             Name = _name;
             ID = _id;
             Components = _components;
-        }
-
-        public void Add(ShipComponent _sc)
-        {
-            Components.Add(_sc);
         }
     }
     
@@ -79,7 +73,6 @@ namespace Apollyon
                             new ApComponentOverviewPost(
                                 _c.Name,
                                 _c.ID,
-                                1,
                                 new List<ShipComponent>{ _c }
                             )
                         );

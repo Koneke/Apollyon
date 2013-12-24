@@ -10,16 +10,16 @@ namespace Apollyon
         public int Current;
         public int Max;
 
-        public Shield(int _c, int _max)
+        public Shield(int _current, int _max)
         {
-            Current = _c;
+            Current = _current;
             Max = _max;
         }
 
-        public float getPercentage()
+        /*public float getPercentage()
         {
             return 100f * (float)Current / Max;
-        }
+        }*/
 
         //resistances and stuff here later
         //or not? have it on the ship and this as a component? idk

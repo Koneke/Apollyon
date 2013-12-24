@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Apollyon
 {
-    class ApShipOverview : ApWindow
+    /*class ApShipOverview : ApWindow
     {
         public string Ships;
         public string Selection;
@@ -129,5 +129,5 @@ namespace Apollyon
                 }
             }
         }
-    }
+    }*/
 }

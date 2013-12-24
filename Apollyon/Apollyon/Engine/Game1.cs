@@ -24,7 +24,6 @@ namespace Apollyon
 
         World world;
 
-        ISoundEngine soundEngine;
         string cwd;
 
         public Game1()
@@ -32,7 +31,6 @@ namespace Apollyon
             graphics = new GraphicsDeviceManager(this);
             this.IsMouseVisible = true;
             Content.RootDirectory = "Content";
-            soundEngine = new ISoundEngine();
             cwd = System.IO.Directory.GetCurrentDirectory();
         }
 
@@ -241,8 +239,7 @@ namespace Apollyon
             ApWindow.graphics = graphics.GraphicsDevice;
             ApWindow.Setup();
 
-            UILoader foo = new UILoader();
-            foo.Load();
+            UILoader.Load();
 
             ApWindow.Windows = WindowManager.Windows;
 

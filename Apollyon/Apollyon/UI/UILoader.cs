@@ -9,16 +9,13 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Apollyon
 {
-    class UILoader
+    static class UILoader
     {
-        public UILoader()
-        {
-        }
-
-        public void Load()
+        public static void Load()
         {
             IEnumerable<XElement> _elements =
                 (XElement.Load("Content/data/ui.xml")).Elements();
+
             foreach (var _e in _elements)
             {
                 string _name    = _e.Element("name").Value;
@@ -36,8 +33,8 @@ namespace Apollyon
 
                 switch (_type)
                 {
-                    case "ShipOverview":
-                        _new = new ApShipOverview(_x, _y, _w, _h); break;
+                    /*case "ShipOverview":
+                        _new = new ApShipOverview(_x, _y, _w, _h); break;*/
                     case "CombatLog":
                         _new = new ApLogWindow(_x, _y, _w, _h); break;
                     case "ComponentOverview":
@@ -49,13 +46,12 @@ namespace Apollyon
                     case "Overview":
                         _new = new ApOverview(_x, _y, _w, _h); break;
                     default:
-                        throw new Exception("BAD UI TYPE");
+                        throw new System.FormatException("BAD UI TYPE");
                 }
 
                 _new.Name = _name;
                 if (_e.Element("help") != null)
                 {
-                    //_new.Help = _e.Element("help").Value;
                     _new.Help =
                         Utility.WrapText(
                         Res.GetFont("log font"),
@@ -112,7 +108,6 @@ namespace Apollyon
                     }
                 }
 
-                //_new.SpecificUILoading(_e);
                 _new.xml = _e;
                 WindowManager.Windows.Add(_new);
             }

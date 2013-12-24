@@ -7,7 +7,7 @@ namespace Apollyon
     class Camera
     {
         public Rectangle Rectangle;
-        int lastScrollWheelValue;
+        //int lastScrollWheelValue;
 
         Vector2? mouseGrabPoint;
         Vector2? cameraStartGrab;
@@ -32,12 +32,6 @@ namespace Apollyon
                 (int)Game.ScreenSize.X,
                 (int)Game.ScreenSize.Y
             );
-            lastScrollWheelValue = 0;
-        }
-
-        public Boolean Contains(Point _p)
-        {
-            return Rectangle.Contains(_p);
         }
 
         public float GetZoom()
@@ -53,16 +47,12 @@ namespace Apollyon
             if (
                 ms.MiddleButton == ButtonState.Pressed &&
                 oms.MiddleButton == ButtonState.Released)
-            {
                 cameraStartGrab = new Vector2(ms.X, ms.Y);
-            }
 
             if (
                 ms.MiddleButton == ButtonState.Released &&
                 oms.MiddleButton == ButtonState.Pressed)
-            {
                 cameraStartGrab = null;
-            }
 
             if (cameraStartGrab != null)
             {
@@ -81,10 +71,6 @@ namespace Apollyon
             if (ms.Y < 0)
                 Rectangle.Y -= _scrollSpeed;
 
-            //int _wDelta = (lastScrollWheelValue - ms.ScrollWheelValue);
-
-            float _premsx = Rectangle.X + ms.X * _zoom;
-            float _premsy = Rectangle.Y + ms.Y * _zoom;
 
             int _preW = Rectangle.Width;
             int _preH = Rectangle.Height;
@@ -96,22 +82,20 @@ namespace Apollyon
             Rectangle.Height =
                 (int)(Rectangle.Width * (9f / 16f));
             _zoom = (Game.ScreenSize.X / (float)Rectangle.Width);
+
             //work more on this to avoid glitching "through" the world
             if (_zoom > 6)
             {
                 Rectangle.Width = (int)Game.ScreenSize.X / 6;
                 Rectangle.Height = (int)Game.ScreenSize.Y / 6;
             }
-            float _newmsx = Rectangle.X + ms.X * _zoom;
-            float _newmsy = Rectangle.Y + ms.Y * _zoom;
+
             Rectangle.X -= (int)(
                 (Rectangle.Width - _preW) *
                 (ms.X / (Game.ScreenSize.X / 2f)) / 2f);
             Rectangle.Y -= (int)(
                 (Rectangle.Height - _preH) *
                 (ms.Y / (Game.ScreenSize.Y / 2f)) / 2f);
-
-            lastScrollWheelValue = ms.ScrollWheelValue;
         }
 
         public Vector2 ScreenToWorld(Vector2 _position)

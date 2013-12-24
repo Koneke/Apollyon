@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Apollyon
 {
-    class Game
+    static class Game
     {
         public static Camera Camera;
         public static Vector2 ScreenSize;

@@ -5,7 +5,7 @@ using IrrKlang;
 
 namespace Apollyon
 {
-    class Audio
+    static class Audio
     {
         public static ISoundEngine soundEngine = new ISoundEngine();
         //public static int MaxDistance = (int)(Game.ScreenSize.X * 1.5);
@@ -75,7 +75,8 @@ namespace Apollyon
             bool _looped = false
         ) {
             if (!System.IO.File.Exists(ContentRoot + _file))
-                throw new Exception("FILE DOESN'T EXIST");
+                throw new System.IO.FileNotFoundException
+                    (_file+" does not exist.");
 
             var a = soundEngine.Play3D(
                 ContentRoot + _file,
@@ -112,7 +113,8 @@ namespace Apollyon
             bool _looped = false
         ) {
             if (!System.IO.File.Exists(ContentRoot + _file))
-                throw new Exception("FILE DOESN'T EXIST");
+                throw new System.IO.FileNotFoundException
+                    (_file+" does not exist.");
 
             var a = soundEngine.Play2D(
                 ContentRoot+_file, _looped, true);

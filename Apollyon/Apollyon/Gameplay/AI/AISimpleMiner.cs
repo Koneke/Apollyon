@@ -19,6 +19,7 @@ namespace Apollyon
             fleetTargets = new Dictionary<Ship, SpaceObject>();
         }
 
+        //rework this a bit as well
         public override void Tick()
         {
             if (fleetTargets.Count == 0)

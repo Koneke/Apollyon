@@ -10,10 +10,10 @@ namespace Apollyon
     class World
     {
         public Camera Camera;
-        public Vector2 CameraPosition
+        /*public Vector2 CameraPosition
         {
             get { return new Vector2(Camera.X, Camera.Y); }
-        }
+        }*/
         public List<SpaceObject> SpaceObjects;
 
         public float Timer; //ms timer
@@ -28,6 +28,7 @@ namespace Apollyon
             Camera = new Camera();
         }
 
+        //CA1502
         public void Input(
             KeyboardState ks, KeyboardState oks,
             MouseState ms, MouseState oms)

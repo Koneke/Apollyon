@@ -10,8 +10,13 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Apollyon
 {
-    class ApWindow
+    class ApWindow : IDisposable
     {
+        public void Dispose()
+        {
+            Target.Dispose();
+        }
+
         //to be set upon initialization to the graphicsdevice in Game1.
         //required for creating the rendertargets.
         //put here to avoid having to poke in Game1 every time we want to create
@@ -123,19 +128,6 @@ namespace Apollyon
             BindingsManager.WindowKeyBindings.Add(
                 new ApWindowKeyBind(_action, _key, _type, this)
             );
-        }
-
-        public void UnbindKey(
-            Keys _key
-        ) {
-            foreach (ApWindowKeyBind _kb in BindingsManager.WindowKeyBindings)
-            {
-                if (_kb.Window == this && _kb.Key == _key)
-                {
-                    BindingsManager.WindowKeyBindings.Remove(_kb);
-                    break;
-                }
-            }
         }
 
         //receive an action from a key they bound earlier

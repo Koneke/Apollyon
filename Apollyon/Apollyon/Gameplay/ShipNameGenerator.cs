@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Apollyon
 {
-    class ShipNameGenerator
+    static class ShipNameGenerator
     {
         public static List<string> Adjectives = new List<string>()
         {

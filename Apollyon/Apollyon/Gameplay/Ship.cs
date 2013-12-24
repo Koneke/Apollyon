@@ -82,7 +82,7 @@ namespace Apollyon
 
             Components = new List<ShipComponent>();
             Shield = new Shield(Game.Random.Next(50, 100), 100);
-            Health = MaxHealth = 100;
+            health = maxHealth = 100;
 
             Inventory = new List<Item>();
 
@@ -109,11 +109,11 @@ namespace Apollyon
         }
         Particle2 EngineTrail;
 
-        public void AddComponent(ShipComponent _sc)
+        /*public void AddComponent(ShipComponent _sc)
         {
             Components.Add(_sc);
             _sc.Carrier = this;
-        }
+        }*/
 
         public void AddItem(Item _i)
         {
@@ -164,7 +164,8 @@ namespace Apollyon
             }
             return Inventory.Count - _pre;
         }
-
+        
+        //rewrite this as Get(string _action), send actions from elsewhere
         public void Input(
             KeyboardState ks, KeyboardState oks,
             MouseState ms, MouseState oms
@@ -267,7 +268,6 @@ namespace Apollyon
 
             foreach (ShipComponent _c in Components)
                 _c.Tick();
-
 
             float _d = Vector2.Distance(Position, TargetPosition);
 

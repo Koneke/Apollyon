@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Apollyon
 {
-    class ResourceLoader
+    static class ResourceLoader
     {
         public static void Load(ContentManager _cm) //add path var later?
         {

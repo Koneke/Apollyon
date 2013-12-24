@@ -41,8 +41,10 @@ namespace Apollyon
                 return;
             }
             Timer += 1;
-            if (Timer >= Frequency-Game.Random.Next(20,35))
-            {
+            if (
+                Timer >= Frequency-Game.Random.Next(20,35) &&
+                (!NeedsTarget||Targets.Count>0)
+            ) {
                 Fire();
                 Timer = 0;
             }

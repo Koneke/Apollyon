@@ -18,6 +18,7 @@ namespace Apollyon
             targets = new List<Ship>();
         }
 
+        //rewrite/rework, a bit flaky atm
         public override void Tick()
         {
             if (Faction == null) return;
@@ -33,7 +34,6 @@ namespace Apollyon
                 targets = targets.FindAll(
                     x => Faction.GetHostiles().Contains(x.Faction)
                 );
-                var a = 1;
             }
 
             if (targets.Count == 0)
@@ -72,13 +72,6 @@ namespace Apollyon
                             > ((Weapon)x).Range
                         )
                     ) {
-                        double _a = Math.Atan2(
-                            fleetTargets[_s].Position.Y - _s.Position.Y,
-                            fleetTargets[_s].Position.X - _s.Position.X
-                        );
-                        /*_s.TargetPosition = _s.Position +
-                            new Vector2(
-                                Math.Cos(_a) * 100*/
                         _s.TargetPosition = fleetTargets[_s].Position;
                     }
                     else

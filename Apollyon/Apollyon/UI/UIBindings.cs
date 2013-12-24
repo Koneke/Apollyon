@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Apollyon
 {
-    class UIBindings
+    static class UIBindings
     {
         public static Dictionary<
             string, List<SpaceObject>>
