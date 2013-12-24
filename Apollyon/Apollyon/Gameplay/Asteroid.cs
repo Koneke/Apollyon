@@ -17,6 +17,11 @@ namespace Apollyon
             Utility.Tag(this, "celestial");
         }
 
+        public override void Update()
+        {
+            Position += Velocity;
+        }
+
         public override void Damage(AttackInfo _attack)
         {
             if (_attack.Weapon.Item.HasTag("miner"))

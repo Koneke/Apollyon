@@ -24,6 +24,9 @@ namespace Apollyon
         public List<string> Filters;
         List<SpaceObject> list;
 
+
+        Vector2 averagePosition; //distance to midpoint of selected items 
+
         public ApOverview(
             int _x, int _y, int _w, int _h
             ) : base(_x, _y, _w, _h)
@@ -46,6 +49,23 @@ namespace Apollyon
             list = list.FindAll(
                 x => Filters.All(y => !x.HasTag(y))
             );
+
+            if (UIBindings.Get("selected").Count > 0)
+            {
+                averagePosition = UIBindings.Get("selected")[0].Position;
+                if (UIBindings.Get("selected").Count > 1)
+                {
+                    for (int i = 1; i < UIBindings.Get("selected").Count; i++)
+                    {
+                        averagePosition += UIBindings.Get("selected")[i].Position;
+                    }
+                    averagePosition /= UIBindings.Get("selected").Count;
+                }
+
+                list = list.OrderBy(
+                    x=>Vector2.Distance(x.Position, averagePosition)
+                ).ToList();
+            }
         }
 
         public override void SpecificUILoading() {
@@ -88,9 +108,13 @@ namespace Apollyon
                         )
                     );
 
+                int _distance = (int)(Math.Round(
+                    Vector2.Distance(_so.Position, averagePosition)
+                )/100f);
+
                 spriteBatch.DrawString(
                     Res.GetFont("log font"),
-                    _so.Name,
+                    "<"+_distance+"> "+_so.Name,
                     new Vector2(indent, _currentY),
                     Color.White
                 );

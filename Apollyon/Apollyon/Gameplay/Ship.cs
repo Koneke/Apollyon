@@ -40,6 +40,17 @@ namespace Apollyon
             set { maxHealth = value; }
         }
 
+        public new Vector2 Velocity
+        {
+            get
+            {
+                return new Vector2(
+                    (float)Math.Cos(Direction) * Speed,
+                    (float)Math.Sin(Direction) * Speed
+                    );
+            }
+        }
+
         Shield Shield;
         public override void Damage(AttackInfo _attack)
         {
@@ -121,9 +132,12 @@ namespace Apollyon
             _i.Carrier = null;
             _i.Position = Position;
             _i.Tags.Remove("carried");
+            double _angle = Game.Random.NextDouble() * Math.PI * 2;
             _i.Velocity = new Vector2(
-                -0.5f + (float)Game.Random.NextDouble(),
-                -0.5f + (float)Game.Random.NextDouble());
+                (float)Math.Cos(_angle),
+                (float)Math.Sin(_angle)
+            ) * (float)(Game.Random.NextDouble()) * (2f/3f);
+            _i.Velocity += Velocity/2f;
             Inventory.Remove(_i);
         }
 
