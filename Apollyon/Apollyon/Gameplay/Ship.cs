@@ -20,7 +20,7 @@ namespace Apollyon
         public float Speed;
         public float MaxSpeed;
         public float Acceleration;
-        public Vector2 TargetPosition;
+        public Vector2? TargetPosition;
         public float TurnSpeed = 0.01f; //rad/s
 
         public List<ShipComponent> Components;
@@ -74,7 +74,7 @@ namespace Apollyon
             Texture = Res.Textures["ship"];
             Position = _position;
             Size = new Vector2(32, 32);
-            TargetPosition = Position;
+            TargetPosition = null;
             Direction = Math.PI;
             Speed = 0;
             MaxSpeed = 3;
@@ -129,10 +129,7 @@ namespace Apollyon
 
         public void Stop()
         {
-            this.TargetPosition = Position+
-                new Vector2(
-                    (float)Math.Cos(Direction)*Speed*15,
-                    (float)Math.Sin(Direction)*Speed*15);
+            this.TargetPosition = null;
         }
 
         //return amount scooped
@@ -230,7 +227,7 @@ namespace Apollyon
 
         public override void Update() //goes once per tick
         {
-            if(engineSound == null)
+            if (engineSound == null)
                 engineSound = Audio.PlaySoundAtPosition(
                     "afx/engine2.wav", Position, true, true);
 
@@ -263,43 +260,53 @@ namespace Apollyon
             foreach (ShipComponent _c in Components)
                 _c.Tick();
 
-            float _d = Vector2.Distance(Position, TargetPosition);
+            if (!TargetPosition.HasValue && Speed > 0)
+            {
+                Speed -= Acceleration * 5; //easier to stop for some reason
+                //just feels better is a good enough reason, I guess
+                Speed = Math.Max(Speed, 0);
+            }
+            else if (TargetPosition.HasValue)
+            {
 
-            //if (_d < 0.5f) return; //do something to stop on the spot turning
+                float _d = Vector2.Distance(Position, TargetPosition.Value);
 
-            float _magicNumber = 60;
-            float _targetSpeed = _d < _magicNumber * MaxSpeed ?
-                _d / (_magicNumber * MaxSpeed) : MaxSpeed;
-            if (Math.Abs(Speed-_targetSpeed) < Acceleration)
-                Speed = _targetSpeed;
-            if (Speed < _targetSpeed) Speed += Acceleration;
-            if (Speed > _targetSpeed) Speed -= Acceleration*10;
+                //if (_d < 0.5f) return; //do something to stop on the spot turning
+
+                float _magicNumber = 60;
+                float _targetSpeed = _d < _magicNumber * MaxSpeed ?
+                    _d / (_magicNumber * MaxSpeed) : MaxSpeed;
+                if (Math.Abs(Speed - _targetSpeed) < Acceleration)
+                    Speed = _targetSpeed;
+                if (Speed < _targetSpeed) Speed += Acceleration;
+                if (Speed > _targetSpeed) Speed -= Acceleration * 10;
+
+                double _targetDirection = Math.Atan2(
+                    TargetPosition.Value.Y - Position.Y,
+                    TargetPosition.Value.X - Position.X);
+
+                var a = _targetDirection;
+                var b = Direction;
+
+                a = a <= 0 ? a + Math.PI * 2 : a;
+                b = b <= 0 ? b + Math.PI * 2 : b;
+                b = b - a;
+                a = 0;
+                b = b <= 0 ? b + Math.PI * 2 : b;
+
+                if (b > Math.PI)
+                    Direction += TurnSpeed;
+                else
+                    Direction -= TurnSpeed;
+
+                while (Direction > Math.PI * 2)
+                    Direction -= Math.PI * 2;
+                while (Direction < 0)
+                    Direction += Math.PI * 2;
+            }
 
             Position.X += (float)Math.Cos(Direction) * Speed;
             Position.Y += (float)Math.Sin(Direction) * Speed;
-
-            double _targetDirection = Math.Atan2(
-                TargetPosition.Y - Position.Y,
-                TargetPosition.X - Position.X);
-
-            var a = _targetDirection;
-            var b = Direction;
-
-            a = a <= 0 ? a + Math.PI * 2 : a;
-            b = b <= 0 ? b + Math.PI * 2 : b;
-            b = b - a;
-            a = 0;
-            b = b <= 0 ? b + Math.PI * 2 : b;
-
-            if (b > Math.PI)
-                Direction += TurnSpeed;
-            else
-                Direction -= TurnSpeed;
-
-            while (Direction > Math.PI * 2)
-                Direction -= Math.PI * 2;
-            while (Direction < 0)
-                Direction += Math.PI * 2;
         }
     }
 }

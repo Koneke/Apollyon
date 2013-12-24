@@ -117,13 +117,10 @@ namespace Apollyon
                         }
                     }
 
-                    //what
-                    /*
-                    if (!ks.IsKeyDown(Keys.LeftShift))
-                        UIBindings.Bind("selected",
-                            UIBindings.Get("selected").FindAll(
-                                x => ((Ship)x).Faction == Game.PlayerFaction)
-                        );*/
+                    UIBindings.Bind("selected",
+                        UIBindings.Get("selected").FindAll(
+                            x => ((Ship)x).Faction == Game.PlayerFaction)
+                    );
                 }
                 boxSelection.Width = 0;
                 selecting = false;
