@@ -77,28 +77,6 @@ namespace Apollyon
             return sb.ToString();
         }
 
-        //put the colour stuff somewhere else, this class is a bit messy AON 
-        /*public static Color AddColours(Color _a, Color _b)
-        {
-            return new Color(
-                _a.R/255f + _b.R/255f,
-                _a.G/255f + _b.G/255f,
-                _a.B/255f + _b.B/255f,
-                _a.A/255f + _b.A/255f
-            );
-        }*/
-
-        /*public static Color AddColours(Color _a, Vector4 _b)
-        {
-            Color _c = new Color(
-                _a.R/255f + _b.X,
-                _a.G/255f + _b.Y,
-                _a.B/255f + _b.Z,
-                _a.A/255f + _b.W
-            );
-            return _c;
-        }*/
-
         public static Color MultiplyColours(Color _a, Color _b)
         {
             return new Color(
@@ -108,36 +86,6 @@ namespace Apollyon
                 _a.A/255f * _b.A/255f
             );
         }
-
-        /*public static Color ScaleColour(Color _a, float _scale)
-        {
-            return new Color(
-                _a.R * _scale,
-                _a.G * _scale,
-                _a.B * _scale,
-                _a.A * _scale
-            );
-        }*/
-
-        /*public static Color SubtractFromColour(Color _a, float _amount)
-        {
-            return new Color(
-                _a.R - _amount,
-                _a.G - _amount,
-                _a.B - _amount,
-                _a.A - _amount
-            );
-        }*/
-
-        /*public static Color AddToColour(Color _a, float _amount)
-        {
-            return new Color(
-                _a.R + _amount,
-                _a.G + _amount,
-                _a.B + _amount,
-                _a.A + _amount
-            );
-        }*/
 
         public static int SumColour(Color _a)
         {

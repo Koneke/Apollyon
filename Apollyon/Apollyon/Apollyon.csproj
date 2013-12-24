@@ -132,7 +132,6 @@
     <Compile Include="UI\Windows\ApOverview.cs" />
     <Compile Include="UI\Windows\ApStatusWindow.cs" />
     <Compile Include="Gameplay\Shield.cs" />
-    <Compile Include="UI\Windows\ApShipOverview.cs" />
     <Compile Include="UI\Windows\ApLogWindow.cs" />
     <Compile Include="Input\ApWindowKeyBind.cs" />
     <Compile Include="Input\BindingsManager.cs" />

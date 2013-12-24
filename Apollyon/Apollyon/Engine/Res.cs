@@ -18,6 +18,5 @@ namespace Apollyon
         {
             return Fonts[_name];
         }
-
     }
 }

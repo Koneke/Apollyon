@@ -8,7 +8,6 @@ namespace Apollyon
 {
     class AISimpleMiner : AISimpleBrain
     {
-        //int amtMined;
         //targets I'm keeping track to delegate my minions towards
         List<SpaceObject> targets;
         Dictionary<Ship, SpaceObject> fleetTargets;
@@ -95,7 +94,6 @@ namespace Apollyon
                     x => Vector2.Distance(x.Position, _s.Position) < 100))
                 {
                     _s.Scoop();
-                    //amtMined += _s.Scoop();
                 }
             }
         }

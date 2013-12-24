@@ -30,7 +30,6 @@ namespace Apollyon
         public int BeamThickness; //we don't really want this here
         //make more data driven etc., never repeated enough
         public Color BeamTint; //important ok
-        public Item Item; //not sure if this should be hiding, idk, it works
         public int Range;
 
         public Weapon(string _name, int _id) : base(_name, _id)
@@ -108,8 +107,6 @@ namespace Apollyon
                     100
                 )
             );
-
-            //audio test
 
             Audio.PlaySoundAtPosition(
                 "afx/explosion.wav",

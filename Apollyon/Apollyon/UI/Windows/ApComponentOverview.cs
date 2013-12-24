@@ -62,7 +62,7 @@ namespace Apollyon
             ComponentList.Clear();
             foreach (Ship _s in
                 UIBindings.Get(Ships).FindAll(x => x.HasTag("ship")))
-                //semi hackish, mainly here to let it keep workign while we
+                //semi hackish, mainly here to let it keep working while we
                 //implement targeting things which are not ships
             {
                 foreach (ShipComponent _c in _s.Components)
@@ -205,7 +205,6 @@ namespace Apollyon
                         );
 
                         if(!ComponentList[Selection].Components.
-                            //Any(x => x.Active))
                             All(x => x.Active))
                         {
                             if (UIBindings.Get("Targeted").Count > 0)

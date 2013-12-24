@@ -8,7 +8,6 @@ namespace Apollyon
     static class Audio
     {
         public static ISoundEngine soundEngine = new ISoundEngine();
-        //public static int MaxDistance = (int)(Game.ScreenSize.X * 1.5);
         public static string ContentRoot;
 
         public static Vector3 ListenerPosition;

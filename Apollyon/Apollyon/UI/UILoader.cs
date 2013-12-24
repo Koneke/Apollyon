@@ -33,8 +33,6 @@ namespace Apollyon
 
                 switch (_type)
                 {
-                    /*case "ShipOverview":
-                        _new = new ApShipOverview(_x, _y, _w, _h); break;*/
                     case "CombatLog":
                         _new = new ApLogWindow(_x, _y, _w, _h); break;
                     case "ComponentOverview":

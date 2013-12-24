@@ -37,7 +37,7 @@ namespace Apollyon
             {
                 foreach (Ship _s in
                     UIBindings.Get(Ships).FindAll(x => x.HasTag("ship")))
-                    //semi hackish, mainly here to let it keep workign while we
+                    //semi hackish, mainly here to let it keep working while we
                     //implement targeting things which are not ships
                     _percentage += 100*((float)_s.Health/_s.MaxHealth);
                 _percentage /= UIBindings.Get(Ships).Count;

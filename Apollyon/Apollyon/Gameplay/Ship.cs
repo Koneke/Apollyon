@@ -109,12 +109,6 @@ namespace Apollyon
         }
         Particle2 EngineTrail;
 
-        /*public void AddComponent(ShipComponent _sc)
-        {
-            Components.Add(_sc);
-            _sc.Carrier = this;
-        }*/
-
         public void AddItem(Item _i)
         {
             _i.Carrier = this;

@@ -104,13 +104,13 @@ namespace Apollyon
             }
         }
 
-        public static Boolean PointInWindow(Point _p)
+        public static ApWindow PointInWindow(Point _p)
         {
             foreach (ApWindow _w in Windows)
             {
-                if (_w.Area.Contains(_p)) return true;
+                if (_w.Area.Contains(_p)) return _w;
             }
-            return false;
+            return null;
         }
 
         //stop hardbinding to keys! skip _key, keep _type, get _key/_action
@@ -193,11 +193,8 @@ namespace Apollyon
 
         public float h {
             get { return Size.Y; }
-            //set { Size.Y = value; }
         }
 
-        //mainly because i hate the goddamn motherfucking intcasting
-        //fuck rectangles, what's their deal?
         public Rectangle Area
         {
             get {
@@ -263,7 +260,6 @@ namespace Apollyon
             SpriteBatch spriteBatch
         ) {
             graphics.Clear(Color.Blue);
-            /*...*/
         }
 
         //own input handling, specific to the subclass

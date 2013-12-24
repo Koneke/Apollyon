@@ -7,7 +7,6 @@ namespace Apollyon
     class Camera
     {
         public Rectangle Rectangle;
-        //int lastScrollWheelValue;
 
         Vector2? mouseGrabPoint;
         Vector2? cameraStartGrab;

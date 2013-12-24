@@ -16,23 +16,19 @@ namespace Apollyon
         /*-------*/
 
         //switch to SpaceObject to account for containers and such
-        //public Ship Carrier;
         public SpaceObject Carrier;
 
         public int Count;
-        //public Boolean Stacking;
         public int ID;
 
         public Item(
             string _name = "",
             int _id = -1,
             bool _inSpace = true, //debuggish, leave for now
-            //bool _stacking = false,
             int _count = 1
         ) {
             Name = _name;
             ID = _id;
-            //Stacking = _stacking;
             Count = _count;
             Carrier = null;
             Tags = new List<string>();
@@ -59,7 +55,7 @@ namespace Apollyon
 
         public virtual void RealUse()
         {
-            //for now, only ships use items
+            //for now, only ships |use| items
             if (!Carrier.HasTag("ship")) return;
             if (Component != null)
             {

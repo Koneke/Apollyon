@@ -22,7 +22,6 @@ namespace Apollyon
         public override void ActualRender(SpriteBatch spriteBatch)
         {
             graphics.Clear(ApLogWindow.StandardBackground);
-            /*...*/
 
             spriteBatch.Begin();
 

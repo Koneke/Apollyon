@@ -15,13 +15,5 @@ namespace Apollyon
             Current = _current;
             Max = _max;
         }
-
-        /*public float getPercentage()
-        {
-            return 100f * (float)Current / Max;
-        }*/
-
-        //resistances and stuff here later
-        //or not? have it on the ship and this as a component? idk
     }
 }

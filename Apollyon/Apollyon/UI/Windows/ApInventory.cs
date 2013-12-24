@@ -72,7 +72,6 @@ namespace Apollyon
 
             var _iNames = Selection.Select(x => x.Name);
 
-            //foreach (Ship _s in UIBindings.Get(Ships))
             foreach (Ship _s in
                 UIBindings.Get(Ships).FindAll(x => x.HasTag("ship")))
                 //semi hackish, mainly here to let it keep workign while we
@@ -80,9 +79,6 @@ namespace Apollyon
             {
                 foreach (Item _i in _s.Inventory)
                 {
-                    /*_iNames = _iNames.Intersect(
-                        _s.Inventory.Select(x => x.Name));*/
-                    //ApInventoryPost _post = Items.Find(x => x.Name == _i.Name);
                     ApInventoryPost _post =
                         Items.Find(x => x.Items[0].ID == _i.ID);
 
@@ -142,7 +138,6 @@ namespace Apollyon
 
                 foreach (ApInventoryPost _i in Items)
                 {
-                    //if (Selection.Contains(_i))
                     if (Selection.Find(x => x.Name.Equals(_i.Name)) != null)
                     {
                         spriteBatch.Draw(
@@ -196,8 +191,6 @@ namespace Apollyon
                     {
                         Item _i = Items[(int)_item].Items[0];
                         Ship _s = (UIBindings.Get("Selected")[0] as Ship);
-                        //dude, wat - future you
-                        //_s.DropItem(_s.Inventory[(int)_item]);
                         _s.DropItem(_s.Inventory.Find(x => x.ID == _i.ID));
                     }
                 }
@@ -239,17 +232,8 @@ namespace Apollyon
                     < Game.DoubleClickTime
                     && UIBindings.Get(Ships).Count == 1
                 ) {
-
                     //use one
                     Items[_item].Items[0].Use();
-                    //use all at once
-                    /*
-                    for(int i = 0; i < Items[_item].Count; i++)
-                    {
-                        Item _i = Items[_item].Items[i];
-                        _i.Use();
-                    }*/
-
                 }
 
                 lastLeftClick = DateTime.Now;

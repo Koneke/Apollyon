@@ -24,7 +24,6 @@ namespace Apollyon
         public int ID;
         public Texture2D Texture;
         public List<string> Tags;
-        //public bool Stacking;
 
         public WeaponTemplate Weapon;
     }
@@ -56,10 +55,6 @@ namespace Apollyon
                 {
                     _template.Tags.Add(_tag.Value);
                 }
-
-                /*_template.Stacking = _e.Element("stacking").
-                    Value.Equals("false") ?
-                    false : true;*/
 
                 XElement _weapon = _e.Element("weapon");
                 if (_weapon != null)
@@ -109,23 +104,13 @@ namespace Apollyon
         {
             Item _i = new Item();
 
-            if (_template.Weapon != null)
-            {
-                //_i = new ComponentItem();
-
-            }
-            /*else {
-                _i = new Item();*/
-
             _i.Name = _template.Name;
             _i.ID = _template.ID;
             _i.Texture = _template.Texture;
             _i.Tags = new List<string>(_template.Tags);
-            //_i.Stacking = _template.Stacking;
 
             if (_template.Weapon != null)
             {
-                //ComponentItem _ci = (ComponentItem)_i;
                 Weapon _w = new Weapon(
                     _template.Name,
                     _template.ID);
@@ -138,8 +123,6 @@ namespace Apollyon
                 _w.Item = _i;
                 _i.Component = _w;
                 _i.Component.Item = _i; //reference upwards for the component
-                //_i = _ci;
-                //return _ci;
             }
 
             return _i;

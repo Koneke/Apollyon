@@ -24,7 +24,6 @@ namespace Apollyon
             if (Faction == null) return;
             targets = targets.FindAll(x => x.Health > 0);
 
-            //if (targets.Count == 0)
             if(true)
             {
                 List<SpaceObject> query = Utility.QuerySpace(

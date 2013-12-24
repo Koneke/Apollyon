@@ -10,10 +10,6 @@ namespace Apollyon
     class World
     {
         public Camera Camera;
-        /*public Vector2 CameraPosition
-        {
-            get { return new Vector2(Camera.X, Camera.Y); }
-        }*/
         public List<SpaceObject> SpaceObjects;
 
         public float Timer; //ms timer
@@ -33,7 +29,7 @@ namespace Apollyon
             KeyboardState ks, KeyboardState oks,
             MouseState ms, MouseState oms)
         {
-            if(!ApWindow.PointInWindow(new Point(ms.X,ms.Y)))
+            if(ApWindow.PointInWindow(new Point(ms.X,ms.Y)) == null)
                 Camera.Input(ms, oms);
 
             foreach (Ship _s in SpaceObjects.FindAll(
@@ -49,7 +45,7 @@ namespace Apollyon
             ) {
                 if (
                     oms.LeftButton == ButtonState.Released &&
-                    !ApWindow.PointInWindow(new Point(ms.X, ms.Y))
+                    ApWindow.PointInWindow(new Point(ms.X, ms.Y)) == null
                 ) {
                     Vector2 _clickPoint = Camera.ScreenToWorld(
                         new Vector2(ms.X, ms.Y));
@@ -72,11 +68,13 @@ namespace Apollyon
                 oms.LeftButton == ButtonState.Pressed &&
                 selecting
             ) {
-                //Game.Selected.Clear();
-                if (!selectingHostile)
-                    UIBindings.Get("Selected").Clear();
-                else
-                    UIBindings.Get("Targeted").Clear();
+                if (!ks.IsKeyDown(Keys.LeftShift)) //add to selection w/ shift
+                {
+                    if (!selectingHostile)
+                        UIBindings.Get("Selected").Clear();
+                    else
+                        UIBindings.Get("Targeted").Clear();
+                }
 
                 foreach (Ship _s in SpaceObjects.FindAll(
                     x => x.Tags.Contains("ship")))
@@ -119,11 +117,13 @@ namespace Apollyon
                         }
                     }
 
+                    //what
+                    /*
                     if (!ks.IsKeyDown(Keys.LeftShift))
                         UIBindings.Bind("selected",
                             UIBindings.Get("selected").FindAll(
                                 x => ((Ship)x).Faction == Game.PlayerFaction)
-                        );
+                        );*/
                 }
                 boxSelection.Width = 0;
                 selecting = false;
@@ -132,7 +132,7 @@ namespace Apollyon
             if (
                 ms.RightButton == ButtonState.Pressed &&
                 oms.RightButton == ButtonState.Released &&
-                !ApWindow.PointInWindow(new Point(ms.X, ms.Y))
+                ApWindow.PointInWindow(new Point(ms.X, ms.Y)) == null
             ) {
                 if (
                     UIBindings.Get("Selected").FindAll(
