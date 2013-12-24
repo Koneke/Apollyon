@@ -25,7 +25,7 @@ namespace Apollyon
         List<SpaceObject> list;
 
 
-        Vector2 averagePosition; //distance to midpoint of selected items 
+        Vector2? averagePosition; //distance to midpoint of selected items 
 
         public ApOverview(
             int _x, int _y, int _w, int _h
@@ -50,6 +50,7 @@ namespace Apollyon
                 x => Filters.All(y => !x.HasTag(y))
             );
 
+            averagePosition = null;
             if (UIBindings.Get("selected").Count > 0)
             {
                 averagePosition = UIBindings.Get("selected")[0].Position;
@@ -63,7 +64,7 @@ namespace Apollyon
                 }
 
                 list = list.OrderBy(
-                    x=>Vector2.Distance(x.Position, averagePosition)
+                    x=>Vector2.Distance(x.Position, averagePosition.Value)
                 ).ToList();
             }
         }
@@ -108,13 +109,18 @@ namespace Apollyon
                         )
                     );
 
-                int _distance = (int)(Math.Round(
-                    Vector2.Distance(_so.Position, averagePosition)
-                )/100f);
+                int _distance = -1;
+                if (averagePosition.HasValue)
+                {
+                    _distance = (int)(Math.Round(
+                        Vector2.Distance(_so.Position, averagePosition.Value)
+                    ) / 100f);
+                }
 
                 spriteBatch.DrawString(
                     Res.GetFont("log font"),
-                    "<"+_distance+"> "+_so.Name,
+                    ((_distance == -1) ? "" : ("<" + _distance + "> "))
+                        + _so.Name,
                     new Vector2(indent, _currentY),
                     Color.White
                 );
@@ -173,8 +179,13 @@ namespace Apollyon
 
             DrawBorder(spriteBatch, ApWindow.StandardBorder);
         }
-        public override void OwnInput(MouseState ms, MouseState oms)
-        {
+
+        public override void OwnInput(
+            KeyboardState ks,
+            KeyboardState oks,
+            MouseState ms,
+            MouseState oms
+        ) {
             if (ms.ScrollWheelValue != lastWheelValue)
             {
                 scrollOffset += Game.MouseWheelDelta;
@@ -206,11 +217,15 @@ namespace Apollyon
                     (ms.LeftButton == ButtonState.Pressed &&
                     oms.LeftButton == ButtonState.Released) ?
                     "Selected" : "Targeted";
+
                 if (_index >= list.Count)
                 {
                     UIBindings.Get(_list).Clear();
                     return;
                 }
+
+                if (!ks.IsKeyDown(Keys.LeftShift))
+                    UIBindings.Get(_list).Clear();
 
                 if (UIBindings.Get(_list).Contains(list[_index]))
                 {

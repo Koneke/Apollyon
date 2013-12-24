@@ -99,7 +99,7 @@ namespace Apollyon
                 Point _mousePoint = new Point(ms.X, ms.Y);
                 if (_w.Area.Contains(_mousePoint))
                 {
-                    _w.OwnInput(ms, oms);
+                    _w.OwnInput(ks, oks, ms, oms);
                 }
             }
         }
@@ -268,6 +268,15 @@ namespace Apollyon
             MouseState ms,
             MouseState oms
         ) {
+        }
+
+        public virtual void OwnInput(
+            KeyboardState ks,
+            KeyboardState oks,
+            MouseState ms,
+            MouseState oms
+        ) {
+            OwnInput(ms, oms); //defaulting
         }
 
         //convenience function

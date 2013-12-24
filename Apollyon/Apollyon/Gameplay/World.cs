@@ -76,8 +76,9 @@ namespace Apollyon
                         UIBindings.Get("Targeted").Clear();
                 }
 
-                foreach (Ship _s in SpaceObjects.FindAll(
-                    x => x.Tags.Contains("ship")))
+                /*foreach (Ship _s in SpaceObjects.FindAll(
+                    x => x.Tags.Contains("ship")))*/
+                foreach(SpaceObject _so in SpaceObjects)
                 {
                     Rectangle _box = boxSelection;
 
@@ -95,32 +96,38 @@ namespace Apollyon
 
                     List<SpaceObject> _list;
 
-                    _list = Game.World.SpaceObjects.FindAll(
-                        x => x.Tags.Contains("ship"));
+                    /*_list = Game.World.SpaceObjects.FindAll(
+                        x => x.Tags.Contains("ship"));*/
+
+                    _list = Game.World.SpaceObjects;
 
                     if (_list != null)
                     {
                         if (
-                            _list.Contains(_s) &&
+                            _list.Contains(_so) &&
                             _box.Contains(
                                 new Point(
-                                    (int)_s.Position.X,
-                                    (int)_s.Position.Y
+                                    (int)_so.Position.X,
+                                    (int)_so.Position.Y
                                 )
                             )
                         )
                         {
-                            if (!selectingHostile)
-                                UIBindings.Get("Selected").Add(_s);
+                            string list = selectingHostile
+                                ? "targeted" : "selected";
+                            if (ks.IsKeyDown(Keys.LeftShift))
+                            {
+                                if (UIBindings.Get(list).Contains(_so))
+                                    UIBindings.Get(list).Remove(_so);
+                                else
+                                    UIBindings.Get(list).Add(_so);
+                            }
                             else
-                                UIBindings.Get("Targeted").Add(_s);
+                            {
+                                UIBindings.Get(list).Add(_so);
+                            }
                         }
                     }
-
-                    UIBindings.Bind("selected",
-                        UIBindings.Get("selected").FindAll(
-                            x => ((Ship)x).Faction == Game.PlayerFaction)
-                    );
                 }
                 boxSelection.Width = 0;
                 selecting = false;
@@ -183,6 +190,19 @@ namespace Apollyon
                         _so.Die();
 
                 SpaceObjects = SpaceObjects.FindAll(x => x.Health > 0);
+
+                List<Ship> _ships = 
+                    UIBindings.Get("selected").FindAll(
+                        x => x.HasTag("ship"))
+                    .Cast<Ship>()
+                    .ToList()
+                    .FindAll(
+                        x => x.Faction != Game.PlayerFaction)
+                    ;
+
+                UIBindings.Get("selected").RemoveAll(
+                    x => _ships.Contains(x) || !x.HasTag("ship"))
+                    ;
 
                 Timer -= Game.TickTime;
             }
