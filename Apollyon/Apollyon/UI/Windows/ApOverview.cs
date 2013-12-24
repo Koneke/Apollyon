@@ -25,7 +25,7 @@ namespace Apollyon
         List<SpaceObject> list;
 
 
-        Vector2? averagePosition; //distance to midpoint of selected items 
+        Vector2 averagePosition; //distance to midpoint of selected items 
 
         public ApOverview(
             int _x, int _y, int _w, int _h
@@ -50,7 +50,12 @@ namespace Apollyon
                 x => Filters.All(y => !x.HasTag(y))
             );
 
-            averagePosition = null;
+            //if nothing is selected, check distance from screen center,
+            //to show what's the most relevant (probably) at the top of the OV
+            averagePosition = new Vector2(
+                Game.Camera.X + Game.Camera.Rectangle.Width / 2,
+                Game.Camera.Y + Game.Camera.Rectangle.Height / 2);
+
             if (UIBindings.Get("selected").Count > 0)
             {
                 averagePosition = UIBindings.Get("selected")[0].Position;
@@ -58,15 +63,16 @@ namespace Apollyon
                 {
                     for (int i = 1; i < UIBindings.Get("selected").Count; i++)
                     {
-                        averagePosition += UIBindings.Get("selected")[i].Position;
+                        averagePosition +=
+                            UIBindings.Get("selected")[i].Position;
                     }
                     averagePosition /= UIBindings.Get("selected").Count;
                 }
-
-                list = list.OrderBy(
-                    x=>Vector2.Distance(x.Position, averagePosition.Value)
-                ).ToList();
             }
+
+            list = list.OrderBy(
+                x=>Vector2.Distance(x.Position, averagePosition)
+            ).ToList();
         }
 
         public override void SpecificUILoading() {
@@ -110,12 +116,10 @@ namespace Apollyon
                     );
 
                 int _distance = -1;
-                if (averagePosition.HasValue)
-                {
-                    _distance = (int)(Math.Round(
-                        Vector2.Distance(_so.Position, averagePosition.Value)
-                    ) / 100f);
-                }
+
+                _distance = (int)(Math.Round(
+                    Vector2.Distance(_so.Position, averagePosition)
+                ) / 100f);
 
                 spriteBatch.DrawString(
                     Res.GetFont("log font"),
