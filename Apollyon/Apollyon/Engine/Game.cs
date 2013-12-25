@@ -24,6 +24,9 @@ namespace Apollyon
 
         public static bool HasFocus = true;
 
+        //public static GameState GameState;
+        public static SpaceState SpaceState;
+
         public enum TargetingType {
             Cycle,
             Weakest,
@@ -33,7 +36,8 @@ namespace Apollyon
 
         public static void Log(string _message)
         {
-            ((ApLogWindow)WindowManager.GetWindowByName("Combat Log")).
+            ((ApLogWindow)SpaceState
+                .WindowManager.GetWindowByName("Combat Log")).
                 Log.Add(_message);
         }
 

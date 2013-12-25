@@ -87,8 +87,9 @@ namespace Apollyon
             }
         }
 
-        public override void GetAction(string _action)
+        public override void Receive(ApKeyBind _apk)
         {
+            string _action = _apk.Action;
             switch (_action)
             {
                 case "Clear Selection":
@@ -184,7 +185,9 @@ namespace Apollyon
                 if (
                     (DateTime.Now - lastLeftClick).TotalMilliseconds < 200 &&
                     //still a bit hacky, but...
-                    this == WindowManager.GetWindowByName("Component Overview")
+                    //HACK: HACK: HACK: FUCK
+                    this == Game.SpaceState.WindowManager
+                        .GetWindowByName("Component Overview")
                 ) {
                     if (Selection != -1)
                     {

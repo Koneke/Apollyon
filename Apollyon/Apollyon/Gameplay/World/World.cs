@@ -9,7 +9,7 @@ namespace Apollyon
 {
     class World
     {
-        public Camera Camera;
+        //public Camera Camera;
         public List<SpaceObject> SpaceObjects;
 
         public float Timer; //ms timer
@@ -21,7 +21,7 @@ namespace Apollyon
         public World()
         {
             SpaceObjects = new List<SpaceObject>();
-            Camera = new Camera();
+            //Camera = new Camera();
         }
 
         //CA1502
@@ -39,25 +39,25 @@ namespace Apollyon
             KeyboardState ks, KeyboardState oks,
             MouseState ms, MouseState oms)
         {
-            if(ApWindow.PointInWindow(new Point(ms.X,ms.Y)) == null)
-                Camera.Input(ms, oms);
+            //SO ugly. JESUS CHRIST.
+            //input falling through needs to be fixed ASAP.
+            if(Game.SpaceState.WindowManager
+                .PointInWindow(new Point(ms.X,ms.Y)) == null)
+                Game.Camera.Input(ms, oms);
 
             foreach (Ship _s in SpaceObjects.FindAll(
                 x => x.Tags.Contains("ship")))
-            {
                 _s.Input(ks, oks, ms, oms);
-            }
 
             selectingHostile = ks.IsKeyDown(Keys.LeftControl);
 
-            if (
-                ms.LeftButton == ButtonState.Pressed
-            ) {
+            if (ms.LeftButton == ButtonState.Pressed) {
                 if (
                     oms.LeftButton == ButtonState.Released &&
-                    ApWindow.PointInWindow(new Point(ms.X, ms.Y)) == null
+                    Game.SpaceState.WindowManager
+                    .PointInWindow(new Point(ms.X, ms.Y)) == null
                 ) {
-                    Vector2 _clickPoint = Camera.ScreenToWorld(
+                    Vector2 _clickPoint = Game.Camera.ScreenToWorld(
                         new Vector2(ms.X, ms.Y));
                     boxSelection.X = (int)_clickPoint.X;
                     boxSelection.Y = (int)_clickPoint.Y;
@@ -68,7 +68,7 @@ namespace Apollyon
                     oms.LeftButton == ButtonState.Pressed &&
                     selecting
                 ) {
-                    Vector2 _clickPoint = Camera.ScreenToWorld(
+                    Vector2 _clickPoint = Game.Camera.ScreenToWorld(
                         new Vector2(ms.X, ms.Y));
                     boxSelection.Width = (int)(_clickPoint.X - boxSelection.X);
                     boxSelection.Height = (int)(_clickPoint.Y - boxSelection.Y);
@@ -141,7 +141,8 @@ namespace Apollyon
             if (
                 ms.RightButton == ButtonState.Pressed &&
                 oms.RightButton == ButtonState.Released &&
-                ApWindow.PointInWindow(new Point(ms.X, ms.Y)) == null
+                Game.SpaceState.WindowManager
+                .PointInWindow(new Point(ms.X, ms.Y)) == null
             ) {
                 if (
                     UIBindings.Get("Selected").FindAll(
@@ -168,7 +169,7 @@ namespace Apollyon
                         Vector2 _avgPositionOffset =
                             _s.Position - _avgPosition;
                         _s.TargetPosition =
-                            Camera.ScreenToWorld(
+                            Game.Camera.ScreenToWorld(
                                 new Vector2(ms.X, ms.Y)
                             ) + _avgPositionOffset;
                     }
@@ -232,11 +233,11 @@ namespace Apollyon
                 Rectangle _screenRect = new Rectangle(
                     (int)(_sp.X),
                     (int)(_sp.Y),
-                    Math.Max((int)(_so.Size.X * Camera.GetZoom()),1),
-                    Math.Max((int)(_so.Size.Y * Camera.GetZoom()),1)
+                    Math.Max((int)(_so.Size.X * Game.Camera.GetZoom()),1),
+                    Math.Max((int)(_so.Size.Y * Game.Camera.GetZoom()),1)
                 );
 
-                if (Camera.Rectangle.Contains(
+                if (Game.Camera.Rectangle.Contains(
                     new Point(
                         (int)_so.Position.X,
                         (int)_so.Position.Y)
@@ -262,8 +263,8 @@ namespace Apollyon
                 #region selectionboxes
                 _screenRect.Offset(
                     new Point(
-                        (int)(-_so.Size.X * Camera.GetZoom() / 2f),
-                        (int)(-_so.Size.Y * Camera.GetZoom() / 2f))
+                        (int)(-_so.Size.X * Game.Camera.GetZoom() / 2f),
+                        (int)(-_so.Size.Y * Game.Camera.GetZoom() / 2f))
                 );
 
                 if(true)
@@ -327,7 +328,7 @@ namespace Apollyon
                 Rectangle _screenRectangle = boxSelection;
 
                 _screenRectangle.Offset(
-                    new Point(-Camera.X, -Camera.Y));
+                    new Point(-Game.Camera.X, -Game.Camera.Y));
 
                 if (_screenRectangle.Width < 0)
                 {
@@ -342,14 +343,14 @@ namespace Apollyon
                 }
 
                 _screenRectangle.X =
-                    (int)(_screenRectangle.X * Camera.GetZoom());
+                    (int)(_screenRectangle.X * Game.Camera.GetZoom());
                 _screenRectangle.Y =
-                    (int)(_screenRectangle.Y * Camera.GetZoom());
+                    (int)(_screenRectangle.Y * Game.Camera.GetZoom());
 
                 _screenRectangle.Width =
-                    (int)(_screenRectangle.Width * Camera.GetZoom());
+                    (int)(_screenRectangle.Width * Game.Camera.GetZoom());
                 _screenRectangle.Height =
-                    (int)(_screenRectangle.Height * Camera.GetZoom());
+                    (int)(_screenRectangle.Height * Game.Camera.GetZoom());
 
                 Utility.DrawOutlinedRectangle(
                     _screenRectangle,

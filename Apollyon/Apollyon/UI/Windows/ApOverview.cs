@@ -24,7 +24,6 @@ namespace Apollyon
         public List<string> Filters;
         List<SpaceObject> list;
 
-
         Vector2 averagePosition; //distance to midpoint of selected items 
 
         public ApOverview(

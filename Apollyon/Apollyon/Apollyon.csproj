@@ -113,8 +113,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DrawManager.cs" />
-    <Compile Include="Engine\GameState.cs" />
-    <Compile Include="Engine\IGameState.cs" />
+    <Compile Include="Engine\GameStates\SpaceState.cs" />
+    <Compile Include="Engine\GameStates\GameState.cs" />
+    <Compile Include="Engine\StationState.cs" />
     <Compile Include="Gameplay\AI\AISimpleFighter.cs" />
     <Compile Include="Gameplay\AI\AISimpleMiner.cs" />
     <Compile Include="Gameplay\AI\AISimpleBrain.cs" />
@@ -123,15 +124,17 @@
     <Compile Include="Engine\ResourceLoader.cs" />
     <Compile Include="Gameplay\Factions.cs" />
     <Compile Include="Gameplay\Items\Container.cs" />
-    <Compile Include="Engine\LineParticle.cs" />
+    <Compile Include="Engine\GameStates\LineParticle.cs" />
     <Compile Include="Gameplay\SpaceObject.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Gameplay\Items\Item.cs" />
     <Compile Include="Engine\Particle.cs" />
     <Compile Include="Gameplay\Items\ItemDatabase.cs" />
     <Compile Include="Engine\Particle2.cs" />
+    <Compile Include="Gameplay\Station.cs" />
     <Compile Include="Gameplay\World\DevWorldGenerator.cs" />
     <Compile Include="Gameplay\World\WorldGenerator.cs" />
+    <Compile Include="Input\IInputReceiver.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="UI\UIBindings.cs" />
     <Compile Include="UI\UILoader.cs" />
@@ -139,8 +142,6 @@
     <Compile Include="UI\Windows\ApStatusWindow.cs" />
     <Compile Include="Gameplay\Shield.cs" />
     <Compile Include="UI\Windows\ApLogWindow.cs" />
-    <Compile Include="Input\ApWindowKeyBind.cs" />
-    <Compile Include="Input\BindingsManager.cs" />
     <Compile Include="Gameplay\ShipComponent.cs" />
     <Compile Include="Engine\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

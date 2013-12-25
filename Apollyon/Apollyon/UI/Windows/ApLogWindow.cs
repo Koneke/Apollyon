@@ -54,8 +54,9 @@ namespace Apollyon
             DrawBorder(spriteBatch, ApWindow.StandardBorder);
         }
 
-        public override void GetAction(string _action)
+        public override void Receive(ApKeyBind _akb)
         {
+            string _action = _akb.Action;
             switch(_action) {
                 case "Clear Log":
                     Log.Clear();
