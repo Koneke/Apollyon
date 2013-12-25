@@ -137,30 +137,14 @@ namespace Apollyon
             graphics.GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Black);
 
-            //to be moved asap
-            spriteBatch.Begin();
-            spriteBatch.Draw(
-                Res.Textures["background"],
-                new Rectangle(
-                    0,
-                    0,
-                    graphics.PreferredBackBufferWidth,
-                    graphics.PreferredBackBufferHeight),
-                Color.White);
-            spriteBatch.End();
+            //migrate from particle1 pls
+            foreach (Particle _p in Particle.Particles)
+                _p.Draw();
+            Particle2.Draw();
 
-            foreach (Particle _p in
-                Particle.Particles.FindAll(x => x.Depth < 0))
-                _p.Draw(spriteBatch);
-            Particle2.Draw(spriteBatch);
+            drawState.Draw();
 
-            drawState.Draw(spriteBatch);
-
-            foreach (Particle _p in
-                Particle.Particles.FindAll(x => x.Depth > 0))
-                _p.Draw(spriteBatch);
-
-            WindowManager.DrawAll(spriteBatch);
+            WindowManager.DrawAll();
 
             spriteBatch.Begin();
             DrawManager.Draw(spriteBatch);

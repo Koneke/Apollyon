@@ -23,23 +23,23 @@ namespace Apollyon
             World.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw()
         {
-            //bg will be here later, we just need to solved removing local
-            //drawing all over the goddamn place so we can have proper depth
-            //sorted stuff across the entire game.
-            /*spriteBatch.Begin();
-            spriteBatch.Draw(
-                Res.Textures["background"],
-                new Rectangle(
-                    0,
-                    0,
-                    (int)Game.ScreenSize.X,
-                    (int)Game.ScreenSize.Y
-                ),
-                Color.White);
-            spriteBatch.End();*/
-            World.Draw(spriteBatch);
+            DrawManager.AddCall(
+                new BasicDrawCall(
+                    Res.Textures["background"],
+                    new Rectangle(
+                        0,
+                        0,
+                        (int)Game.ScreenSize.X,
+                        (int)Game.ScreenSize.Y
+                    ),
+                    null,
+                    Color.White,
+                    10f
+                )
+            );
+            World.Draw();
         }
     }
 }

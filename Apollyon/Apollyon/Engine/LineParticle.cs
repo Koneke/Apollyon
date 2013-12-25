@@ -40,10 +40,8 @@ namespace Apollyon
             return _p;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            //spriteBatch.Begin();
-            //spriteBatch.Draw(
             DrawManager.AddCall(
                 new BasicDrawCall(
                     Res.Textures["1x1"],
@@ -64,7 +62,6 @@ namespace Apollyon
                     1f
                 )
             );
-            //spriteBatch.End();
         }
     }
 }

@@ -208,7 +208,6 @@ namespace Apollyon
         //doable, just not implemented yet.
         public float w {
             get { return Size.X; }
-            //set { Size.X = value; }
         }
 
         public float h {
@@ -303,15 +302,11 @@ namespace Apollyon
         public void DrawBorder(SpriteBatch spriteBatch, Color _c)
         {
             Rectangle _r = Area;
-            /*_r.X = 0;
-            _r.Y = 0;*/
-            Utility.DrawOutlinedRectangle(spriteBatch, _r, _c);
+            Utility.DrawOutlinedRectangle(_r, _c);
         }
 
         //draw the window to the screen
-        public void Draw(
-            SpriteBatch spriteBatch
-        ) {
+        public void Draw() {
             DrawManager.AddCall(
                 new BasicDrawCall(
                     Target,

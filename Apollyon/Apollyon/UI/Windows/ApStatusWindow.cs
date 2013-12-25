@@ -44,7 +44,6 @@ namespace Apollyon
             }
 
             Utility.DrawOutlinedRectangle(
-                spriteBatch,
                 new Rectangle(
                     (int)(x1+_sideMargin),
                     (int)(y1+_topMargin),

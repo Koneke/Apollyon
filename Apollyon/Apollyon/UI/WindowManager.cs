@@ -20,16 +20,20 @@ namespace Apollyon
                 _w.SpecificUILoading();
         }
 
+        //NOTICE: THESE ARE ALLOWED TO USE SPRITEBATCH, AS THEY USE THAT TO
+        //RENDER THE WINDOW'S OWN TARGET, NOT TO THE SCREEN DIRECTLY.
+        //THE TARGETS THEMSELVES ARE THEN DRAWN WITH DRAWMANAGER.
+        //DON'T CLEAN THIS SPRITEBATCH UP, ALTEAST NOT NOW.
         public static void RenderAll(SpriteBatch spriteBatch)
         {
             foreach (ApWindow w in Windows)
                 w.Render(spriteBatch);
         }
 
-        public static void DrawAll(SpriteBatch spriteBatch)
+        public static void DrawAll()
         {
             foreach (ApWindow w in Windows)
-                w.Draw(spriteBatch);
+                w.Draw();
         }
     }
 }

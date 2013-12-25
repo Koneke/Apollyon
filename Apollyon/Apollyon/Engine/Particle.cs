@@ -72,7 +72,7 @@ namespace Apollyon
             Speed *= 1 - Friction;
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw()
         {
             var _p = Game.Camera.WorldToScreen(Position);
             DrawManager.AddCall(

@@ -49,10 +49,8 @@ namespace Apollyon
             }
         }
 
-        public static void Draw(
-            SpriteBatch spriteBatch)
+        public static void Draw()
         {
-            //spriteBatch.Begin();
             foreach (Particle2 _p in Particles)
             {
                 Vector2 _screenPosition =
@@ -86,21 +84,7 @@ namespace Apollyon
                         1f
                     )
                 );
-                /*
-                spriteBatch.Draw(
-                    _p.texture,
-                    _screenRect,
-                    null,
-                    _p.color,
-                    (float)_p.rotation,
-                    new Vector2(
-                        _p.texture.Width / 2,
-                        _p.texture.Height / 2),
-                        SpriteEffects.None,
-                    0f
-                );*/
             }
-            //spriteBatch.End();
         }
 
         //ACTUAL VARIED VALUES ARE ONLY GENERATED UPON USING THE GENERATE FUNCTS

@@ -10,6 +10,6 @@ namespace Apollyon
     interface IGameState
     {
         void Update(GameTime gameTime);
-        void Draw(SpriteBatch spriteBatch);
+        void Draw();
     }
 }

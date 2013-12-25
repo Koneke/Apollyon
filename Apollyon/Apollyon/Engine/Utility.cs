@@ -94,7 +94,6 @@ namespace Apollyon
 
 
         public static void DrawOutlinedRectangle(
-            SpriteBatch spriteBatch,
             Rectangle _r,
             Color _c
         ) {
@@ -131,27 +130,30 @@ namespace Apollyon
         }
 
         public static void DropShadowText(
-            SpriteBatch spriteBatch,
-            SpriteFont _font,
+            string _font,
             string _text,
             Vector2 _position,
             Color _colorA,
             Color _colorB)
         {
-            spriteBatch.Begin();
-            spriteBatch.DrawString(
-                _font,
-                _text,
-                _position+new Vector2(1, 1),
-                _colorA
+            DrawManager.AddCall(
+                new TextDrawCall(
+                    _font,
+                    _text,
+                    _position+new Vector2(1, 1),
+                    _colorA,
+                    -9f
+                )
             );
-            spriteBatch.DrawString(
-                _font,
-                _text,
-                _position,
-                _colorB 
+            DrawManager.AddCall(
+                new TextDrawCall(
+                    _font,
+                    _text,
+                    _position,
+                    _colorB,
+                    -9f
+                )
             );
-            spriteBatch.End();
         }
     }
 }

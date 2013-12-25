@@ -213,7 +213,7 @@ namespace Apollyon
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw()
         {
             string _hoverText = "";
             MouseState _ms = Mouse.GetState();
@@ -227,8 +227,6 @@ namespace Apollyon
                 if(!_so.Visible) continue;
 
                 #region maindrawing
-                spriteBatch.Begin();
-
                 Vector2 _sp = Game.Camera.WorldToScreen(_so.Position);
 
                 Rectangle _screenRect = new Rectangle(
@@ -259,8 +257,6 @@ namespace Apollyon
                         )
                     );
                 }
-
-                spriteBatch.End();
                 #endregion
 
                 #region selectionboxes
@@ -282,7 +278,6 @@ namespace Apollyon
                     {
                         if(_targeted) _screenRect.Offset(new Point(1, 1));
                         Utility.DrawOutlinedRectangle(
-                            spriteBatch,
                             _screenRect,
                             new Color(0f, 1f, 0f, 0.5f)
                         );
@@ -292,7 +287,6 @@ namespace Apollyon
                     {
                         if(_selected) _screenRect.Offset(new Point(-1, -1));
                         Utility.DrawOutlinedRectangle(
-                            spriteBatch,
                             _screenRect,
                             new Color(1f, 0f, 0f, 0.5f)
                         );
@@ -307,8 +301,7 @@ namespace Apollyon
             }
 
             Utility.DropShadowText(
-                spriteBatch,
-                Res.GetFont("log font"),
+                "log font",
                 _hoverText,
                 new Vector2(
                     _ms.X -
@@ -322,11 +315,11 @@ namespace Apollyon
                 Color.White
             );
 
-            drawBoxSelection(spriteBatch);
+            drawBoxSelection();
         }
 
         //stuff like this feels like it should be in game, idk
-        void drawBoxSelection(SpriteBatch spriteBatch)
+        void drawBoxSelection()
         {
             //box selection drawing
             if (boxSelection.Width != 0)
@@ -359,7 +352,6 @@ namespace Apollyon
                     (int)(_screenRectangle.Height * Camera.GetZoom());
 
                 Utility.DrawOutlinedRectangle(
-                    spriteBatch,
                     _screenRectangle,
                     selectingHostile ?
                         new Color(1f, 0f, 0f, 1f) :
