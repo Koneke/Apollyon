@@ -14,6 +14,16 @@ namespace Apollyon
         public Station Station;
 
         public override void Update(GameTime gameTime) { }
-        public override void Draw(SpriteBatch spriteBatch) { }
+        public override void Draw(SpriteBatch spriteBatch) {
+            DrawManager.AddCall(
+                new TextDrawCall(
+                    "log font",
+                    Station.Name,
+                    new Vector2(0, 0),
+                    Color.White,
+                    -11f
+                )
+            );
+        }
     }
 }

@@ -8,7 +8,10 @@ namespace Apollyon
 {
     class Asteroid : Container
     {
-        public Asteroid()
+        public Asteroid(
+            string _name,
+            World _world
+        ) : base(_name, _world)
         {
             Name = "Asteroid";
             Texture = Res.Textures["asteroid"];
@@ -27,6 +30,7 @@ namespace Apollyon
             if (_attack.Weapon.Item.HasTag("miner"))
             {
                 Item _i = ItemDatabase.Spawn(
+                    _attack.Source.World,
                     ItemDatabase.Items.Find(
                     x => x.ID == 1000));
                 _i

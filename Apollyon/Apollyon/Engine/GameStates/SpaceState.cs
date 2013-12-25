@@ -29,6 +29,13 @@ namespace Apollyon
             InputManager.Update();
             WindowManager.Input();
 
+            if (InputManager.ks.IsKeyDown(Keys.M) &&
+                !InputManager.oks.IsKeyDown(Keys.M))
+            {
+                Audio.Mute = !Audio.Mute;
+                Audio.bgm.Volume = Audio.Mute ? 0 : 0.05f;
+            }
+
             foreach (string _s in
                 UIBindings.ShipLists.Keys.ToList().FindAll(x=>true)
             )

@@ -8,30 +8,29 @@ namespace Apollyon
 {
     class DevWorldGenerator : WorldGenerator
     {
-        public override void Generate(World _world)
+        public override World Generate(World _world)
         {
             Faction _f = new Faction("The Rude Dudes");
             Faction _aifactionA = new Faction("The Lumberjack Organization");
-            Faction _aifactionB = new Faction("The Lumberjack Organization");
+            Faction _aifactionB = new Faction("The Lumberjack Organization B");
 
             Game.PlayerFaction = _f;
 
             Faction.SetRelations(_f, _aifactionA, 0f);
             Faction.SetRelations(_aifactionB, _aifactionA, -1f);
             
-            Ship _s = new Ship(new Vector2(100, 300));
+            Ship _s = new Ship(new Vector2(100, 300), _world);
             _world.SpaceObjects.Add(_s);
-            UIBindings.Get("All").Add(_s);
 
-            _s.AddItem(ItemDatabase.Spawn(
+            _s.AddItem(ItemDatabase.Spawn(_world,
                 ItemDatabase.Items.Find(x => x.ID == 1102)));
-            _s.AddItem(ItemDatabase.Spawn(
+            _s.AddItem(ItemDatabase.Spawn(_world,
                 ItemDatabase.Items.Find(x => x.ID == 1102)));
-            _s.AddItem(ItemDatabase.Spawn(
+            _s.AddItem(ItemDatabase.Spawn(_world,
                 ItemDatabase.Items.Find(x => x.ID == 1102)));
-            _s.AddItem(ItemDatabase.Spawn( //spawn into inventory
+            _s.AddItem(ItemDatabase.Spawn(_world, //spawn into inventory
                 ItemDatabase.Items.Find(x => x.ID == 1199)));
-            ItemDatabase.Spawn( //spawn into space
+            ItemDatabase.Spawn(_world, //spawn into space
                 ItemDatabase.Items.Find(x => x.ID == 1100))
                 .SetPosition(new Vector2(100, 100));
 
@@ -52,10 +51,11 @@ namespace Apollyon
                 _s = new Ship(new Vector2(
                     (float)Game.Random.NextDouble()*7000,
                     (float)Game.Random.NextDouble()*7000
-                    ));
+                    ),
+                    _world
+                );
                 _world.SpaceObjects.Add(_s);
-                UIBindings.Get("All").Add(_s);
-                _s.AddItem(ItemDatabase.Spawn(
+                _s.AddItem(ItemDatabase.Spawn(_world,
                     ItemDatabase.Items.Find(x => x.ID == 1101)));
                 _AI2.Fleet.Add(_s);
                 _s.Faction = _aifactionA;
@@ -63,32 +63,34 @@ namespace Apollyon
                 _s = new Ship(new Vector2(
                     (float)Game.Random.NextDouble()*7000,
                     (float)Game.Random.NextDouble()*7000
-                    ));
+                    ),
+                    _world
+                );
                 _world.SpaceObjects.Add(_s);
-                UIBindings.Get("All").Add(_s);
-                _s.AddItem(ItemDatabase.Spawn(
+                _s.AddItem(ItemDatabase.Spawn(_world,
                     ItemDatabase.Items.Find(x => x.ID == 1101)));
                 _AI3.Fleet.Add(_s);
                 _s.Faction = _aifactionB;
             }
 
-            _s = new Ship(new Vector2(100, 100));
+            _s = new Ship(new Vector2(100, 100), _world);
             _world.SpaceObjects.Add(_s);
-            UIBindings.Get("All").Add(_s);
-            _s.AddItem(ItemDatabase.Spawn(
+            _s.AddItem(ItemDatabase.Spawn(_world,
                 ItemDatabase.Items.Find(x => x.ID == 1102)));
-            _s.AddItem(ItemDatabase.Spawn(
+            _s.AddItem(ItemDatabase.Spawn(_world,
                 ItemDatabase.Items.Find(x => x.ID == 1102)));
             _AI.Fleet.Add(_s);
             _s.Faction = _aifactionA;
 
-            Asteroid _a = new Asteroid();
+            Asteroid _a = new Asteroid("Asteroid", _world);
             _a.Position = new Vector2(400, 400);
 
-            _a = new Asteroid();
+            _a = new Asteroid("Asteroid", _world);
             _a.Position = new Vector2(0, 80);
 
-            Container _c = new Container();
+            Container _c = new Container("Generic Container", _world);
+
+            return _world;
         }
     }
 }

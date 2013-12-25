@@ -11,9 +11,13 @@ namespace Apollyon
     {
         public List<Item> Inventory;
 
-        public Container()
+        public Container(
+            string _name,
+            World _world
+        ) : base(_name, _world)
         {
             Name = "Generic Container";
+            World = _world;
             Texture = Res.Textures["generic"];
             Size = new Vector2(24, 24);
 
@@ -23,11 +27,6 @@ namespace Apollyon
             Utility.Tag(this, "container");
 
             ID = 100;
-
-            //test stuff
-            AddItem(
-                ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1101)));
         }
 
         public override void Die()

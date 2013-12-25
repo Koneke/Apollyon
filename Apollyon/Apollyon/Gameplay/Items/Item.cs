@@ -28,12 +28,15 @@ namespace Apollyon
         float rotationSpeed;
 
         public Item(
-            string _name = "",
+            string _name,
+            World _world,
             int _id = -1,
             bool _inSpace = true, //debuggish, leave for now
             int _count = 1
-        ) {
+        ) : base(_world)
+        {
             Name = _name;
+            World = _world;
             ID = _id;
             Count = _count;
             Carrier = null;
@@ -45,7 +48,7 @@ namespace Apollyon
             rotationSpeed = 0.01f + (float)Game.Random.NextDouble() * 0.01f;
 
             if (_inSpace) {
-                Game.World.SpaceObjects.Add(this); }
+                World.SpaceObjects.Add(this); }
         }
 
         public override void Update()

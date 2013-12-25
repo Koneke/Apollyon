@@ -179,6 +179,12 @@ namespace Apollyon
 
         public void Update(GameTime gameTime)
         {
+            UIBindings.Bind(
+                "All",
+                SpaceObjects.FindAll(
+                    x => x.HasTag("ship") && x.Health > 0
+                )
+            );
             Timer += gameTime.ElapsedGameTime.Milliseconds;
             while (Timer > Game.TickTime)
             {

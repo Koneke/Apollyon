@@ -79,8 +79,10 @@ namespace Apollyon
         public List<Item> Inventory;
 
         public Ship(
-            Vector2 _position
-        ) {
+            Vector2 _position,
+            World _world
+        ) : base(_world)
+        {
             Name = ShipNameGenerator.GenerateName();
             Texture = Res.Textures["ship"];
             Position = _position;
@@ -241,13 +243,13 @@ namespace Apollyon
 
         public override void Update() //goes once per tick
         {
-            if (engineSound == null)
+            if(engineSound == null) 
                 engineSound = Audio.PlaySoundAtPosition(
                     "afx/engine2.wav", Position, true, true);
 
             Audio.SetSoundPosition(engineSound, Position);
 
-            engineSound.Volume = Math.Min(
+            engineSound.Volume = Audio.Mute ? 0 : Math.Min(
                 Math.Max(Speed, 0), 1
             );
 

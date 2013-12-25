@@ -10,6 +10,7 @@ namespace Apollyon
     class SpaceObject
     {
         public string Name { get; set; }
+        public World World; //what world am i in
         public Texture2D Texture { get; set; }
         public Vector2 Position;
         public Vector2 Velocity;
@@ -34,8 +35,9 @@ namespace Apollyon
         public SpaceObject SetVelocity(Vector2 _v) {
             Velocity = _v; return this; }
 
-        public SpaceObject()
+        public SpaceObject(World _world)
         {
+            World = _world;
             Visible = true;
             Tags = new List<string>();
             Health = 1;

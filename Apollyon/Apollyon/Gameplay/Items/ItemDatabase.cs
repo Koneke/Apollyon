@@ -100,11 +100,12 @@ namespace Apollyon
             }
         }
 
-        public static Item Spawn(ItemTemplate _template)
-        {
-            Item _i = new Item();
+        public static Item Spawn(
+            World _world,
+            ItemTemplate _template
+        ) {
+            Item _i = new Item(_template.Name, _world);
 
-            _i.Name = _template.Name;
             _i.ID = _template.ID;
             _i.Texture = _template.Texture;
             _i.Tags = new List<string>(_template.Tags);

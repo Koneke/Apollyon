@@ -112,10 +112,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DrawManager.cs" />
+    <Compile Include="Engine\DrawManager.cs" />
     <Compile Include="Engine\GameStates\SpaceState.cs" />
     <Compile Include="Engine\GameStates\GameState.cs" />
-    <Compile Include="Engine\StationState.cs" />
+    <Compile Include="Engine\GameStates\StationState.cs" />
     <Compile Include="Gameplay\AI\AISimpleFighter.cs" />
     <Compile Include="Gameplay\AI\AISimpleMiner.cs" />
     <Compile Include="Gameplay\AI\AISimpleBrain.cs" />
@@ -124,7 +124,7 @@
     <Compile Include="Engine\ResourceLoader.cs" />
     <Compile Include="Gameplay\Factions.cs" />
     <Compile Include="Gameplay\Items\Container.cs" />
-    <Compile Include="Engine\GameStates\LineParticle.cs" />
+    <Compile Include="Engine\LineParticle.cs" />
     <Compile Include="Gameplay\SpaceObject.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Gameplay\Items\Item.cs" />

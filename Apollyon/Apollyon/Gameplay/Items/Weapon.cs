@@ -108,12 +108,13 @@ namespace Apollyon
                 )
             );
 
-            Audio.PlaySoundAtPosition(
-                "afx/explosion.wav",
-                new Vector3(
-                    Carrier.Position.X,
-                    Carrier.Position.Y, 0)
-            );
+            if(!Audio.Mute)
+                Audio.PlaySoundAtPosition(
+                    "afx/explosion.wav",
+                    new Vector3(
+                        Carrier.Position.X,
+                        Carrier.Position.Y, 0)
+                );
         }
     }
 }

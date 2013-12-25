@@ -45,6 +45,8 @@ namespace Apollyon
 
             Game.ScreenSize.X = graphics.PreferredBackBufferWidth;
             Game.ScreenSize.Y = graphics.PreferredBackBufferHeight;
+            Game.Camera = new Camera();
+            Game.World = (new DevWorldGenerator()).Generate(new World());
 
             UIBindings.Bind("Selected", new List<SpaceObject>());
             UIBindings.Bind("Targeted", new List<SpaceObject>());
@@ -52,9 +54,8 @@ namespace Apollyon
 
             activeStates = new List<GameState>();
 
-            Game.World = new World();
-            DevWorldGenerator _dwg = new DevWorldGenerator();
-            _dwg.Generate(Game.World);
+            /*DevWorldGenerator _dwg = new DevWorldGenerator();
+            _dwg.Generate(Game.World);*/
 
             spaceState.World = Game.World;
             activeStates.Add(spaceState);
@@ -62,8 +63,8 @@ namespace Apollyon
             foreach (GameState _gs in activeStates)
                 _gs.Load();
 
-            Game.Camera = new Camera();
             Audio.bgm = Audio.Play("mus/mAmbience.ogg", 0.05f, false, true);
+            Audio.bgm.Volume = Audio.Mute ? 0 : 0.05f;
 
             //REMEMBER: convenience while deving
             //(so i can spawn at 0,0 and still see stuff)

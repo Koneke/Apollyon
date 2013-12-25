@@ -14,6 +14,8 @@ namespace Apollyon
         public static float LinearFalloffStart = 2000;
         public static float LinearFalloffEnd = 4700;
 
+        public static bool Mute = false;
+
         static List<string> playedLog = new List<string>();
 
         public static ISound bgm;
@@ -25,7 +27,6 @@ namespace Apollyon
 
         public static void UpdateListenerPosition()
         {
-
             ListenerPosition = new Vector3
             (
                 Game.Camera.ScreenToWorld(
