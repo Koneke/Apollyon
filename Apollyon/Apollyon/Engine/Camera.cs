@@ -79,7 +79,8 @@ namespace Apollyon
                 float _zoomSpeed = 1.1f;
 
                 Rectangle.Width =
-                    (int)(Rectangle.Width * 1 + (Game.MouseWheelDelta * 120 * _zoomSpeed));
+                    (int)(Rectangle.Width * 1 +
+                    (Game.MouseWheelDelta * 120 * _zoomSpeed));
                 Rectangle.Height =
                     (int)(Rectangle.Width * (9f / 16f));
                 _zoom = (Game.ScreenSize.X / (float)Rectangle.Width);

@@ -11,6 +11,10 @@ namespace Apollyon
 
         static Keys[] lastKeys;
 
+        public static void HandleInput()
+        {
+            HandleInput(InputManager.ks.GetPressedKeys());
+        }
         public static void HandleInput(
             Keys[] _keys
         ) {

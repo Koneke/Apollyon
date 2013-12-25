@@ -112,6 +112,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\GameState.cs" />
+    <Compile Include="Engine\IGameState.cs" />
     <Compile Include="Gameplay\AI\AISimpleFighter.cs" />
     <Compile Include="Gameplay\AI\AISimpleMiner.cs" />
     <Compile Include="Gameplay\AI\AISimpleBrain.cs" />
@@ -127,6 +129,9 @@
     <Compile Include="Engine\Particle.cs" />
     <Compile Include="Gameplay\Items\ItemDatabase.cs" />
     <Compile Include="Engine\Particle2.cs" />
+    <Compile Include="Gameplay\World\DevWorldGenerator.cs" />
+    <Compile Include="Gameplay\World\WorldGenerator.cs" />
+    <Compile Include="Input\Input.cs" />
     <Compile Include="UI\UIBindings.cs" />
     <Compile Include="UI\UILoader.cs" />
     <Compile Include="UI\Windows\ApOverview.cs" />
@@ -145,7 +150,7 @@
     <Compile Include="Gameplay\Ship.cs" />
     <Compile Include="Gameplay\ShipNameGenerator.cs" />
     <Compile Include="Engine\Utility.cs" />
-    <Compile Include="Gameplay\World.cs" />
+    <Compile Include="Gameplay\World\World.cs" />
     <Compile Include="UI\Windows\ApComponentOverview.cs" />
     <Compile Include="UI\Windows\ApInventory.cs" />
     <Compile Include="Gameplay\Items\Weapon.cs" />

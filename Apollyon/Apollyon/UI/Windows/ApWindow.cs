@@ -12,6 +12,8 @@ namespace Apollyon
 {
     class ApWindow : IDisposable
     {
+        //move stuff over towards WindowManager?
+
         public void Dispose()
         {
             Target.Dispose();
@@ -21,7 +23,7 @@ namespace Apollyon
         //required for creating the rendertargets.
         //put here to avoid having to poke in Game1 every time we want to create
         //a new target, and because it's more readable this way.
-        public static GraphicsDevice graphics;
+        protected static GraphicsDevice graphics;
 
         public String Name;
         public string Help;
@@ -31,9 +33,10 @@ namespace Apollyon
         public XElement xml;
 
         public static List<ApWindow> Windows;
-        public static void Setup()
+        public static void Setup(GraphicsDevice _graphics)
         {
             Windows = new List<ApWindow>();
+            graphics = _graphics;
         }
 
         //keeping track of currently dragged window and such
@@ -46,6 +49,15 @@ namespace Apollyon
         //pushes the window to the front as well.
         //possible todo: push window to front even if not draggable? iunno
         //possible todo: snapping windows?
+        public static void Input()
+        {
+            Input(
+                InputManager.ks,
+                InputManager.oks,
+                InputManager.ms,
+                InputManager.oms
+            );
+        }
         public static void Input(
             KeyboardState ks,
             KeyboardState oks,

@@ -17,12 +17,10 @@ namespace Apollyon
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        MouseState ms;
-        MouseState oms; //last frame's
-        KeyboardState ks;
-        KeyboardState oks;
-
-        World world;
+        //several gamestates can be running at once, but only one can be drawn
+        //at a time.
+        List<IGameState> activeStates;
+        IGameState drawState;
 
         string cwd;
 
@@ -49,11 +47,19 @@ namespace Apollyon
             UIBindings.Bind("Targeted", new List<SpaceObject>());
             UIBindings.Bind("All", new List<SpaceObject>());
 
-            LoadUI();
-            ItemDatabase.LoadData(); //move to load
-            world = new World();
-            Game.World = world;
-            Game.Camera = world.Camera;
+            activeStates = new List<IGameState>();
+
+            GameState _gs = new GameState();
+
+            Game.World = new World();
+            DevWorldGenerator _dwg = new DevWorldGenerator();
+            _dwg.Generate(Game.World);
+
+            _gs.World = Game.World;
+            activeStates.Add(_gs);
+            drawState = _gs;
+
+            Game.Camera = Game.World.Camera;
             Audio.bgm = Audio.Play("mus/mAmbience.ogg", 0.05f, false, true);
 
             //REMEMBER: convenience while deving
@@ -61,92 +67,20 @@ namespace Apollyon
             Game.Camera.X -= 600;
             Game.Camera.Y -= 400;
 
-            //test stuff
-            Faction _f = new Faction("The Rude Dudes");
-            Faction _aifactionA = new Faction("The Lumberjack Organization");
-            Faction _aifactionB = new Faction("The Lumberjack Organization");
-
-            Game.PlayerFaction = _f;
-
-            Faction.SetRelations(_f, _aifactionA, 0f);
-            Faction.SetRelations(_aifactionB, _aifactionA, -1f);
-            
-            Ship _s = new Ship(new Vector2(100, 300));
-            world.SpaceObjects.Add(_s);
-            UIBindings.Get("All").Add(_s);
-
-            _s.AddItem(ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1102)));
-            _s.AddItem(ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1102)));
-            _s.AddItem(ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1102)));
-            _s.AddItem(ItemDatabase.Spawn( //spawn into inventory
-                ItemDatabase.Items.Find(x => x.ID == 1199)));
-            ItemDatabase.Spawn( //spawn into space
-                ItemDatabase.Items.Find(x => x.ID == 1100))
-                .SetPosition(new Vector2(100, 100));
-
-            _s.Faction = _f;
-
-            AISimpleMiner _AI = new AISimpleMiner();
-            Game.AIs.Add(_AI);
-            AISimpleFighter _AI2 = new AISimpleFighter();
-            _AI2.Faction = _aifactionA;
-            Game.AIs.Add(_AI2);
-
-            AISimpleFighter _AI3 = new AISimpleFighter();
-            _AI3.Faction = _aifactionB;
-            Game.AIs.Add(_AI3);
-
-            for (int i = 0; i < 3; i++)
-            {
-                _s = new Ship(new Vector2(
-                    (float)Game.Random.NextDouble()*7000,
-                    (float)Game.Random.NextDouble()*7000
-                    ));
-                world.SpaceObjects.Add(_s);
-                UIBindings.Get("All").Add(_s);
-                _s.AddItem(ItemDatabase.Spawn(
-                    ItemDatabase.Items.Find(x => x.ID == 1101)));
-                _AI2.Fleet.Add(_s);
-                _s.Faction = _aifactionA;
-
-                _s = new Ship(new Vector2(
-                    (float)Game.Random.NextDouble()*7000,
-                    (float)Game.Random.NextDouble()*7000
-                    ));
-                world.SpaceObjects.Add(_s);
-                UIBindings.Get("All").Add(_s);
-                _s.AddItem(ItemDatabase.Spawn(
-                    ItemDatabase.Items.Find(x => x.ID == 1101)));
-                _AI3.Fleet.Add(_s);
-                _s.Faction = _aifactionB;
-            }
-
-            _s = new Ship(new Vector2(100, 100));
-            world.SpaceObjects.Add(_s);
-            UIBindings.Get("All").Add(_s);
-            _s.AddItem(ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1102)));
-            _s.AddItem(ItemDatabase.Spawn(
-                ItemDatabase.Items.Find(x => x.ID == 1102)));
-            _AI.Fleet.Add(_s);
-            _s.Faction = _aifactionA;
-
-            Asteroid _a = new Asteroid();
-            _a.Position = new Vector2(400, 400);
-
-            _a = new Asteroid();
-            _a.Position = new Vector2(0, 80);
-
-            Container _c = new Container();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             ResourceLoader.Load(Content);
+
+            ApWindow.Setup(graphics.GraphicsDevice);
+            UILoader.Load();
+
+            ApWindow.Windows = WindowManager.Windows;
+            WindowManager.Load();
+
+            ItemDatabase.LoadData(); //move to load
             Audio.UpdateSettings();
             Audio.ContentRoot = cwd + "/Content/";
         }
@@ -158,53 +92,52 @@ namespace Apollyon
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
-            ms = Mouse.GetState();
-            ks = Keyboard.GetState();
-
-            Audio.UpdateListenerPosition();
-
             Game.HasFocus = IsActive;
 
-            BindingsManager.HandleInput(ks.GetPressedKeys());
+            InputManager.UpdateStart();
+            Audio.UpdateListenerPosition();
+            //use the BM more?
+            BindingsManager.HandleInput();
 
             //clean lists to filter out dead ships
+            //<later me> are we not already doing this locally?
+            //most of the time, atleast? idk, check it out
             foreach (string _s in
                 UIBindings.ShipLists.Keys.ToList().FindAll(x=>true)
             )
                 UIBindings.Bind(_s, UIBindings.Get(_s).FindAll(
                     x => x.Health > 0));
 
-            Game.MouseWheelDelta =
-                -(ms.ScrollWheelValue - oms.ScrollWheelValue)/120;
-            ApWindow.Input(ks, oks, ms, oms);
-            world.Input(ks, oks, ms, oms);
-            world.Update(gameTime);
+            ApWindow.Input();
+
+            //update all active states
+            foreach (IGameState _gs in activeStates)
+                _gs.Update(gameTime);
+
             foreach (ApWindow _w in ApWindow.Windows)
                 _w.Update();
 
+            //should be moved. switch these over from static to being
+            //per world?
             Particle.Particles =
                 Particle.Particles.FindAll(
                     x => (DateTime.Now - x.Created).TotalMilliseconds
                         < x.LifeTime);
-
             Particle2.Update();
-
             foreach (Particle _p in Particle.Particles)
                 _p.Update();
 
-            oms = ms;
-            oks = ks;
+            InputManager.UpdateEnd();
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            foreach (ApWindow w in ApWindow.Windows)
-                w.Render(spriteBatch);
+            WindowManager.RenderAll(spriteBatch);
 
             graphics.GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Black);
 
+            //to be moved asap
             spriteBatch.Begin();
             spriteBatch.Draw(
                 Res.Textures["background"],
@@ -216,35 +149,21 @@ namespace Apollyon
                 Color.White);
             spriteBatch.End();
 
+
             foreach (Particle _p in
                 Particle.Particles.FindAll(x => x.Depth < 0))
                 _p.Draw(spriteBatch);
-
             Particle2.Draw(spriteBatch);
 
-            world.Draw(spriteBatch);
+            drawState.Draw(spriteBatch);
 
             foreach (Particle _p in
                 Particle.Particles.FindAll(x => x.Depth > 0))
                 _p.Draw(spriteBatch);
 
-            foreach (ApWindow w in ApWindow.Windows)
-                w.Draw(spriteBatch);
+            WindowManager.DrawAll(spriteBatch);
 
             base.Draw(gameTime);
-        }
-
-        void LoadUI()
-        {
-            ApWindow.graphics = graphics.GraphicsDevice;
-            ApWindow.Setup();
-
-            UILoader.Load();
-
-            ApWindow.Windows = WindowManager.Windows;
-
-            foreach (ApWindow _w in WindowManager.Windows)
-                _w.SpecificUILoading();
         }
     }
 }

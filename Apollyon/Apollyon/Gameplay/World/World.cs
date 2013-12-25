@@ -25,6 +25,16 @@ namespace Apollyon
         }
 
         //CA1502
+        public void Input()
+        {
+            Input(
+                InputManager.ks,
+                InputManager.oks,
+                InputManager.ms,
+                InputManager.oms
+            );
+        }
+
         public void Input(
             KeyboardState ks, KeyboardState oks,
             MouseState ms, MouseState oms)
@@ -76,8 +86,6 @@ namespace Apollyon
                         UIBindings.Get("Targeted").Clear();
                 }
 
-                /*foreach (Ship _s in SpaceObjects.FindAll(
-                    x => x.Tags.Contains("ship")))*/
                 foreach(SpaceObject _so in SpaceObjects)
                 {
                     Rectangle _box = boxSelection;
@@ -95,9 +103,6 @@ namespace Apollyon
                     }
 
                     List<SpaceObject> _list;
-
-                    /*_list = Game.World.SpaceObjects.FindAll(
-                        x => x.Tags.Contains("ship"));*/
 
                     _list = Game.World.SpaceObjects;
 
@@ -233,20 +238,25 @@ namespace Apollyon
                     Math.Max((int)(_so.Size.Y * Camera.GetZoom()),1)
                 );
 
-                var _z = Camera.GetZoom();//debug
-
-                spriteBatch.Draw(
-                    _so.Texture??Res.Textures["generic"],
-                    _screenRect,
-                    null,
-                    Color.White,
-                    (float)_so.Rotation,
-                    new Vector2(
-                        _so.Texture.Width/2f,
-                        _so.Texture.Height/2f
-                        ),
-                    SpriteEffects.None, 0f
-                );
+                if (Camera.Rectangle.Contains(
+                    new Point(
+                        (int)_so.Position.X,
+                        (int)_so.Position.Y)
+                    )
+                ) {
+                    spriteBatch.Draw(
+                        _so.Texture ?? Res.Textures["generic"],
+                        _screenRect,
+                        null,
+                        Color.White,
+                        (float)_so.Rotation,
+                        new Vector2(
+                            _so.Texture.Width / 2f,
+                            _so.Texture.Height / 2f
+                            ),
+                        SpriteEffects.None, 0f
+                    );
+                }
 
                 spriteBatch.End();
                 #endregion
@@ -254,8 +264,8 @@ namespace Apollyon
                 #region selectionboxes
                 _screenRect.Offset(
                     new Point(
-                        (int)(-_so.Size.X * _z / 2f),
-                        (int)(-_so.Size.Y * _z / 2f))
+                        (int)(-_so.Size.X * Camera.GetZoom() / 2f),
+                        (int)(-_so.Size.Y * Camera.GetZoom() / 2f))
                 );
 
                 if(true)
