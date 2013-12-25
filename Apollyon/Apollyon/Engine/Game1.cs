@@ -149,7 +149,6 @@ namespace Apollyon
                 Color.White);
             spriteBatch.End();
 
-
             foreach (Particle _p in
                 Particle.Particles.FindAll(x => x.Depth < 0))
                 _p.Draw(spriteBatch);
@@ -162,6 +161,10 @@ namespace Apollyon
                 _p.Draw(spriteBatch);
 
             WindowManager.DrawAll(spriteBatch);
+
+            spriteBatch.Begin();
+            DrawManager.Draw(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

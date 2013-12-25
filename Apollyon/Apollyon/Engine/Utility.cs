@@ -98,50 +98,36 @@ namespace Apollyon
             Rectangle _r,
             Color _c
         ) {
-            spriteBatch.Begin();
-
-            spriteBatch.Draw(
-                Res.Textures["1x1"],
+            List<Rectangle> _rectangles = new List<Rectangle>
+            {
                 new Rectangle(
-                    (int)_r.X,
-                    (int)_r.Y,
-                    (int)_r.Width,
-                    1
-                ),
-                _c
-            );
-
-            spriteBatch.Draw(
-                Res.Textures["1x1"],
+                    (int)_r.X, (int)_r.Y,
+                    (int)_r.Width, 1),
                 new Rectangle(
-                    (int)_r.X,
-                    (int)_r.Y + (int)_r.Height-1,
-                    (int)_r.Width,
-                    1
-                ),
-                _c);
-
-            spriteBatch.Draw(
-                Res.Textures["1x1"],
+                    (int)_r.X, (int)_r.Y + (int)_r.Height-1,
+                    (int)_r.Width, 1),
                 new Rectangle(
-                    (int)_r.X,
-                    (int)_r.Y,
-                    1,
-                    (int)_r.Height
-                ),
-                _c);
-
-            spriteBatch.Draw(
-                Res.Textures["1x1"],
+                    (int)_r.X, (int)_r.Y,
+                    1, (int)_r.Height),
                 new Rectangle(
-                    (int)_r.X + (int)_r.Width-1,
-                    (int)_r.Y,
-                    1,
-                    (int)_r.Height
-                ),
-                _c);
+                    (int)_r.X + (int)_r.Width-1, (int)_r.Y,
+                    1, (int)_r.Height)
+            };
 
-            spriteBatch.End();
+            foreach (Rectangle _rectangle in _rectangles)
+            {
+                DrawManager.AddCall(
+                    new BasicDrawCall(
+                        Res.Textures["1x1"],
+                        _rectangle,
+                        null,
+                        _c,
+                        0,
+                        Vector2.Zero,
+                        -1f
+                    )
+                );
+            }
         }
 
         public static void DropShadowText(

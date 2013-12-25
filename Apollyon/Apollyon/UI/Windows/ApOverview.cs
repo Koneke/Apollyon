@@ -128,7 +128,7 @@ namespace Apollyon
                     new Vector2(indent, _currentY),
                     Color.White
                 );
-
+                
                 if (list[_i].HasTag("ship"))
                 {
                     Ship _s = list[_i] as Ship;
@@ -178,7 +178,6 @@ namespace Apollyon
                 Color.White
             );
 
-            
             spriteBatch.End();
 
             DrawBorder(spriteBatch, ApWindow.StandardBorder);

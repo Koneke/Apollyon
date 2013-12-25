@@ -44,6 +44,14 @@ namespace Apollyon
         static Vector2 grabOffset = new Vector2(0,0);
 
         public virtual void Update() { }
+
+        public Vector2 PointToScreen(Vector2 _point)
+        {
+            return new Vector2(
+                _point.X + x1,
+                _point.Y + y1
+            );
+        }
         
         //handle window dragging (if draggable)
         //pushes the window to the front as well.
@@ -295,8 +303,8 @@ namespace Apollyon
         public void DrawBorder(SpriteBatch spriteBatch, Color _c)
         {
             Rectangle _r = Area;
-            _r.X = 0;
-            _r.Y = 0;
+            /*_r.X = 0;
+            _r.Y = 0;*/
             Utility.DrawOutlinedRectangle(spriteBatch, _r, _c);
         }
 
@@ -304,11 +312,15 @@ namespace Apollyon
         public void Draw(
             SpriteBatch spriteBatch
         ) {
-            spriteBatch.Begin();
-            spriteBatch.Draw(
-                Target, Area, Color.White
+            DrawManager.AddCall(
+                new BasicDrawCall(
+                    Target,
+                    Area,
+                    null,
+                    Color.White,
+                    -1
+                )
             );
-            spriteBatch.End();
         }
     }
 }

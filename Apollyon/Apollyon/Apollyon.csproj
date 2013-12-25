@@ -112,6 +112,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrawManager.cs" />
     <Compile Include="Engine\GameState.cs" />
     <Compile Include="Engine\IGameState.cs" />
     <Compile Include="Gameplay\AI\AISimpleFighter.cs" />
@@ -131,7 +132,7 @@
     <Compile Include="Engine\Particle2.cs" />
     <Compile Include="Gameplay\World\DevWorldGenerator.cs" />
     <Compile Include="Gameplay\World\WorldGenerator.cs" />
-    <Compile Include="Input\Input.cs" />
+    <Compile Include="Input\InputManager.cs" />
     <Compile Include="UI\UIBindings.cs" />
     <Compile Include="UI\UILoader.cs" />
     <Compile Include="UI\Windows\ApOverview.cs" />

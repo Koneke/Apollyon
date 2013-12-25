@@ -42,27 +42,29 @@ namespace Apollyon
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
-            spriteBatch.Draw(
-                Res.Textures["1x1"],
-                new Rectangle(
-                    (int)Game.Camera.WorldToScreen(Position).X,
-                    (int)Game.Camera.WorldToScreen(Position).Y,
-                    (int)(Vector2.Distance(Position, Target)
-                        *Game.Camera.GetZoom()),
-                    Thickness
-                ),
-                null,
-                Colour,
-                (float)Math.Atan2(
-                    Target.Y - Position.Y,
-                    Target.X - Position.X
-                ),
-                new Vector2(0,0),
-                SpriteEffects.None,
-                0f
+            //spriteBatch.Begin();
+            //spriteBatch.Draw(
+            DrawManager.AddCall(
+                new BasicDrawCall(
+                    Res.Textures["1x1"],
+                    new Rectangle(
+                        (int)Game.Camera.WorldToScreen(Position).X,
+                        (int)Game.Camera.WorldToScreen(Position).Y,
+                        (int)(Vector2.Distance(Position, Target)
+                            * Game.Camera.GetZoom()),
+                        Thickness
+                    ),
+                    null,
+                    Colour,
+                    (float)Math.Atan2(
+                        Target.Y - Position.Y,
+                        Target.X - Position.X
+                    ),
+                    new Vector2(0, 0),
+                    1f
+                )
             );
-            spriteBatch.End();
+            //spriteBatch.End();
         }
     }
 }

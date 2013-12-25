@@ -64,10 +64,6 @@ namespace Apollyon
             AngularVelocity = _angularVelocity;
         }
 
-        /*public static void UpdateParticles()
-        {
-        }*/
-
         public virtual void Update()
         {
             Position.X += (float)Math.Cos(Direction) * Speed;
@@ -79,23 +75,24 @@ namespace Apollyon
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             var _p = Game.Camera.WorldToScreen(Position);
-            spriteBatch.Begin();
-            spriteBatch.Draw(
-                Texture,
-                new Rectangle(
-                    (int)_p.X,
-                    (int)_p.Y,
-                    Math.Max((int)(Texture.Width * Game.Camera.GetZoom()), 1),
-                    Math.Max((int)(Texture.Height * Game.Camera.GetZoom()), 1)
-                ),
-                null,
-                Colour,
-                (float)Rotation,
-                new Vector2(Texture.Width/2, Texture.Height/2),
-                SpriteEffects.None,
-                0f
+            DrawManager.AddCall(
+                new BasicDrawCall(
+                    Texture,
+                    new Rectangle(
+                        (int)_p.X,
+                        (int)_p.Y,
+                        Math.Max((int)(Texture.Width *
+                            Game.Camera.GetZoom()), 1),
+                        Math.Max((int)(Texture.Height *
+                            Game.Camera.GetZoom()), 1)
+                    ),
+                    null,
+                    Colour,
+                    (float)Rotation,
+                    new Vector2(Texture.Width/2, Texture.Height/2),
+                    -0.1f
+                )
             );
-            spriteBatch.End();
         }
     }
 }

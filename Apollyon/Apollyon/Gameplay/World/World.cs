@@ -244,17 +244,19 @@ namespace Apollyon
                         (int)_so.Position.Y)
                     )
                 ) {
-                    spriteBatch.Draw(
-                        _so.Texture ?? Res.Textures["generic"],
-                        _screenRect,
-                        null,
-                        Color.White,
-                        (float)_so.Rotation,
-                        new Vector2(
-                            _so.Texture.Width / 2f,
-                            _so.Texture.Height / 2f
-                            ),
-                        SpriteEffects.None, 0f
+                    DrawManager.AddCall(
+                        new BasicDrawCall(
+                            _so.Texture ?? Res.Textures["generic"],
+                            _screenRect,
+                            null,
+                            Color.White,
+                            (float)_so.Rotation,
+                            new Vector2(
+                                _so.Texture.Width / 2f,
+                                _so.Texture.Height / 2f
+                                ),
+                            0f
+                        )
                     );
                 }
 

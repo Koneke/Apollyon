@@ -52,7 +52,7 @@ namespace Apollyon
         public static void Draw(
             SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
+            //spriteBatch.Begin();
             foreach (Particle2 _p in Particles)
             {
                 Vector2 _screenPosition =
@@ -73,6 +73,20 @@ namespace Apollyon
                     )
                 );
 
+                DrawManager.AddCall(
+                    new BasicDrawCall(
+                        _p.texture,
+                        _screenRect,
+                        null,
+                        _p.color,
+                        (float)_p.rotation,
+                        new Vector2(
+                            _p.texture.Width / 2,
+                            _p.texture.Height / 2),
+                        1f
+                    )
+                );
+                /*
                 spriteBatch.Draw(
                     _p.texture,
                     _screenRect,
@@ -84,9 +98,9 @@ namespace Apollyon
                         _p.texture.Height / 2),
                         SpriteEffects.None,
                     0f
-                );
+                );*/
             }
-            spriteBatch.End();
+            //spriteBatch.End();
         }
 
         //ACTUAL VARIED VALUES ARE ONLY GENERATED UPON USING THE GENERATE FUNCTS
