@@ -19,15 +19,12 @@ namespace Apollyon
 
         public override void Load()
         {
-            WindowManager.Load();
+            WindowManager.Load("Content/data/ui.xml");
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Input()
         {
-            if (World == null) return;
-
             InputManager.Update();
-            WindowManager.Input();
 
             if (InputManager.ks.IsKeyDown(Keys.M) &&
                 !InputManager.oks.IsKeyDown(Keys.M))
@@ -35,6 +32,15 @@ namespace Apollyon
                 Audio.Mute = !Audio.Mute;
                 Audio.bgm.Volume = Audio.Mute ? 0 : 0.05f;
             }
+
+            WindowManager.Input();
+            //HERE IS WHERE WE GIVE INPUT TO CAMERA, WM OR WORLD
+            World.Input();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (World == null) return;
 
             foreach (string _s in
                 UIBindings.ShipLists.Keys.ToList().FindAll(x=>true)
@@ -51,13 +57,14 @@ namespace Apollyon
             foreach (Particle _p in Particle.Particles)
                 _p.Update();
 
-            World.Input();
+            WindowManager.Input();
+            WindowManager.UpdateAll();
+
             World.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            WindowManager.UpdateAll();
             WindowManager.RenderAll(spriteBatch);
             WindowManager.DrawAll();
 

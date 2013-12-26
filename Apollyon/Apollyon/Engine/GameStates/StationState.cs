@@ -13,8 +13,21 @@ namespace Apollyon
     {
         public Station Station;
 
-        public override void Update(GameTime gameTime) { }
+        public override void Update(GameTime gameTime) {
+            WindowManager.Input();
+            WindowManager.UpdateAll();
+
+            if (InputManager.ks.IsKeyDown(
+                Microsoft.Xna.Framework.Input.Keys.Enter))
+            {
+                Game.ActiveStates.Remove(this);
+            }
+        }
+
         public override void Draw(SpriteBatch spriteBatch) {
+            WindowManager.RenderAll(spriteBatch);
+            WindowManager.DrawAll();
+
             DrawManager.AddCall(
                 new TextDrawCall(
                     "log font",
@@ -24,6 +37,11 @@ namespace Apollyon
                     -11f
                 )
             );
+        }
+
+        public override void Load()
+        {
+            WindowManager.Load("Content/data/stationui.xml");
         }
     }
 }

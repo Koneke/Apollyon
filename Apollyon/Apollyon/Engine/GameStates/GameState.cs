@@ -22,6 +22,7 @@ namespace Apollyon
 
         public virtual void Update(GameTime gameTime) { }
         public virtual void Draw(SpriteBatch spriteBatch) { }
+        public virtual void Input() { }
         public virtual void Load() { }
     }
 }

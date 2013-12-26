@@ -4,20 +4,29 @@ using System.Linq;
 
 namespace Apollyon
 {
-    class Station
+    class Station : SpaceObject
     {
-        public string Name;
         List<Ship> DockedShips;
         Dictionary<Ship, List<Item>> Hangars;
+
+        public Station(
+            World _world
+        ) : base(_world)
+        {
+            DockedShips = new List<Ship>();
+            Hangars = new Dictionary<Ship, List<Item>>();
+        }
 
         public void Dock(Ship _s)
         {
             DockedShips.Add(_s);
+            Utility.Tag(_s, "docked");
         }
 
         public void Undock(Ship _s)
         {
             DockedShips.Remove(_s);
+            Utility.Untag(_s, "docked");
         }
     }
 }

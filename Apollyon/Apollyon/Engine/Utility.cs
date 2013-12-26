@@ -17,7 +17,8 @@ namespace Apollyon
             List<SpaceObject> _r = Game.World.SpaceObjects;
             if (any)
             {
-                _r = _r.FindAll(x => x.Tags.Any(y => _tags.Contains(y)));
+                //_r = _r.FindAll(x => x.Tags.Any(y => _tags.Contains(y)));
+                _r.FindAll(x => _tags.Any(y => x.HasTag(y)));
             }
             else
             {

@@ -129,10 +129,11 @@ namespace Apollyon
             return null;
         }
 
-        public void Load()
+        public void Load(string _path)
         {
             IEnumerable<XElement> _elements =
-                (XElement.Load("Content/data/ui.xml")).Elements();
+                //(XElement.Load("Content/data/ui.xml")).Elements();
+                (XElement.Load(_path)).Elements();
 
             foreach (var _e in _elements)
             {

@@ -17,14 +17,6 @@ namespace Apollyon
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        //several gamestates can be running at once, but only one can be drawn
-        //at a time.
-        List<GameState> activeStates;
-        GameState drawState;
-
-        SpaceState spaceState;
-        StationState stationState;
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -34,7 +26,11 @@ namespace Apollyon
 
         protected override void Initialize()
         {
-            drawState = Game.SpaceState = spaceState = new SpaceState();
+            SpaceState spaceState;
+            StationState stationState;
+
+            Game.AddState("space", new SpaceState());
+            //Game.SpaceState = spaceState = new SpaceState();
             stationState = new StationState();
 
             base.Initialize();
@@ -52,15 +48,22 @@ namespace Apollyon
             UIBindings.Bind("Targeted", new List<SpaceObject>());
             UIBindings.Bind("All", new List<SpaceObject>());
 
-            activeStates = new List<GameState>();
+            //spaceState.World = Game.World;
+            ((SpaceState)Game.GetState("space")).World = Game.World;
+            Game.ActiveStates.Add(Game.GetState("space"));
 
-            /*DevWorldGenerator _dwg = new DevWorldGenerator();
-            _dwg.Generate(Game.World);*/
+            stationState.Station = new Station(Game.World);
+            stationState.Station.Name = "The Spooky Sailor Cafe";
+            Ship _s = new Ship(
+                Vector2.Zero,
+                Game.World
+            );
+            _s.Faction = Game.PlayerFaction;
+            Game.World.SpaceObjects.Add(_s);
+            stationState.Station.Dock(_s);
+            Game.ActiveStates.Add(stationState);
 
-            spaceState.World = Game.World;
-            activeStates.Add(spaceState);
-
-            foreach (GameState _gs in activeStates)
+            foreach (GameState _gs in Game.ActiveStates)
                 _gs.Load();
 
             Audio.bgm = Audio.Play("mus/mAmbience.ogg", 0.05f, false, true);
@@ -97,8 +100,11 @@ namespace Apollyon
             InputManager.UpdateStart();
             Audio.UpdateListenerPosition();
 
+            //only take input from the front state as of now
+            Game.ActiveStates[Game.ActiveStates.Count-1].Input();
+
             //update all active states
-            foreach (GameState _gs in activeStates)
+            foreach (GameState _gs in Game.ActiveStates.FindAll(x=>true))
                 _gs.Update(gameTime);
 
             InputManager.UpdateEnd();
@@ -109,7 +115,7 @@ namespace Apollyon
             graphics.GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Black);
 
-            drawState.Draw(spriteBatch);
+            Game.ActiveStates[Game.ActiveStates.Count-1].Draw(spriteBatch);
 
             spriteBatch.Begin();
             DrawManager.Draw(spriteBatch);

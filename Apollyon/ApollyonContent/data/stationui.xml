@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<windows>
+  <window>
+    <name>Station Overview</name>
+    <type>Overview</type>
+    <help>Station Overview</help>
+    <position>
+      <x>10</x>
+      <y>30</y>
+      <w>200</w>
+      <h>200</h>
+    </position>
+    <tags>
+      <tag>ship</tag>
+    </tags>
+    <filters>
+      <tag>!docked</tag>
+    </filters>
+  </window>
+
+  <window>
+    <name>Component Overview</name>
+    <type>ComponentOverview</type>
+    <help>Component Overview: List of equipped components. Double click to activate (weapons need you to have things targeted). Yellow text means activated, blue means some in the stack are activated, but not all.</help>
+    <position>
+      <x>220</x>
+      <y>690</y>
+      <w>200</w>
+      <h>200</h>
+    </position>
+    <ships>Selected</ships>
+  </window>
+
+  <window>
+    <name>Inventory</name>
+    <type>Inventory</type>
+    <help>Inventory: List of things in the inventories of the selected ships. Double click to use/equip, right click to drop (Z loots, in case you drop something nice).</help>
+    <position>
+      <x>10</x>
+      <y>690</y>
+      <w>200</w>
+      <h>200</h>
+    </position>
+    <ships>Selected</ships>
+  </window>
+</windows>

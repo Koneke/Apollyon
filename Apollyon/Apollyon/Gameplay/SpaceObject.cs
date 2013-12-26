@@ -48,7 +48,10 @@ namespace Apollyon
             Tags = _tags; }
 
         public bool HasTag(string _tag) {
-            return Tags.Contains(_tag); }
+            if (_tag[0]=='!')
+                return !HasTag(_tag.Substring(1));
+            return Tags.Contains(_tag);
+        }
 
         public virtual void Die() { }
     }
