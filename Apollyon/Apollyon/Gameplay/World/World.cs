@@ -15,7 +15,7 @@ namespace Apollyon
         public float Timer; //ms timer
 
         Rectangle boxSelection;
-        bool selecting = false;
+        public bool selecting = false;
         bool selectingHostile = false;
 
         public World()
@@ -39,10 +39,11 @@ namespace Apollyon
             KeyboardState ks, KeyboardState oks,
             MouseState ms, MouseState oms)
         {
-            //SO ugly. JESUS CHRIST.
-            //input falling through needs to be fixed ASAP.
-            if(Game.SpaceState.WindowManager
-                .PointInWindow(new Point(ms.X,ms.Y)) == null)
+            //still ugly, but not as
+            if(
+                Game.GetState("space").IsTopState() &&
+                Game.GetState("space").WindowManager.PointInWindow(
+                    new Point(ms.X,ms.Y)) == null)
                 Game.Camera.Input(ms, oms);
 
             foreach (Ship _s in SpaceObjects.FindAll(
@@ -203,18 +204,30 @@ namespace Apollyon
 
                 SpaceObjects = SpaceObjects.FindAll(x => x.Health > 0);
 
-                List<Ship> _ships = 
-                    UIBindings.Get("selected").FindAll(
-                        x => x.HasTag("ship"))
-                    .Cast<Ship>()
-                    .ToList()
-                    .FindAll(
-                        x => x.Faction != Game.PlayerFaction)
-                    ;
+                //selection stuff, only if top state (because we're not box
+                //selecting stuff in world in other states
 
-                UIBindings.Get("selected").RemoveAll(
-                    x => _ships.Contains(x) || !x.HasTag("ship"))
-                    ;
+                if (Game.GetState("space").IsTopState())
+                {
+                    List<Ship> _ships =
+                        UIBindings.Get("selected").FindAll(
+                            x => x.HasTag("ship"))
+                        .Cast<Ship>()
+                        .ToList()
+                        .FindAll(
+                            x => x.Faction != Game.PlayerFaction)
+                        ;
+
+                    UIBindings.Bind("selected",
+                        UIBindings.Get("selected")
+                        //filter out hostiles
+                            .FindAll(x => !_ships.Contains(x))
+                        //filter out nonships
+                            .FindAll(x => x.HasTag("ship"))
+                        //filter out docked ships
+                            .FindAll(x => x.HasTag("!docked"))
+                    );
+                }
 
                 Timer -= Game.TickTime;
             }
@@ -227,7 +240,9 @@ namespace Apollyon
 
             foreach (SpaceObject _so in
                 SpaceObjects
-                .FindAll(x => !x.HasTag("carried"))
+                //.FindAll(x => !x.HasTag("carried"))
+                .FindAll(x => x.HasTag("!carried"))
+                .FindAll(x => x.HasTag("!docked"))
                 .OrderBy(x => x.Depth)
                 )
             {

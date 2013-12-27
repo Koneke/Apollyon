@@ -226,6 +226,10 @@ namespace Apollyon
                     Selection.Add(Items[_item]);
                 }
 
+                var a = DateTime.Now;
+                var b = lastLeftClick;
+                var c = a - b;
+
                 //dblclick
                 if (
                     (DateTime.Now - lastLeftClick).TotalMilliseconds

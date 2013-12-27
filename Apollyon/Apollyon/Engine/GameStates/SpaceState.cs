@@ -33,8 +33,8 @@ namespace Apollyon
                 Audio.bgm.Volume = Audio.Mute ? 0 : 0.05f;
             }
 
-            WindowManager.Input();
             //HERE IS WHERE WE GIVE INPUT TO CAMERA, WM OR WORLD
+            WindowManager.Input();
             World.Input();
         }
 
@@ -57,7 +57,6 @@ namespace Apollyon
             foreach (Particle _p in Particle.Particles)
                 _p.Update();
 
-            WindowManager.Input();
             WindowManager.UpdateAll();
 
             World.Update(gameTime);

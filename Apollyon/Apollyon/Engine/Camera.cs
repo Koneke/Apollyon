@@ -61,7 +61,6 @@ namespace Apollyon
             }
             else //don't zoom/pan and stuff while mm dragging
             {
-
                 int _scrollSpeed = (int)(9f / _zoom);
                 if (ms.X > Game.ScreenSize.X)
                     Rectangle.X += _scrollSpeed;
@@ -112,6 +111,11 @@ namespace Apollyon
             Vector2 _camPos = new Vector2(Rectangle.X, Rectangle.Y);
             Vector2 _offs = (_position - _camPos) * GetZoom();
             return _offs;
+        }
+
+        public void CenterOn(Vector2 _position) {
+            X = (int)(_position.X - Rectangle.Width / 2f);
+            Y = (int)(_position.Y - Rectangle.Height / 2f);
         }
     }
 }

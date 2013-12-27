@@ -20,6 +20,7 @@ namespace Apollyon
         public void Dock(Ship _s)
         {
             DockedShips.Add(_s);
+            _s.Position = Position;
             Utility.Tag(_s, "docked");
         }
 

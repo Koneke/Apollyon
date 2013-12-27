@@ -45,6 +45,7 @@ namespace Apollyon
                 States[_state] = _gs;
             else States.Add(_state, _gs);
         }
+
         public static GameState GetState(string _state)
         {
             if (States.ContainsKey(_state.ToLower()))

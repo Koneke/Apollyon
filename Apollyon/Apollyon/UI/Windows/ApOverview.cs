@@ -81,7 +81,9 @@ namespace Apollyon
             Filters = xml.Element("filters").Elements().Select(
                 x => x.Value).ToList();
         }
+
         public override void GetAction(string _action) { }
+
         public override void ActualRender(
             SpriteBatch spriteBatch
         ) {

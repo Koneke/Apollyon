@@ -17,16 +17,27 @@ namespace Apollyon
             WindowManager.Input();
             WindowManager.UpdateAll();
 
+            Game.Camera.CenterOn(Station.Position);
+
             if (InputManager.ks.IsKeyDown(
                 Microsoft.Xna.Framework.Input.Keys.Enter))
-            {
                 Game.ActiveStates.Remove(this);
-            }
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
             WindowManager.RenderAll(spriteBatch);
             WindowManager.DrawAll();
+
+            DrawManager.AddCall(
+                new BasicDrawCall(
+                    Res.Textures["1x1"],
+                    new Rectangle(
+                        0, 0, (int)Game.ScreenSize.X, (int)Game.ScreenSize.Y),
+                    null,
+                    Color.Black,
+                    10f
+                )
+            );
 
             DrawManager.AddCall(
                 new TextDrawCall(

@@ -238,7 +238,8 @@ namespace Apollyon
                     .Spawn()
                 );
 
-            UIBindings.Get("All").Remove(this);
+            engineSound.Stop();
+            engineSound = null;
         }
 
         public override void Update() //goes once per tick

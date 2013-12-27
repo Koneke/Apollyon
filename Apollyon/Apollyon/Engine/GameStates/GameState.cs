@@ -24,5 +24,11 @@ namespace Apollyon
         public virtual void Draw(SpriteBatch spriteBatch) { }
         public virtual void Input() { }
         public virtual void Load() { }
+
+        public bool IsTopState()
+        {
+            return Game.ActiveStates[
+                Game.ActiveStates.Count - 1] == this;
+        }
     }
 }

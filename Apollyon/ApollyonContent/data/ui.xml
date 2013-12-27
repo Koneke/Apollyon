@@ -18,57 +18,9 @@
     </tags>
     <filters>
       <tag>carried</tag>
+      <tag>docked</tag>
     </filters>
   </window>
-<!--
-  <window>
-    <name>Fleet Overview</name>
-    <type>ShipOverview</type>
-    <help>Fleet Overview: List of friendly ships in the vicinity.</help>
-    <position>
-      <x>220</x>
-      <y>10</y>
-      <w>200</w>
-      <h>200</h>
-    </position>
-    <bindings>
-      <bind>
-        <key>D</key>
-        <type>Press</type>
-        <action>Clear Selection</action>
-      </bind>
-    </bindings>
-    <ships>All</ships>
-    <selection>Selected</selection>
-  </window>
-
-  <window>
-    <name>Hostile Overview</name>
-    <type>ShipOverview</type>
-    <help>Hostiles Overview: List of non-friendly ships in the vicinity.</help>
-    <position>
-      <x>430</x>
-      <y>10</y>
-      <w>200</w>
-      <h>200</h>
-    </position>
-    <tint>
-      <r>255</r>
-      <g>0</g>
-      <b>0</b>
-      <a>255</a>
-    </tint>
-    <bindings>
-      <bind>
-        <key>F</key>
-        <type>Press</type>
-        <action>Clear Selection</action>
-      </bind>
-    </bindings>
-    <ships>All</ships>
-    <selection>Targeted</selection>
-  </window>
-  -->
 
   <window>
     <name>Combat Log</name>

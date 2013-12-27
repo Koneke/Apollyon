@@ -26,7 +26,6 @@ namespace Apollyon
 
         protected override void Initialize()
         {
-            SpaceState spaceState;
             StationState stationState;
 
             Game.AddState("space", new SpaceState());
